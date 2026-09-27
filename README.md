@@ -58,7 +58,7 @@ These features are under development and will be added in future updates:
 ## ⚠️ Important Warnings
 - This is a Resource Pack, NOT a Mod.
 - ETF & EMF are strictly required. This pack uses advanced animation frameworks provided by these two mods. Animations will not load or work without them installed.
-- This is an **Alpha test version**. Minor instability, animation glitches or frame errors may occur during use.
+- This is an **Beta test version**. Minor instability, animation glitches or frame errors may occur during use.
 - Client-side only. Works for single-player and multiplayer servers.
 
 ---
