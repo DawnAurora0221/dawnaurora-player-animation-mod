@@ -22,20 +22,25 @@
             --blue-glow:rgba(96,165,250,0.25);
             --bg-card:rgba(255,255,255,0.05);
             --bg-card-hover:rgba(255,255,255,0.09);
-            --glass-blur:14px;
+            --glass-blur:16px;
+            --radius-xl:22px;
+            --radius-lg:16px;
+            --radius-md:12px;
+            --shadow-base: 0 8px 32px rgba(0,0,0,0.24);
         }
         [data-theme="light"]{
             --line:rgba(0,0,0,0.12);
-            --text:#1f2937;
+            --text:#111827;
             --text-dim:#4b5563;
             --bg-card:rgba(255,255,255,0.72);
-            --bg-card-hover:rgba(255,255,255,0.92);
-            --glass-blur:10px;
-            --green-glow:rgba(74,222,128,0.12);
-            --blue-glow:rgba(96,165,250,0.15);
+            --bg-card-hover:rgba(255,255,255,0.94);
+            --glass-blur:12px;
+            --green-glow:rgba(74,222,128,0.14);
+            --blue-glow:rgba(96,165,250,0.16);
+            --shadow-base:0 8px 32px rgba(0,0,0,0.08);
         }
         *{box-sizing:border-box;margin:0;padding:0;}
-        html{scroll-behavior:smooth;scroll-padding-top:72px;}
+        html{scroll-behavior:smooth;scroll-padding-top:80px;}
         ::-webkit-scrollbar {width:8px;height:8px;}
         ::-webkit-scrollbar-track {background:transparent;}
         ::-webkit-scrollbar-thumb {background:var(--line);border-radius:99px;}
@@ -44,12 +49,35 @@
         body{
             font-family:"Noto Sans SC",system-ui,-apple-system,Segoe UI,sans-serif;
             color:var(--text);
-            transition: color 0.35s ease;
-            line-height:1.6;
+            transition: color 0.35s ease, background 0.4s ease;
+            line-height:1.7;
             overflow-x:hidden;
             position:relative;
+            background:#04060f;
+            /* 页面载入淡入 */
+            opacity:0;
+            animation: pageFadeIn 1s ease forwards;
         }
-
+        @keyframes pageFadeIn {
+            to {opacity:1;}
+        }
+        /* 极光背景层 */
+        .aurora{
+            position:fixed;
+            inset:0;
+            z-index:-2;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(28,130,190,0.22), transparent 52%),
+                radial-gradient(ellipse at 80% 40%, rgba(18,190,145,0.19), transparent 52%),
+                radial-gradient(ellipse at 50% 90%, rgba(105,42,170,0.16), transparent 52%);
+            animation: auroraMove 20s ease-in-out infinite alternate;
+            pointer-events:none;
+        }
+        @keyframes auroraMove {
+            0%{transform:translateX(-12%) scale(1.15);}
+            100%{transform:translateX(12%) scale(1.25);}
+        }
+        /* 流星画布 */
         #meteorBg{
             position:fixed;
             inset:0;
@@ -59,36 +87,44 @@
             height:100%;
             pointer-events:none;
         }
-
-        .container{max-width:1200px;margin:0 auto;padding:0 20px;}
-
+        .container{max-width:1240px;margin:0 auto;padding:0 24px;}
+        /* 导航栏 */
         nav{
             position:sticky;top:0;z-index:99;
             background:transparent;
             border-bottom:1px solid transparent;
-            padding:14px 0;
-            transition:0.3s ease;
+            padding:16px 0;
+            transition:0.35s ease;
         }
         nav.scrolled{
-            background:rgba(5,7,13,0.72);
+            background:rgba(4,6,15,0.68);
             backdrop-filter: blur(var(--glass-blur));
             border-bottom:1px solid var(--line);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
         }
         [data-theme="light"] nav.scrolled{
-            background:rgba(238,244,255,0.75);
+            background:rgba(245,248,255,0.72);
         }
-        .nav-wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+        .nav-wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
         .nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;}
         .nav-logo img{
-            height:42px;
+            height:44px;
             width:auto;
             object-fit:contain;
         }
-        .nav-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
-        .nav-links a{color:var(--text-dim);text-decoration:none;transition:0.25s ease;font-size:14px;white-space:nowrap;}
+        .nav-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+        .nav-links a{
+            color:var(--text-dim);text-decoration:none;transition:0.25s ease;font-size:14px;white-space:nowrap;
+            position:relative;
+        }
+        .nav-links a::after{
+            content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;background:var(--blue-primary);transition:0.25s;
+        }
         .nav-links a:hover{color:var(--text);text-shadow:0 0 8px var(--blue-glow);}
+        .nav-links a:hover::after{width:100%;}
+        /* 按钮样式 */
         .btn{
-            padding:9px 18px;border-radius:10px;border:none;cursor:pointer;
+            padding:10px 20px;border-radius:var(--radius-md);border:none;cursor:pointer;
             font-weight:600;font-size:15px;transition:0.25s ease;
             font-family:inherit;
         }
@@ -99,16 +135,16 @@
         }
         .btn-primary:hover{
             filter:brightness(1.1);
-            transform:translateY(-2px);
-            box-shadow:0 0 16px var(--green-glow);
+            transform:translateY(-3px);
+            box-shadow:0 0 20px var(--green-glow);
         }
         .btn-primary:active{transform:translateY(0px);}
         .btn.pulse{
-            animation: pulse 2.2s infinite;
+            animation: pulse 2.4s infinite;
         }
         @keyframes pulse {
-            0%{box-shadow:0 0 0 0 rgba(74,222,128,0.4);}
-            70%{box-shadow:0 0 0 12px rgba(74,222,128,0);}
+            0%{box-shadow:0 0 0 0 rgba(74,222,128,0.45);}
+            70%{box-shadow:0 0 0 14px rgba(74,222,128,0);}
             100%{box-shadow:0 0 0 0 rgba(74,222,128,0);}
         }
         .btn-secondary{
@@ -119,209 +155,237 @@
         }
         .btn-secondary:hover{
             background:var(--bg-card-hover);
-            transform:translateY(-1px);
+            transform:translateY(-2px);
+            box-shadow: var(--shadow-base);
         }
         .btn-secondary:active{transform:translateY(0px);}
-        select.btn-secondary{padding:8px 14px;}
-        
-        .hero{padding:60px 0;}
+        select.btn-secondary{padding:9px 14px;}
+        /* 轮播图 */
+        .carousel-wrap{
+            position:relative;
+            width:100%;
+            border-radius:var(--radius-xl);
+            overflow:hidden;
+            border:1px solid var(--line);
+            margin-bottom:32px;
+            backdrop-filter: blur(var(--glass-blur));
+        }
+        .carousel-track{
+            display:flex;
+            transition: transform 0.6s ease-in-out;
+        }
+        .carousel-slide{
+            min-width:100%;
+            height:420px;
+            background:#0003;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#fff;
+            font-size:24px;
+        }
+        .carousel-slide img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+        .carousel-btn{
+            position:absolute;
+            top:50%;
+            transform:translateY(-50%);
+            width:44px;height:44px;
+            border-radius:50%;
+            border:1px solid var(--line);
+            background:rgba(0,0,0,0.45);
+            color:#fff;
+            font-size:20px;
+            cursor:pointer;
+            backdrop-filter: blur(8px);
+            z-index:2;
+        }
+        .carousel-prev{left:16px;}
+        .carousel-next{right:16px;}
+        .carousel-dots{
+            position:absolute;bottom:14px;
+            left:50%;transform:translateX(-50%);
+            display:flex;gap:8px;
+        }
+        .dot{
+            width:10px;height:10px;border-radius:50%;
+            background:rgba(255,255,255,0.35);
+            cursor:pointer;
+        }
+        .dot.active{background:#fff;}
+        /* 首页Hero区域 */
+        .hero{padding:72px 0;}
         .hero-card{
-            border:1px solid var(--line);border-radius:22px;padding:48px;
+            border:1px solid var(--line);border-radius:var(--radius-xl);padding:52px;
             background:var(--bg-card);
             backdrop-filter: blur(var(--glass-blur));
-            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-            transition:0.3s ease;
+            box-shadow: var(--shadow-base);
+            transition:0.35s ease;
         }
         .hero-card:hover{
             box-shadow: 0 14px 50px rgba(0,0,0,0.35);
+            transform: translateY(-2px);
         }
         .hero-card .hero-logo{
             width:100%;
             max-width:900px;
             display:block;
-            margin:0 auto 24px;
+            margin:0 auto 28px;
         }
-        .badge-group{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
+        .badge-group{display:flex;gap:10px;margin-bottom:26px;flex-wrap:wrap;}
         .badge{
-            padding:4px 10px;border-radius:99px;font-size:13px;font-weight:500;
+            padding:5px 12px;border-radius:99px;font-size:13px;font-weight:500;
             background:var(--bg-card);border:1px solid var(--line);
             backdrop-filter: blur(var(--glass-blur));
         }
         .badge.warn{background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.3);color:#fbbf24;}
-        .badge.tag{background:rgba(96,165,250,0.12);border-color:rgba(96,165,250,0.3);color:#60a5fa;}
+        .badge.tag{background:rgba(96,165,250,0.14);border-color:rgba(96,165,250,0.3);color:#60a5fa;}
         .hero h1{
-            font-size:56px;line-height:1.1;margin-bottom:16px;
-            text-shadow:0 0 18px rgba(124,204,255,0.35),0 0 40px rgba(96,165,250,0.25);
+            font-size:56px;line-height:1.15;margin-bottom:24px;
         }
-        .hero h1 span.blue-text{
+        .blue-text{
             background:linear-gradient(90deg,#7cf,#60a5fa);
             -webkit-background-clip:text;color:transparent;
         }
-        .hero p{color:var(--text-dim);max-width:720px;margin-bottom:28px;font-size:16px;}
-        .hero-btn-group{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
-
-        .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0 60px;}
-        .stat-card{
-            border:1px solid var(--line);border-radius:16px;padding:24px;
-            background:var(--bg-card);
-            backdrop-filter: blur(var(--glass-blur));
-            transition:0.3s ease;
-            opacity:0;transform:translateY(24px);
+        .hero p{
+            color:var(--text-dim);font-size:16px;margin-bottom:32px;max-width:800px;
         }
-        .stat-card.visible{opacity:1;transform:translateY(0);}
-        .stat-card:hover{background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
-        .stat-card .num{font-size:24px;font-weight:700;margin-bottom:4px;}
-        .stat-card .desc{color:var(--text-dim);font-size:14px;}
-
-        .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px;}
-        .section-title h2{font-size:24px;display:flex;align-items:center;gap:8px;}
-        .section-title .tip{color:var(--text-dim);font-size:14px;}
-
+        .hero-btn-group{display:flex;gap:16px;flex-wrap:wrap;}
+        /* 通用卡片 */
+        .section{margin-bottom:72px;}
+        .section-title{font-size:26px;margin-bottom:24px;display:flex;align-items:center;gap:8px;}
         .dep-visual-card{
-            border:1px solid var(--line);border-radius:18px;padding:28px;margin-bottom:30px;
-            background:var(--bg-card);
-            backdrop-filter: blur(var(--glass-blur));
-            box-shadow:0 8px 30px rgba(0,0,0,0.18);
-            opacity:0;transform:translateY(24px);transition:0.4s ease;
+            border:1px solid var(--line);border-radius:var(--radius-xl);padding:32px;
+            background:var(--bg-card);backdrop-filter: blur(var(--glass-blur));
+            box-shadow:var(--shadow-base);transition:0.3s;
         }
-        .dep-visual-card.visible{opacity:1;transform:translateY(0);}
-        .dep-chain{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
+        .dep-visual-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.25);}
+        .dep-chain{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;}
         .dep-node{
-            padding:14px 20px;border-radius:12px;border:1px solid var(--blue-primary);background:rgba(96,165,250,0.1);
-            font-weight:bold;text-align:center;
-            box-shadow:0 0 12px var(--blue-glow);
+            padding:16px 24px;border-radius:var(--radius-md);border:1px solid var(--blue-primary);
+            background:rgba(96,165,250,0.1);font-weight:bold;text-align:center;
+            box-shadow:0 0 14px var(--blue-glow);
         }
         .dep-arrow{font-size:24px;color:var(--text-dim);}
-
-        .dep-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:60px;}
-        .dep-card{
-            border:1px solid var(--line);border-radius:18px;padding:24px;
-            background:var(--bg-card);
-            backdrop-filter: blur(var(--glass-blur));
-            transition:0.3s ease;
-            opacity:0;transform:translateY(24px);
+        .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+        .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+        .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+        .card{
+            border:1px solid var(--line);border-radius:var(--radius-lg);padding:28px;
+            background:var(--bg-card);backdrop-filter: blur(var(--glass-blur));
+            box-shadow:var(--shadow-base);transition:0.35s ease;
+            /* 滚动淡入 */
+            opacity:0;
+            transform:translateY(24px);
         }
-        .dep-card.visible{opacity:1;transform:translateY(0);}
-        .dep-card:hover{background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
-        .dep-card h3{margin-bottom:8px;font-size:18px;}
-        .dep-card p{color:var(--text-dim);margin-bottom:16px;font-size:14px;}
-        .dep-link-group{display:flex;gap:10px;flex-wrap:wrap;}
-
-        .features-section{margin-bottom:60px;}
-        .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-        .feature-card{
-            border:1px solid var(--line);border-radius:18px;padding:24px;
-            background:var(--bg-card);
-            backdrop-filter: blur(var(--glass-blur));
-            transition:0.3s ease;
-            opacity:0;transform:translateY(24px);
+        .card.visible{
+            opacity:1;
+            transform:translateY(0);
         }
-        .feature-card.visible{opacity:1;transform:translateY(0);}
-        .feature-card:hover{background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
-
-        .version-section{margin-bottom:60px;}
+        .card:hover{
+            transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,0.22);
+            border-color:rgba(255,255,255,0.14);
+        }
+        .card h3{margin-bottom:10px;font-size:19px;}
+        .card p{color:var(--text-dim);}
+        .stat-card .num{font-size:38px;font-weight:900;margin-bottom:8px;}
         .version-item{
-            border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:14px;
-            background:var(--bg-card);
-            backdrop-filter: blur(var(--glass-blur));
-            transition:0.3s ease;
-            opacity:0;transform:translateY(24px);
+            border:1px solid var(--line);border-radius:var(--radius-lg);padding:24px;
+            background:var(--bg-card);backdrop-filter: blur(var(--glass-blur));
+            transition:0.3s;
+            opacity:0;
+            transform:translateY(24px);
         }
-        .version-item.visible{opacity:1;transform:translateY(0);}
-        .version-item:hover{background:var(--bg-card-hover);transform:translateX(4px);}
+        .version-item.visible{
+            opacity:1;
+            transform:translateY(0);
+        }
+        .version-item:hover{transform:translateX(4px);box-shadow:var(--shadow-base);}
         .version-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
         .version-name{font-weight:700;font-size:18px;}
         .version-date{color:var(--text-dim);font-size:14px;}
-        
-        .team-section{margin-bottom:60px;}
-        .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-        .team-card{
-            border:1px solid var(--line);border-radius:18px;padding:24px;text-align:center;
-            background:var(--bg-card);
-            backdrop-filter: blur(var(--glass-blur));
-            transition:0.3s ease;
-            opacity:0;transform:translateY(24px);
-        }
-        .team-card.visible{opacity:1;transform:translateY(0);}
-        .team-card:hover{background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
-        .team-card h3{margin:8px 0 4px;}
-        .team-card .role{color:var(--text-dim);font-size:14px;}
-
-        .action-section{margin-bottom:60px;}
         .action-item{
-            border-left:3px solid var(--green);padding:14px 18px;margin-bottom:14px;
-            background:var(--bg-card);border-radius:0 14px 14px 0;
-            backdrop-filter: blur(var(--glass-blur));
-            opacity:0;transform:translateY(24px);transition:0.3s ease;
+            border-left:3px solid var(--green);padding:16px 20px;margin-bottom:16px;
+            background:var(--bg-card);border-radius:0 var(--radius-md) var(--radius-md) 0;
+            backdrop-filter: blur(var(--glass-blur));transition:0.3s;
+            opacity:0;
+            transform:translateY(24px);
         }
-        .action-item.visible{opacity:1;transform:translateY(0);}
+        .action-item.visible{
+            opacity:1;
+            transform:translateY(0);
+        }
         .action-time{color:var(--text-dim);font-size:13px;margin-bottom:4px;}
-
-        .analytics-section{margin-bottom:60px;}
-        .analytics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-
-        .faq-section{margin-bottom:60px;}
+        /* FAQ */
         .faq-item{
-            border:1px solid var(--line);border-radius:16px;margin-bottom:12px;
-            background:var(--bg-card);
-            backdrop-filter: blur(var(--glass-blur));
-            overflow:hidden;
-            opacity:0;transform:translateY(24px);transition:0.3s ease;
+            border:1px solid var(--line);border-radius:var(--radius-lg);margin-bottom:14px;
+            background:var(--bg-card);backdrop-filter: blur(var(--glass-blur));
+            overflow:hidden;transition:0.3s ease;
+            opacity:0;
+            transform:translateY(24px);
         }
-        .faq-item.visible{opacity:1;transform:translateY(0);}
-        .faq-question{padding:18px 22px;cursor:pointer;font-weight:500;display:flex;justify-content:space-between;}
-        .faq-question::after{content:"+";transition:0.25s;font-size:20px;}
+        .faq-item.visible{
+            opacity:1;
+            transform:translateY(0);
+        }
+        .faq-question{
+            padding:20px 24px;cursor:pointer;font-weight:500;display:flex;justify-content:space-between;
+        }
+        .faq-question::after{content:"+";transition:0.25s;font-size:22px;}
         .faq-item.open .faq-question::after{content:"−";}
-        .faq-answer{padding:0 22px;max-height:0;overflow:hidden;transition:0.45s ease;color:var(--text-dim);}
-        .faq-item.open .faq-answer{padding:0 22px 18px;max-height:500px;}
-
-        .changelog-section{margin-bottom:60px;}
-        .log-item{border-left:2px solid var(--green);padding-left:16px;margin-bottom:20px;opacity:0;transform:translateY(24px);transition:0.3s ease;}
-        .log-item.visible{opacity:1;transform:translateY(0);}
-
+        .faq-answer{
+            padding:0 24px;max-height:0;overflow:hidden;transition:0.45s ease;color:var(--text-dim);
+        }
+        .faq-item.open .faq-answer{padding:0 24px 20px;max-height:300px;}
+        /* 弹窗 */
         .modal-overlay{
-            position:fixed;inset:0;background:rgba(0,0,0,0.72);
+            position:fixed;inset:0;background:rgba(0,0,0,0.75);
             display:none;align-items:center;justify-content:center;z-index:999;
             backdrop-filter: blur(8px);
         }
         .modal-overlay.open{display:flex;}
         .modal-box{
-            background:var(--bg-card);
-            border:1px solid var(--line);border-radius:20px;
-            padding:32px;max-width:480px;width:calc(100% - 30px);
+            background:#080a16;
+            border:1px solid var(--line);border-radius:var(--radius-xl);
+            padding:36px;max-width:500px;width:calc(100% - 30px);
             backdrop-filter: blur(var(--glass-blur));
             box-shadow:0 10px 40px rgba(0,0,0,0.4);
             transform:scale(0.92);transition:0.25s ease;
         }
         .modal-overlay.open .modal-box{transform:scale(1);}
-        .modal-box h3{margin-bottom:20px;}
+        [data-theme="light"] .modal-box{background:#fff;}
+        .modal-box h3{margin-bottom:22px;}
         .modal-link-list{display:flex;flex-direction:column;gap:12px;}
         .modal-link-list a{
-            display:block;padding:14px;border-radius:12px;border:1px solid var(--line);
+            display:block;padding:14px;border-radius:var(--radius-md);border:1px solid var(--line);
             color:var(--text);text-decoration:none;transition:0.25s ease;
             background:var(--bg-card);text-align:center;font-weight:500;
-            backdrop-filter: blur(var(--glass-blur));
         }
-        .modal-link-list a:hover{background:var(--bg-card-hover);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.2);}
-        .modal-close{margin-top:20px;width:100%;}
-
-        footer{border-top:1px solid var(--line);padding:30px 0;color:var(--text-dim);font-size:14px;text-align:center;backdrop-filter: blur(var(--glass-blur));}
-
+        .modal-link-list a:hover{background:var(--bg-card-hover);transform:translateY(-2px);box-shadow:var(--shadow-base);}
+        .modal-close{margin-top:22px;width:100%;}
+        footer{border-top:1px solid var(--line);padding:32px 0;color:var(--text-dim);font-size:14px;text-align:center;backdrop-filter: blur(var(--glass-blur));}
+        /* 移动端适配 */
         @media(max-width:768px){
-            .stats-row,.feature-grid,.dep-grid,.team-grid,.analytics-grid{grid-template-columns:1fr;}
+            .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
             .hero h1{font-size:36px;}
-            .nav-logo img{height:34px;}
+            .hero-card{padding:32px;}
+            .section{margin-bottom:48px;}
+            .dep-chain{flex-direction:column;}
+            .carousel-slide{height:240px;}
         }
     </style>
 </head>
 <body>
-    
+    <div class="aurora"></div>
     <canvas id="meteorBg"></canvas>
-
     <nav id="navbar">
         <div class="container nav-wrap">
             <div class="nav-logo">
-                <img src="logo.png" alt="DawnAurora's Player Animation" />
+                <img src="logo.png" alt="DawnAurora Logo" />
+                <span>DawnAurora</span>
             </div>
             <div class="nav-links">
                 <a href="#overview">概述</a>
@@ -332,7 +396,6 @@
                 <a href="#analytics">统计</a>
                 <a href="#faq">常见问题</a>
                 <a href="#changelog">更新日志</a>
-                <!-- GitHub仓库全部导航项目 -->
                 <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack" target="_blank">Code</a>
                 <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/issues" target="_blank">Issues</a>
                 <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/pulls" target="_blank">Pull requests</a>
@@ -343,7 +406,6 @@
                 <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/security" target="_blank">Security and quality</a>
                 <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/pulse" target="_blank">Insights</a>
                 <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/settings" target="_blank">Settings</a>
-
                 <button id="themeSwitch" class="btn btn-secondary">主题切换</button>
                 <select id="versionSelector" class="btn btn-secondary">
                     <option value="v001">Beta 0.0.1 (1.20.1)</option>
@@ -352,9 +414,29 @@
             </div>
         </div>
     </nav>
-
     <main class="container">
-        <section id="overview" class="hero">
+        <!-- 预览轮播区域 -->
+        <section class="hero section">
+            <div class="carousel-wrap">
+                <div class="carousel-track">
+                    <div class="carousel-slide">
+                        <img src="preview1.png" alt="进食动画预览">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="preview2.png" alt="举盾格挡预览">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="preview3.png" alt="武器挥砍动画">
+                    </div>
+                </div>
+                <button class="carousel-btn carousel-prev">‹</button>
+                <button class="carousel-btn carousel-next">›</button>
+                <div class="carousel-dots">
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                    <span class="dot" data-index="2"></span>
+                </div>
+            </div>
             <div class="hero-card">
                 <img src="logo.png" alt="DawnAurora's Player Animation" class="hero-logo">
                 <div class="badge-group">
@@ -366,109 +448,97 @@
                 </div>
                 <h1>Dapa<br><span class="blue-text">DawnAurora 玩家动画资源包</span></h1>
                 <p>优化 Minecraft 第一人称、第三人称玩家动作。进食、举盾格挡、武器挥砍、物品切换全部拥有流畅自然的动画效果。
-                <br><br><strong>重要：</strong>本资源包必须同时安装 EMF (Entity Model Features) 和 ETF (Entity Texture Features) 前置模组，否则无法正常加载动画。
-                <br><br>✅ 国内用户优先选用国内CDN镜像，大幅度提升下载速度。</p>
+                <br><br><strong>重要：</strong>本资源包必须同时安装 EMF (Entity Model Features) 和 ETF (Entity Texture Features) 前置模组，单独安装资源包不会生效。
+                <br><br>✅ 国内用户优先选择国内CDN镜像，大幅提升下载速度。</p>
                 <div class="hero-btn-group">
                     <button class="btn btn-primary pulse" id="heroDownload">下载 Dapa 资源包</button>
                     <button class="btn btn-secondary" id="openDepModal">获取前置 EMF / ETF</button>
                 </div>
             </div>
-            <div class="stats-row">
-                <div class="stat-card">
-                    <div class="num">6+</div>
-                    <div class="desc">独立动作动画</div>
+            <div class="grid-4" style="margin-top:32px;">
+                <div class="card stat-card">
+                    <div class="num" id="starCount">--</div>
+                    <div class="desc">⭐ GitHub Stars</div>
                 </div>
-                <div class="stat-card">
-                    <div class="num">EMF+ETF</div>
-                    <div class="desc">前置依赖模组</div>
+                <div class="card stat-card">
+                    <div class="num" id="downloadCount">--</div>
+                    <div class="desc">📥 总下载量</div>
                 </div>
-                <div class="stat-card">
+                <div class="card stat-card">
                     <div class="num">1.20.1</div>
-                    <div class="desc">游戏版本</div>
+                    <div class="desc">🎮 游戏版本</div>
                 </div>
-                <div class="stat-card">
+                <div class="card stat-card">
                     <div class="num">Apache-2.0</div>
-                    <div class="desc">开源协议</div>
+                    <div class="desc">📜 开源许可证</div>
                 </div>
             </div>
         </section>
-
-        <section id="deps" class="dep-visual-card">
-            <div class="section-title">
-                <h2>● 依赖关系可视化</h2>
+        <section id="deps" class="section">
+            <h2 class="section-title">● 依赖关系可视化</h2>
+            <div class="dep-visual-card">
+                <div class="dep-chain">
+                    <div class="dep-node">Dapa 动画资源包</div>
+                    <span class="dep-arrow">→</span>
+                    <div class="dep-node">EMF</div>
+                    <span class="dep-arrow">+</span>
+                    <div class="dep-node">ETF</div>
+                </div>
+                <p style="text-align:center;margin-top:16px;color:var(--text-dim)">Dapa 资源包依靠 EMF 和 ETF 模组实现骨骼动画支持，二者缺一不可</p>
             </div>
-            <div class="dep-chain">
-                <div class="dep-node">Dapa 动画资源包</div>
-                <span class="dep-arrow">→</span>
-                <div class="dep-node">EMF</div>
-                <span class="dep-arrow">+</span>
-                <div class="dep-node">ETF</div>
-            </div>
-            <p style="text-align:center;margin-top:16px;color:var(--text-dim)">Dapa 资源包依赖 EMF 和 ETF 模组提供骨骼动画支持，二者缺一不可</p>
         </section>
-
-        <section class="dep-section">
-            <div class="section-title">
-                <h2>● 前置依赖模组</h2>
-                <div class="tip">必须全部安装，Dapa 资源包才可以正常运行，国内用户推荐优先使用加速镜像地址</div>
-            </div>
-            <div class="dep-grid">
-                <div class="dep-card">
+        <section class="section">
+            <h2 class="section-title">● 前置依赖模组</h2>
+            <div class="grid-2">
+                <div class="card">
                     <h3>📦 EMF - Entity Model Features</h3>
-                    <p>实体模型特性，负责修改玩家骨骼、手臂模型与动画。</p>
-                    <div class="dep-link-group">
-                        <a class="btn btn-secondary" href="https://cdn-alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">官方源</a>
-                        <a class="btn btn-secondary" href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">国内加速镜像</a>
+                    <p>实体模型特性，负责修改玩家骨骼、手臂模型与动画逻辑。</p>
+                    <div class="modal-link-list" style="margin-top:16px;">
+                        <a href="https://cdn-alt.modrinth.com/data/4I1XuqiY/versions/1YnYfno/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">官方源</a>
+                        <a href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/4I1XuqiY/versions/1YnYfno/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">国内加速镜像</a>
                     </div>
                 </div>
-                <div class="dep-card">
+                <div class="card">
                     <h3>📦 ETF - Entity Texture Features</h3>
-                    <p>实体纹理特性，用于实体材质渲染与动画驱动。</p>
-                    <div class="dep-link-group">
-                        <a class="btn btn-secondary" href="https://cdn-alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">官方源</a>
-                        <a class="btn btn-secondary" href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">国内加速镜像</a>
+                    <p>实体纹理特性，负责实体材质渲染与动画驱动。</p>
+                    <div class="modal-link-list" style="margin-top:16px;">
+                        <a href="https://cdn-alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">官方源</a>
+                        <a href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">国内加速镜像</a>
                     </div>
                 </div>
             </div>
         </section>
-
-        <section class="features-section">
-            <div class="section-title">
-                <h2>● 功能列表</h2>
-            </div>
-            <div class="feature-grid">
-                <div class="feature-card">
+        <section class="section">
+            <h2 class="section-title">● 功能列表</h2>
+            <div class="grid-3">
+                <div class="card">
                     <h3>🍖 进食动画</h3>
-                    <p>吃东西时手臂抬起，自然的进食动作。</p>
+                    <p>吃东西时手臂抬起，自然进食动作。</p>
                 </div>
-                <div class="feature-card">
+                <div class="card">
                     <h3>🛡️ 举盾格挡</h3>
-                    <p>持盾时手臂摆出格挡姿态。</p>
+                    <p>手持盾牌时手臂摆出格挡姿态。</p>
                 </div>
-                <div class="feature-card">
+                <div class="card">
                     <h3>⚔️ 武器挥砍</h3>
-                    <p>攻击、挥剑时流畅的手部动作。</p>
+                    <p>攻击、挥剑时流畅手部动作。</p>
                 </div>
-                <div class="feature-card">
+                <div class="card">
                     <h3>🔄 物品切换动画</h3>
-                    <p>切换手中物品时平滑过渡。</p>
+                    <p>切换手中物品有平滑过渡。</p>
                 </div>
-                <div class="feature-card">
+                <div class="card">
                     <h3>👀 第一人称适配</h3>
-                    <p>第一人称视角同步手部动作。</p>
+                    <p>第一人称视角同步手部动画。</p>
                 </div>
-                <div class="feature-card">
+                <div class="card">
                     <h3>🎥 第三人称全身动作</h3>
                     <p>第三人称完整身体动画展示。</p>
                 </div>
             </div>
         </section>
-
-        <section id="versions" class="version-section">
-            <div class="section-title">
-                <h2>● 版本</h2>
-                <div class="tip">所有发布版本</div>
-            </div>
+        <section id="versions" class="section">
+            <h2 class="section-title">● 版本</h2>
             <div class="version-item">
                 <div class="version-head">
                     <span class="version-name">Beta 0.0.1</span>
@@ -477,89 +547,55 @@
                 <p>支持 Minecraft 1.20.1 Fabric。初始版本，包含进食、举盾、挥砍、物品切换基础动作动画。</p>
             </div>
         </section>
-
-        <section id="team" class="team-section">
-            <div class="section-title">
-                <h2>● 开发团队</h2>
-                <div class="tip">dawnaurora0221</div>
-            </div>
-            <div class="team-grid">
-                <div class="team-card">
+        <section id="team" class="section">
+            <h2 class="section-title">● 开发团队</h2>
+            <div class="grid-3">
+                <div class="card">
                     <h3>DawnAurora</h3>
-                    <div class="role">项目作者 / 动画开发</div>
+                    <p class="role">项目作者 / 动画开发</p>
                 </div>
-                <div class="team-card">
+                <div class="card">
                     <h3>dawnaurora0221</h3>
-                    <div class="role">测试人员</div>
+                    <p class="role">测试人员</p>
                 </div>
-                <div class="team-card">
-                    <h3>                    <h3>预留成员2</h3></h3>
-                    <div class="role">文档维护</div>
+                <div class="card">
+                    <h3>dawnaurora0221</h3>
+                    <p class="role">文档维护</p>
                 </div>
             </div>
         </section>
-
-        <section id="actions" class="action-section">
-            <div class="section-title">
-                <h2>● 项目动态</h2>
-            </div>
+        <section id="actions" class="section">
+            <h2 class="section-title">● 项目动态</h2>
             <div class="action-item">
                 <div class="action-time">2026-09-27</div>
-                <div>发布 Beta 0.0.1 初始版本，上线多CDN下载分流，提升国内下载速度。</div>
+                <div>发布 Beta 0.0.1 初始版本，上线4个CDN下载分流，提升国内下载速度。</div>
             </div>
         </section>
-
-        <section id="analytics" class="analytics-section">
-            <div class="section-title">
-                <h2>● 项目统计</h2>
-            </div>
-            <div class="analytics-grid">
-                <div class="stat-card">
-                    <div class="num">Beta</div>
-                    <div class="desc">版本阶段</div>
-                </div>
-                <div class="stat-card">
-                    <div class="num">1.20.1</div>
-                    <div class="desc">MC版本</div>
-                </div>
-                <div class="stat-card">
-                    <div class="num">4</div>
-                    <div class="desc">CDN分流节点</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="faq" class="faq-section">
-            <div class="section-title">
-                <h2>● 常见问题 FAQ</h2>
+        <section id="faq" class="section">
+            <h2 class="section-title">● 常见问题 FAQ</h2>
+            <div class="faq-item">
+                <div class="faq-question">为什么下载资源包放进游戏没有动画？</div>
+                <div class="faq-answer">请确认同时安装 EMF 和 ETF 前置模组，只装资源包不会生效。版本必须是1.20.1 Fabric。</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question">为什么下载资源包后游戏内没有动画？</div>
-                <div class="faq-answer">请确认已经同时安装 EMF 和 ETF 前置模组，只装资源包无法生效。</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">下载链接哪个优先选择？</div>
-                <div class="faq-answer">国内网络优先选择国内CDN节点，GitHub官方源作为兜底备用。</div>
+                <div class="faq-question">下载链接优先选哪一个？</div>
+                <div class="faq-answer">国内网络优先选择国内CDN节点，GitHub官方链接作为备用兜底。</div>
             </div>
         </section>
-
-        <section id="changelog" class="changelog-section">
-            <div class="section-title">
-                <h2>● 更新日志</h2>
-            </div>
-            <div class="log-item">
+        <section id="changelog" class="section">
+            <h2 class="section-title">● 更新日志</h2>
+            <div class="log-item card">
                 <h3>Beta 0.0.1</h3>
                 <p>初始版本，添加进食、举盾格挡、武器挥砍、物品切换动画；提供多CDN分流下载。</p>
             </div>
         </section>
     </main>
-
     <!-- 下载弹窗 -->
     <div class="modal-overlay">
         <div class="modal-box">
             <h3>📥 下载 Dapa 资源包 Beta 0.0.1 (1.20.1)</h3>
             <div class="modal-link-list">
-                <a href="https://release-assets.githubusercontent.com/github-production-release-asset/1388985451/669ea30c-500c-4ce0-942f-10be52b83cb0?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-09-27T04%3A03%3A22Z&rscd=attachment%3B+filename%3Ddawn-aurora-player-animation-resource-pack-add-on-beta-0.0.1-1.20.1.zip&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-09-27T03%3A02%3A37Z&ske=2026-09-27T04%3A03%3A22Z&sks=b&skv=2018-11-09&sig=H8Zq7l6ZH4u%2B%2BO3J0NnscoxS4XxCEo2lN2rZTa5RXnM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MDQ3OTkyOCwibmJmIjoxNzkwNDc5NjI4LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.v0wWSyCiyt-CxJra8KwRpcYUqy0OxjKeFygnDoNnk3c&response-content-disposition=attachment%3B%20filename%3Ddawn-aurora-player-animation-resource-pack-add-on-beta-0.0.1-1.20.1.zip&response-content-type=application%2Foctet-stream" target="_blank">🔗 1. GitHub官方源（兜底备用）</a>
+                <a href="https://release-assets.githubusercontent.com/github-production-release-asset-2e65be/138898545/669ea30c-500c-4ce0-942f-10be52b83cb0?sp=r&sv=2018-11-09&sr=b&rscd=attachment%3B+filename%3Ddawn-aurora-player-animation-resource-pack-add-on-beta-0.0.1-1.20.1.zip&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab47aa7ab0ab&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-09-27T03%3A02%3A22Z&ske=2026-09-27T03%3A03%3A22Z&sks=b&skv=2018-11-09&sig=H8Zq7l6ZH4u%2B%2BO3J0NnscoxS4XxCEo2lN2rZTa5RXnM%3D" target="_blank">🔗 1. GitHub官方源（兜底备用）</a>
                 <a href="https://cdn.onmicrosoft.cn/gh/DawnAurora0221/dawnaurora-player-animation-resource-pack@beta-0.0.1/dawn-aurora-player-animation-add-on-beta-0.0.1-1.20.1.zip" target="_blank">🚀 2. cdn.onmicrosoft.cn（国内CDN）</a>
                 <a href="https://s4.zstatic.net/gh/DawnAurora0221/dawnaurora-player-animation-resource-pack@beta-0.0.1/dawn-aurora-player-animation-add-on-beta-0.0.1-1.20.1.zip" target="_blank">🚀 3. s4.zstatic.net（国内CDN）</a>
                 <a href="https://jsd.onmicrosoft.cn/gh/DawnAurora0221/dawnaurora-player-animation-resource-pack@beta-0.0.1/dawn-aurora-player-animation-add-on-beta-0.0.1-1.20.1.zip" target="_blank">🚀 4. jsd.onmicrosoft.cn（国内CDN）</a>
@@ -567,49 +603,39 @@
             <button class="btn btn-secondary modal-close">关闭</button>
         </div>
     </div>
-
     <footer>
         © 2026 DawnAurora | Dapa 玩家动画资源包 | Apache-2.0 License
     </footer>
-
 <script>
-
 const modalOverlay = document.querySelector('.modal-overlay');
 const openDownloadModal = document.getElementById('openDownloadModal');
 const heroDownload = document.getElementById('heroDownload');
 const modalCloseBtn = document.querySelector('.modal-close');
-
 openDownloadModal.addEventListener('click', ()=> modalOverlay.classList.add('open'));
 heroDownload.addEventListener('click', ()=> modalOverlay.classList.add('open'));
 modalCloseBtn.addEventListener('click', ()=> modalOverlay.classList.remove('open'));
 modalOverlay.addEventListener('click', (e)=>{
     if(e.target === modalOverlay) modalOverlay.classList.remove('open');
 });
-
-
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll',()=>{
     if(window.scrollY > 20) navbar.classList.add('scrolled');
     else navbar.classList.remove('scrolled');
 })
-
-
 const themeBtn = document.getElementById('themeSwitch');
 themeBtn.addEventListener('click',()=>{
     const html = document.documentElement;
     if(html.hasAttribute('data-theme')) html.removeAttribute('data-theme');
     else html.setAttribute('data-theme','light');
 })
-
-
+// 滚动逐个淡入
 const observer = new IntersectionObserver((entries)=>{
     entries.forEach(entry=>{
         if(entry.isIntersecting) entry.target.classList.add('visible');
     })
 },{threshold:0.1})
-document.querySelectorAll('.stat-card,.dep-card,.feature-card,.version-item,.team-card,.action-item,.faq-item,.log-item,.dep-visual-card').forEach(el=>observer.observe(el));
-
-
+document.querySelectorAll('.card,.version-item,.action-item,.faq-item,.log-item,.dep-visual-card').forEach(el=>observer.observe(el));
+// 流星背景
 const canvas = document.getElementById('meteorBg');
 const ctx = canvas.getContext('2d');
 function resizeCanvas(){
@@ -650,12 +676,64 @@ function animate(){
     requestAnimationFrame(animate);
 }
 animate();
-
+// FAQ折叠
 document.querySelectorAll('.faq-question').forEach(q=>{
     q.addEventListener('click',()=>{
         q.parentElement.classList.toggle('open');
     })
 })
+// 轮播图逻辑
+const track = document.querySelector('.carousel-track');
+const slides = Array.from(track.children);
+const prevBtn = document.querySelector('.carousel-prev');
+const nextBtn = document.querySelector('.carousel-next');
+const dots = Array.from(document.querySelectorAll('.dot'));
+let currentIndex = 0;
+function updateCarousel(){
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    dots.forEach((dot,i)=>dot.classList.toggle('active', i===currentIndex));
+}
+prevBtn.onclick = ()=>{
+    currentIndex = currentIndex ===0 ? slides.length-1 : currentIndex-1;
+    updateCarousel();
+}
+nextBtn.onclick = ()=>{
+    currentIndex = currentIndex === slides.length-1 ? 0 : currentIndex+1;
+    updateCarousel();
+}
+dots.forEach((dot,i)=>{
+    dot.onclick = ()=>{
+        currentIndex = i;
+        updateCarousel();
+    }
+})
+// 自动轮播
+setInterval(()=>{
+    currentIndex = currentIndex === slides.length-1 ? 0 : currentIndex+1;
+    updateCarousel();
+},5000)
+
+// GitHub 动态获取Star & 下载统计
+async function fetchGithubStat(){
+    const repoApi = "https://api.github.com/repos/DawnAurora0221/dawnaurora-player-animation-resource-pack";
+    try{
+        const res = await fetch(repoApi);
+        const data = await res.json();
+        document.getElementById('starCount').innerText = data.stargazers_count;
+        // 获取release下载统计
+        const releaseRes = await fetch(`${repoApi}/releases`);
+        const releaseData = await releaseRes.json();
+        let total = 0;
+        releaseData.forEach(r=>{
+            r.assets.forEach(asset=> total += asset.download_count);
+        })
+        document.getElementById('downloadCount').innerText = total;
+    }catch(e){
+        document.getElementById('starCount').innerText = "--";
+        document.getElementById('downloadCount').innerText = "--";
+    }
+}
+fetchGithubStat();
 </script>
 </body>
 </html>
