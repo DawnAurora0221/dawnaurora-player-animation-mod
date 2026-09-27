@@ -1,5 +1,5 @@
 # DawnAurora Player Animation
-Fabric Mod for Minecraft 1.20.1
+Fabric Resource Pack for Minecraft 1.20.1
 
 ## About
 This is a Minecraft Fabric Resource Pack for version 1.20.1, which implements a custom bone animation system for players.
