@@ -2,7 +2,7 @@
 Fabric Mod for Minecraft 1.20.1
 
 ## About
-This is a Minecraft Fabric mod for version 1.20.1, which implements a custom bone animation system for players.
+This is a Minecraft Fabric Resource Pack for version 1.20.1, which implements a custom bone animation system for players.
 - Third-person: Full body player animations, including walk, run, jump and attack motions.
 - First-person: Arm animations for digging, item holding and swinging.
 - Independent resource pack: All models and animation files are stored inside the resource pack. Animation assets can be edited separately without recompiling the mod source code.
