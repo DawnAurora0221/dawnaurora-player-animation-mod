@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh‑CN">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dapa - DawnAurora Player Animation</title>
-    <meta name="description" content="Dapa - DawnAurora Player Animation. A Minecraft 1.20.1 Fabric mod with smooth player animation." />
+    <meta charset="UTF‑8" />
+    <meta name="viewport" content="width=device‑width, initial‑scale=1.0" />
+    <title>Dapa ‑ DawnAurora Player Animation</title>
+    <meta name="description" content="Dapa 是Minecraft 1.20.1玩家动画资源包，基于EMF与ETF前置模组实现流畅玩家动作动画。" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -12,240 +12,292 @@
         :root{
             --line:rgba(255,255,255,0.08);
             --text:#e8ecf1;
-            --text-dim:#9aa3ad;
+            --text‑dim:#9aa3ad;
             --cyan:#7cf;
             --green:#4ade80;
+            --warn‑yellow:#fbbf24;
+            --danger‑red:#ff7373;
+            --blue‑primary:#60a5fa;
         }
-        *{box-sizing:border-box;margin:0;padding:0;}
-        html{scroll-behavior:smooth;scroll-padding-top:24px;}
-        html,body{
-            min-height:100%;
-        }
+        *{box‑sizing:border‑box;margin:0;padding:0;}
+        html{scroll‑behavior:smooth;scroll‑padding‑top:24px;}
+        html,body{min‑height:100%;}
         body{
-            font-family:"Noto Sans SC",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+            font‑family:"Noto Sans SC",system‑ui,‑apple‑system,Segoe UI,Roboto,sans‑serif;
             color:var(--text);
-            /* ========== 这里替换背景图片 ========== */
-            background-image: url("https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/blob/main/banner.png");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            line-height:1.7;
+            background‑image: url("https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/blob/main/banner.png");
+            background‑size: cover;
+            background‑position: center;
+            background‑attachment: fixed;
+            background‑repeat: no‑repeat;
+            line‑height:1.7;
         }
         body::after{
             content:"";
             position:fixed;
             inset:0;
-            background:rgba(0,0,0,0.62);
-            z-index:-1;
+            background:rgba(0,0,0,0.58);
+            z‑index:‑1;
         }
-        /* 导航栏 */
+        /*导航栏*/
         .topbar{
             position:sticky;
             top:0;
-            z-index:50;
-            backdrop-filter:blur(14px);
+            z‑index:50;
+            backdrop‑filter:blur(14px);
             background:rgba(0,0,0,0.48);
-            border-bottom:1px solid var(--line);
+            border‑bottom:1px solid var(--line);
         }
-        .topbar-inner{
-            max-width:1100px;
+        .topbar‑inner{
+            max‑width:1100px;
             margin:0 auto;
             padding:14px 24px;
             display:flex;
-            align-items:center;
-            justify-content:space-between;
+            align‑items:center;
+            justify‑content:space‑between;
             gap:16px;
+            flex‑wrap:wrap;
         }
         .brand{
             display:flex;
-            align-items:center;
+            align‑items:center;
             gap:12px;
-            font-weight:900;
-            letter-spacing:0.5px;
+            font‑weight:900;
+            letter‑spacing:0.5px;
         }
         .logo{
-            width:34px;height:34px;border-radius:10px;
-            background:linear-gradient(135deg,#7cf,#5ad1ff 40%,#4ade80);
-            box-shadow:0 8px 24px rgba(80,140,255,0.35);
+            width:34px;height:34px;border‑radius:10px;
+            background:linear‑gradient(135deg,#7cf,#5ad1ff 40%,#4ade80);
+            box‑shadow:0 8px 24px rgba(80,140,255,0.35);
             position:relative;overflow:hidden;
         }
         .logo::before{
-            content:"";position:absolute;inset:6px;border-radius:7px;
+            content:"";position:absolute;inset:6px;border‑radius:7px;
             background:#111418;border:1px solid rgba(255,255,255,0.1);
         }
         .logo::after{
             content:"D";position:absolute;inset:0;display:flex;
-            align-items:center;justify-content:center;
-            font-weight:900;color:#cfe8ff;text-shadow:0 0 12px rgba(124,204,255,0.6);
+            align‑items:center;justify‑content:center;
+            font‑weight:900;color:#cfe8ff;text‑shadow:0 0 12px rgba(124,204,255,0.6);
         }
-        .brand-text{display:flex;flex-direction:column;line-height:1.2;}
-        .brand-title{font-size:18px;color:#fff;}
-        .brand-sub{font-size:12px;color:var(--text-dim);font-weight:500;}
-        .nav{display:flex;gap:18px;align-items:center;}
+        .brand‑text{display:flex;flex‑direction:column;line‑height:1.2;}
+        .brand‑title{font‑size:18px;color:#fff;}
+        .brand‑sub{font‑size:12px;color:var(--text‑dim);font‑weight:500;}
+        .nav{display:flex;gap:18px;align‑items:center;flex‑wrap:wrap;}
         .nav a{
-            color:var(--text-dim);text-decoration:none;font-size:14px;font-weight:500;
-            padding:8px 10px;border-radius:8px;transition:color .25s ease,background .25s ease;
+            color:var(--text‑dim);text‑decoration:none;font‑size:14px;font‑weight:500;
+            padding:8px 10px;border‑radius:8px;transition:color .25s ease,background .25s ease;
         }
         .nav a:hover{color:#fff;background:rgba(255,255,255,0.06);}
-        .nav .nav-btn{
-            padding:9px 14px;border-radius:9px;
-            background:linear-gradient(180deg,#2fdd6a,#22c55e);
-            color:#07220f;font-weight:800;text-decoration:none;
-            box-shadow:0 10px 24px rgba(34,197,94,0.28);
-            transition:transform .25s ease,box-shadow .25s ease;
+        .nav .nav‑btn{
+            padding:9px 14px;border‑radius:9px;
+            background:linear‑gradient(180deg,#2fdd6a,#22c55e);
+            color:#07220f;font‑weight:800;text‑decoration:none;
+            box‑shadow:0 10px 24px rgba(34,197,94,0.28);
+            transition:transform .25s ease,box‑shadow .25s ease;
         }
-        .nav .nav-btn:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(34,197,94,0.35);}
+        .nav .nav‑btn:hover{transform:translateY(‑1px);box‑shadow:0 14px 30px rgba(34,197,94,0.35);}
 
-        .container{max-width:1100px;margin:0 auto;padding:28px 24px 48px;}
+        .container{max‑width:1100px;margin:0 auto;padding:28px 24px 48px;}
         .hero{
-            position:relative;border-radius:24px;overflow:hidden;
+            position:relative;border‑radius:24px;overflow:hidden;
             border:1px solid var(--line);background:rgba(0,0,0,0.35);
-            box-shadow:0 30px 80px rgba(0,0,0,0.45);
+            box‑shadow:0 30px 80px rgba(0,0,0,0.45);
         }
-        .hero-media{position:relative;height:540px;overflow:hidden;}
-        .hero-overlay{
+        .hero‑media{position:relative;height:540px;overflow:hidden;}
+        .hero‑overlay{
             position:absolute;inset:0;
-            background:linear-gradient(180deg,rgba(0,0,0,0.2),rgba(0,0,0,0.65) 72%,rgba(0,0,0,0.82));
-            pointer-events:none;
+            background:linear‑gradient(180deg,rgba(0,0,0,0.2),rgba(0,0,0,0.65) 72%,rgba(0,0,0,0.82));
+            pointer‑events:none;
         }
-        .hero-content{position:absolute;left:0;right:0;bottom:0;padding:40px 40px 34px;z-index:3;}
-        .badge-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+        .hero‑content{position:absolute;left:0;right:0;bottom:0;padding:40px 40px 34px;z‑index:3;}
+        .badge‑row{display:flex;flex‑wrap:wrap;gap:10px;margin‑bottom:14px;}
         .badge{
-            display:inline-flex;align-items:center;gap:8px;
-            padding:7px 11px;border-radius:999px;
+            display:inline‑flex;align‑items:center;gap:8px;
+            padding:7px 11px;border‑radius:999px;
             background:rgba(255,255,255,0.07);border:1px solid var(--line);
-            color:#d8e4f0;font-size:12px;font-weight:700;backdrop-filter:blur(8px);
+            color:#d8e4f0;font‑size:12px;font‑weight:700;backdrop‑filter:blur(8px);
         }
-        .badge-dot{width:8px;height:8px;border-radius:50%;background:var(--green);}
-        .badge-version{color:#ffe9a8;}
+        .badge‑dot{width:8px;height:8px;border‑radius:50%;background:var(--green);}
+        .badge‑version{color:#ffe9a8;}
+        .badge‑require{background:rgba(255,90,90,0.15);border‑color:rgba(255,90,90,0.3);color:#ffb8b8;}
         .hero h1{
-            font-size:clamp(34px,4.4vw,56px);line-height:1.05;
-            letter-spacing:-0.5px;margin-bottom:14px;
+            font‑size:clamp(34px,4.4vw,56px);line‑height:1.05;
+            letter‑spacing:‑0.5px;margin‑bottom:14px;
         }
         .hero h1 .line{display:block;}
         .hero h1 .accent{
-            background:linear-gradient(90deg,#7cf,#5ad1ff 40%,#4ade80);
-            -webkit-background-clip:text;background-clip:text;color:transparent;
+            background:linear‑gradient(90deg,#7cf,#5ad1ff 40%,#4ade80);
+            ‑webkit‑background‑clip:text;background‑clip:text;color:transparent;
         }
-        .hero p.lead{font-size:17px;color:#c9d3de;max-width:720px;margin-bottom:22px;}
-        .hero-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
-        .btn-primary{
-            display:inline-flex;align-items:center;gap:10px;
-            padding:14px 20px;border-radius:12px;
-            background:linear-gradient(180deg,#35e073,#22c55e);
-            color:#051a0b;font-weight:900;font-size:15px;text-decoration:none;
-            box-shadow:0 18px 40px rgba(34,197,94,0.32);
-            transition:transform .3s ease,box-shadow .3s ease;
+        .hero p.lead{font‑size:17px;color:#c9d3de;max‑width:720px;margin‑bottom:22px;}
+        .hero‑actions{display:flex;flex‑wrap:wrap;gap:14px;align‑items:center;}
+        .btn‑primary{
+            display:inline‑flex;align‑items:center;gap:10px;
+            padding:14px 20px;border‑radius:12px;
+            background:linear‑gradient(180deg,#35e073,#22c55e);
+            color:#051a0b;font‑weight:900;font‑size:15px;text‑decoration:none;
+            box‑shadow:0 18px 40px rgba(34,197,94,0.32);
+            transition:transform .3s ease,box‑shadow .3s ease;
         }
-        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 24px 50px rgba(34,197,94,0.42);}
-        .btn-ghost{
-            display:inline-flex;align-items:center;gap:10px;
-            padding:13px 18px;border-radius:12px;
+        .btn‑primary:hover{transform:translateY(‑2px);box‑shadow:0 24px 50px rgba(34,197,94,0.42);}
+        .btn‑ghost{
+            display:inline‑flex;align‑items:center;gap:10px;
+            padding:13px 18px;border‑radius:12px;
             background:rgba(255,255,255,0.06);border:1px solid var(--line);
-            color:#fff;font-weight:800;font-size:14px;text-decoration:none;
-            backdrop-filter:blur(8px);transition:background .25s ease,transform .25s ease;
+            color:#fff;font‑weight:800;font‑size:14px;text‑decoration:none;
+            backdrop‑filter:blur(8px);transition:background .25s ease,transform .25s ease;
         }
-        .btn-ghost:hover{background:rgba(255,255,255,0.11);transform:translateY(-1px);}
-        .btn-icon{width:18px;height:18px;}
+        .btn‑ghost:hover{background:rgba(255,255,255,0.11);transform:translateY(‑1px);}
+        .btn‑icon{width:18px;height:18px;}
 
-        .stats{margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+        .stats{margin‑top:28px;display:grid;grid‑template‑columns:repeat(4,1fr);gap:14px;}
         .stat{
-            border:1px solid var(--line);border-radius:18px;padding:18px;
+            border:1px solid var(--line);border‑radius:18px;padding:18px;
             background:rgba(0,0,0,0.3);
-            transition:transform .3s ease,border-color .3s ease;
+            transition:transform .3s ease,border‑color .3s ease;
         }
-        .stat:hover{transform:translateY(-4px);border-color:rgba(124,204,255,0.35);}
-        .stat-num{font-family:"JetBrains Mono",monospace;font-size:28px;font-weight:800;color:#fff;}
-        .stat-label{margin-top:4px;font-size:13px;color:var(--text-dim);}
+        .stat:hover{transform:translateY(‑4px);border‑color:rgba(124,204,255,0.35);}
+        .stat‑num{font‑family:"JetBrains Mono",monospace;font‑size:28px;font‑weight:800;color:#fff;}
+        .stat‑label{margin‑top:4px;font‑size:13px;color:var(--text‑dim);}
 
-        .section{margin-top:48px;}
-        .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:20px;}
-        .section-title{font-size:28px;font-weight:900;letter-spacing:-0.3px;display:flex;align-items:center;gap:12px;}
-        .section-title .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(180deg,#7cf,#4ade80);}
-        .section-sub{color:var(--text-dim);font-size:14px;}
+        .section{margin‑top:48px;}
+        .section‑head{display:flex;align‑items:baseline;justify‑content:space‑between;gap:16px;margin‑bottom:20px;flex‑wrap:wrap;}
+        .section‑title{font‑size:28px;font‑weight:900;letter‑spacing:‑0.3px;display:flex;align‑items:center;gap:12px;}
+        .section‑title .dot{width:10px;height:10px;border‑radius:50%;background:linear‑gradient(180deg,#7cf,#4ade80);}
+        .section‑sub{color:var(--text‑dim);font‑size:14px;}
 
-        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px;}
+        .grid{display:grid;grid‑template‑columns:repeat(3,1fr);gap:18px;margin‑top:20px;}
+        .grid‑2col{display:grid;grid‑template‑columns:repeat(2,1fr);gap:18px;margin‑top:20px;}
+        .grid‑4col{display:grid;grid‑template‑columns:repeat(4,1fr);gap:14px;margin‑top:20px;}
         .card{
-            border:1px solid var(--line);border-radius:18px;padding:22px;
-            background:rgba(0,0,0,0.32);backdrop-filter:blur(10px);
-            transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;
+            border:1px solid var(--line);border‑radius:18px;padding:22px;
+            background:rgba(0,0,0,0.32);backdrop‑filter:blur(10px);
+            transition:transform .3s ease,border‑color .3s ease,box‑shadow .3s ease;
         }
         .card:hover{
-            transform:translateY(-5px);
-            border-color:rgba(124,204,255,0.4);
-            box-shadow:0 20px 45px rgba(124,204,255,0.15);
+            transform:translateY(‑5px);
+            border‑color:rgba(124,204,255,0.4);
+            box‑shadow:0 20px 45px rgba(124,204,255,0.15);
         }
-        .card h3{font-size:20px;margin-bottom:10px;}
-        .card p{color:var(--text-dim);font-size:14px;}
+        .card h3{font‑size:20px;margin‑bottom:10px;}
+        .card p{color:var(--text‑dim);font‑size:14px;}
+        .card.warn{border‑color:rgba(255,140,80,0.35);background:rgba(255,100,40,0.08);}
+        .card‑link{text‑decoration:none;color:inherit;display:block;}
+        .card‑link .external‑tip{font‑size:12px;color:var(--blue‑primary);margin‑top:8px;}
+
+        @media(max‑width:920px){
+            .grid{grid‑template‑columns:1fr;}
+            .grid‑2col{grid‑template‑columns:1fr;}
+            .grid‑4col{grid‑template‑columns:repeat(2,1fr);}
+        }
+        @media(max‑width:540px){
+            .grid‑4col{grid‑template‑columns:1fr;}
+            .hero‑content{padding:24px 16px;}
+        }
     </style>
 </head>
 <body>
     <div class="topbar">
-        <div class="topbar-inner">
+        <div class="topbar‑inner">
             <div class="brand">
                 <div class="logo"></div>
-                <div class="brand-text">
-                    <div class="brand-title">Dapa</div>
-                    <div class="brand-sub">DawnAurora Player Animation</div>
+                <div class="brand‑text">
+                    <div class="brand‑title">Dapa</div>
+                    <div class="brand‑sub">DawnAurora Player Animation</div>
                 </div>
             </div>
             <nav class="nav">
                 <a href="#features">功能</a>
-                <a href="#docs">文档</a>
-                <a href="#changelog">更新日志</a>
-                <a class="nav-btn" href="#download">下载模组</a>
+                <a href="#dependency">前置依赖</a>
+                <a href="#github‑links">GitHub项目入口</a>
+                <a class="nav‑btn" href="https://release‑assets.githubusercontent.com/github‑production‑release‑asset/1388985451/d8bbc381‑db80‑40a9‑9690‑4df5c1c504df?sp=r&sv=2018‑11‑09&sr=b&spr=https&se=2026‑09‑27T02%3A23%3A42Z&rscd=attachment%3B+filename%3Ddawn‑aurora‑player‑animation‑add‑on‑beta‑0.0.1‑1.20.1.zip&rsct=application%2Foctet‑stream&skoid=96c2d410‑5711‑43a1‑aedd‑ab1947aa7ab0&sktid=398a6654‑997b‑47e9‑b12b‑9515b896b4de&skt=2026‑09‑27T01%3A23%3A25Z&ske=2026‑09‑27T02%3A23%3A42Z&sks=b&skv=2018‑11‑09&sig=Iz9WMG8I%2FjWaCKhixFQh%2F8NgIrYjJ9QSkO4tiOexXzo%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MDQ3MzI5MCwibmJmIjoxNzkwNDcyOTkwLCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.NSsXQDNbQsWeERA9yplFUIJZdnRYSSimKFvTDoSdvpc&response‑content‑disposition=attachment%3B%20filename%3Ddawn‑aurora‑player‑animation‑add‑on‑beta‑0.0.1‑1.20.1.zip&response‑content‑type=application%2Foctet‑stream">直接下载</a>
             </nav>
         </div>
     </div>
 
     <div class="container">
         <section class="hero">
-            <div class="hero-media">
-                <div class="hero-overlay"></div>
+            <div class="hero‑media">
+                <div class="hero‑overlay"></div>
             </div>
-            <div class="hero-content">
-                <div class="badge-row">
-                    <span class="badge"><span class="badge-dot"></span> Fabric 1.20.1</span>
-                    <span class="badge badge-version">v1.0.0</span>
+            <div class="hero‑content">
+                <div class="badge‑row">
+                    <span class="badge"><span class="badge‑dot"></span> 资源包 | 1.20.1</span>
+                    <span class="badge badge‑version">Beta 0.0.1</span>
+                    <span class="badge badge‑require">⚠️ 需要 EMF + ETF 前置模组</span>
                 </div>
                 <h1>
                     <span class="line">Dapa</span>
-                    <span class="line accent">玩家动画重制模组</span>
+                    <span class="line accent">DawnAurora 玩家动画资源包</span>
                 </h1>
                 <p class="lead">
-                    重写MC第一、第三人称手臂动作，进食、格挡、挥剑、武器切换全部拥有独立平滑动画。
+                    优化Minecraft第一人称、第三人称玩家动作。进食、举盾格挡、武器挥砍、物品切换全部拥有流畅自然的动画效果。
+                    <br><strong>重要：本资源包必须同时安装 EMF (Entity Model Features) 和 ETF (Entity Texture Features) 前置模组，否则无法正常加载动画。</strong>
                 </p>
-                <div class="hero-actions">
-                    <a href="#download" class="btn-primary">下载模组</a>
-                    <a href="#docs" class="btn-ghost">查看文档</a>
+                <div class="hero‑actions">
+                    <a href="https://release‑assets.githubusercontent.com/github‑production‑release‑asset/1388985451/d8bbc381‑db80‑40a9‑9690‑4df5c1c504df?sp=r&sv=2018‑11‑09&sr=b&spr=https&se=2026‑09‑27T02%3A23%3A42Z&rscd=attachment%3B+filename%3Ddawn‑aurora‑player‑animation‑add‑on‑beta‑0.0.1‑1.20.1.zip&rsct=application%2Foctet‑stream&skoid=96c2d410‑5711‑43a1‑aedd‑ab1947aa7ab0&sktid=398a6654‑997b‑47e9‑b12b‑9515b896b4de&skt=2026‑09‑27T01%3A23%3A25Z&ske=2026‑09‑27T02%3A23%3A42Z&sks=b&skv=2018‑11‑09&sig=Iz9WMG8I%2FjWaCKhixFQh%2F8NgIrYjJ9QSkO4tiOexXzo%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MDQ3MzI5MCwibmJmIjoxNzkwNDcyOTkwLCJwYXRoIjoicmVsZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.NSsXQDNbQsWeERA9yplFUIJZdnRYSSimKFvTDoSdvpc&response‑content‑disposition=attachment%3B%20filename%3Ddawn‑aurora‑player‑animation‑add‑on‑beta‑0.0.1‑1.20.1.zip&response‑content‑type=application%2Foctet‑stream" class="btn‑primary">下载Dapa资源包</a>
+                    <a href="#dependency" class="btn‑ghost">获取前置 EMF / ETF</a>
                 </div>
             </div>
         </section>
 
         <div class="stats">
             <div class="stat">
-                <div class="stat-num">6+</div>
-                <div class="stat-label">独立动作</div>
+                <div class="stat‑num">6+</div>
+                <div class="stat‑label">独立动作动画</div>
             </div>
             <div class="stat">
-                <div class="stat-num">Fabric</div>
-                <div class="stat-label">模组加载器</div>
+                <div class="stat‑num">EMF+ETF</div>
+                <div class="stat‑label">前置依赖模组</div>
             </div>
             <div class="stat">
-                <div class="stat-num">1.20.1</div>
-                <div class="stat-label">游戏版本</div>
+                <div class="stat‑num">1.20.1</div>
+                <div class="stat‑label">游戏版本</div>
             </div>
             <div class="stat">
-                <div class="stat-num">Apache-2.0</div>
-                <div class="stat-label">开源协议</div>
+                <div class="stat‑num">Apache-2.0</div>
+                <div class="stat‑label">开源协议</div>
             </div>
         </div>
 
+        <section id="dependency" class="section">
+            <div class="section‑head">
+                <h2 class="section‑title"><span class="dot"></span>前置依赖模组</h2>
+                <div class="section‑sub">必须全部安装，Dapa资源包才可以正常运行</div>
+            </div>
+            <div class="grid‑2col">
+                <div class="card warn">
+                    <h3>📦 EMF ‑ Entity Model Features</h3>
+                    <p>实体模型扩展模组，负责骨骼、自定义实体模型、动画驱动，Dapa动画核心基础。支持Fabric/Forge/NeoForge，客户端模组。</p>
+                    <div style="margin‑top:14px;">
+                        <a class="btn‑ghost" href="https://modrinth.com/mod/entity‑model‑features" target="_blank" rel="noopener noreferrer">前往Modrinth下载EMF</a>
+                    </div>
+                </div>
+                <div class="card warn">
+                    <h3>📦 ETF ‑ Entity Texture Features</h3>
+                    <p>实体纹理扩展模组，配合EMF实现实体材质、发光纹理、随机材质，联动渲染玩家动画，客户端模组。</p>
+                    <div style="margin‑top:14px;">
+                        <a class="btn‑ghost" href="https://modrinth.com/mod/entitytexturefeatures" target="_blank" rel="noopener noreferrer">前往Modrinth下载ETF</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid‑2col" style="margin‑top:18px;">
+                <div class="card">
+                    <h3>📋 模组加载顺序</h3>
+                    <p>游戏模组列表：先加载 ETF，再加载 EMF；<br>资源包排序：EMF资源包 → ETF资源包 → <strong>Dapa</strong>。顺序错误动画直接失效。</p>
+                </div>
+                <div class="card">
+                    <h3>⚠️ 重要提示</h3>
+                    <p>EMF、ETF是<strong>Mod模组（jar）</strong>，不是资源包zip！需要放入mods文件夹，不要丢进resourcepacks。</p>
+                </div>
+            </div>
+        </section>
+
         <section id="features" class="section">
-            <div class="section-head">
-                <h2 class="section-title"><span class="dot"></span>核心功能</h2>
-                <div class="section-sub">全部自定义玩家动作动画</div>
+            <div class="section‑head">
+                <h2 class="section‑title"><span class="dot"></span>核心功能</h2>
+                <div class="section‑sub">全部自定义玩家动作动画，基于EMF+ETF实现</div>
             </div>
             <div class="grid">
                 <div class="card">
@@ -265,13 +317,72 @@
                     <p>切换武器、道具时加入过渡动画。</p>
                 </div>
                 <div class="card">
-                    <h3>👀 第一人称</h3>
+                    <h3>👀 第一人称适配</h3>
                     <p>第一人称手部全部动作同步生效。</p>
                 </div>
                 <div class="card">
-                    <h3>🧍 第三人称</h3>
+                    <h3>🧍 第三人称适配</h3>
                     <p>第三人称全身骨骼动画同步渲染。</p>
                 </div>
+            </div>
+        </section>
+
+        <section id="github‑links" class="section">
+            <div class="section‑head">
+                <h2 class="section‑title"><span class="dot"></span>GitHub项目入口</h2>
+                <div class="section‑sub">仓库各个功能页面，点击新标签页打开</div>
+            </div>
+            <div class="grid‑4col">
+                <a class="card card‑link" href="https://github.com/DawnAurora0221/dawnaurora‑player‑animation‑resource‑pack" target="_blank" rel="noopener noreferrer">
+                    <h3>🏠 仓库主页</h3>
+                    <p>代码、README、Release发布总入口</p>
+                    <div class="external‑tip">外部链接 ↗</div>
+                </a>
+                <a class="card card‑link" href="https://github.com/DawnAurora0221/dawnaurora‑player‑animation‑resource‑pack/issues" target="_blank" rel="noopener noreferrer">
+                    <h3>🐛 Issues</h3>
+                    <p>提交Bug反馈、功能建议、问题咨询</p>
+                    <div class="external‑tip">外部链接 ↗</div>
+                </a>
+                <a class="card card‑link" href="https://github.com/DawnAurora0221/dawnaurora‑player‑animation‑resource‑pack/pulls" target="_blank" rel="noopener noreferrer">
+                    <h3>🔀 Pull Requests</h3>
+                    <p>代码贡献、提交修改合并请求</p>
+                    <div class="external‑tip">外部链接 ↗</div>
+                </a>
+                <a class="card card‑link" href="https://github.com/DawnAurora0221/dawnaurora‑player‑animation‑resource‑pack/agents?author=DawnAurora0221" target="_blank" rel="noopener noreferrer">
+                    <h3>🤖 Agents</h3>
+                    <p>Copilot AI代理任务面板（需Copilot）</p>
+                    <div class="external‑tip">外部链接 ↗</div>
+                </a>
+                <a class="card card‑link" href="https://github.com/DawnAurora0221/dawnaurora‑player‑animation‑resource‑pack/actions" target="_blank" rel="noopener noreferrer">
+                    <h3>⚙️ Actions</h3>
+                    <p>自动化工作流、Pages部署日志</p>
+                    <div class="external‑tip">外部链接 ↗</div>
+                </a>
+                <a class="card card‑link" href="https://github.com/DawnAurora0221/dawnaurora‑player‑animation‑resource‑pack/projects" target="_blank" rel="noopener noreferrer">
+                    <h3>📋 Projects</h3>
+                    <p>项目看板，管理开发任务与计划</p>
+                    <div class="external‑tip">外部链接 ↗</div>
+                </a>
+                <a class="card card‑link" href="https://github.com/DawnAurora0221/dawnaurora‑player‑animation‑resource‑pack/wiki" target="_blank" rel="noopener noreferrer">
+                    <h3>📖 Wiki</h3>
+                    <p>项目文档、教程、FAQ知识库</p>
+                    <div class="external‑tip">外部链接 ↗</div>
+                </a>
+                <a class="card card‑link" href="https://github.com/DawnAurora0221/dawnaurora‑player‑animation‑resource‑pack/security" target="_blank" rel="noopener noreferrer">
+                    <h3>🛡️ Security</h3>
+                    <p>安全漏洞扫描、安全政策</p>
+                    <div class="external‑tip">外部链接 ↗</div>
+                </a>
+                <a class="card card‑link" href="https://github.com/DawnAurora0221/dawnaurora‑player‑animation‑resource‑pack/pulse" target="_blank" rel="noopener noreferrer">
+                    <h3>📊 Pulse</h3>
+                    <p>仓库活跃度、提交统计总览</p>
+                    <div class="external‑tip">外部链接 ↗</div>
+                </a>
+                <a class="card card‑link" href="https://github.com/DawnAurora0221/dawnaurora‑player‑animation‑resource‑pack/settings" target="_blank" rel="noopener noreferrer">
+                    <h3>🔧 Settings</h3>
+                    <p>仓库设置，<strong>仅仓库管理员可访问</strong></p>
+                    <div class="external‑tip">外部链接 ↗</div>
+                </a>
             </div>
         </section>
     </div>
