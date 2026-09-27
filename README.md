@@ -1,4 +1,4 @@
-# DawnAurora's Player Animation - Alpha - 0.0.1
+# DawnAurora's Player Animation - Alpha - v0.0.1
 **Short Name: Dapa**
 Minecraft 1.20.1 Fabric Animation Resource Pack
 
