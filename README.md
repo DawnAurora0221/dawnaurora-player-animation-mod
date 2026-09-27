@@ -1,10 +1,10 @@
-# DawnAurora's Player Animation - Beta - 0.0.1
+# DawnAurora's Player Animation - Alpha - 0.0.1
 **Short Name: Dapa**
 Minecraft 1.20.1 Fabric Animation Resource Pack
 
 ---
 ## 📦 Version Information
-- Release Type: Beta Early Preview
+- Release Type: Alpha Early Preview
 - Supported Game Version: Minecraft 1.20.1
 - Requirement: Fabric Loader
 - Mandatory Dependencies: ETF, EMF (Fabric Mods)
@@ -56,9 +56,9 @@ These features are under development and will be added in future updates:
 
 ---
 ## ⚠️ Important Warnings
-- This is a Resource Pack, NOT a Mod.
+- This is a Resource Pack, Not a Mod.
 - ETF & EMF are strictly required. This pack uses advanced animation frameworks provided by these two mods. Animations will not load or work without them installed.
-- This is an **Beta test version**. Minor instability, animation glitches or frame errors may occur during use.
+- This is an **Alpha test version**. Minor instability, animation glitches or frame errors may occur during use.
 - Client-side only. Works for single-player and multiplayer servers.
 
 ---
