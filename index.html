@@ -61,7 +61,7 @@
         @keyframes pageFadeIn {
             to {opacity:1;}
         }
-        /* 极光背景层 */
+       
         .aurora{
             position:fixed;
             inset:0;
@@ -77,7 +77,7 @@
             0%{transform:translateX(-12%) scale(1.15);}
             100%{transform:translateX(12%) scale(1.25);}
         }
-        /* 流星画布 */
+
         #meteorBg{
             position:fixed;
             inset:0;
@@ -88,7 +88,7 @@
             pointer-events:none;
         }
         .container{max-width:1240px;margin:0 auto;padding:0 24px;}
-        /* 导航栏 */
+ 
         nav{
             position:sticky;top:0;z-index:99;
             background:transparent;
@@ -122,7 +122,7 @@
         }
         .nav-links a:hover{color:var(--text);text-shadow:0 0 8px var(--blue-glow);}
         .nav-links a:hover::after{width:100%;}
-        /* 按钮样式 */
+  
         .btn{
             padding:10px 20px;border-radius:var(--radius-md);border:none;cursor:pointer;
             font-weight:600;font-size:15px;transition:0.25s ease;
@@ -160,7 +160,7 @@
         }
         .btn-secondary:active{transform:translateY(0px);}
         select.btn-secondary{padding:9px 14px;}
-        /* 轮播图 */
+ 
         .carousel-wrap{
             position:relative;
             width:100%;
@@ -216,7 +216,7 @@
             cursor:pointer;
         }
         .dot.active{background:#fff;}
-        /* 首页Hero区域 */
+  
         .hero{padding:72px 0;}
         .hero-card{
             border:1px solid var(--line);border-radius:var(--radius-xl);padding:52px;
@@ -254,7 +254,7 @@
             color:var(--text-dim);font-size:16px;margin-bottom:32px;max-width:800px;
         }
         .hero-btn-group{display:flex;gap:16px;flex-wrap:wrap;}
-        /* 通用卡片 */
+
         .section{margin-bottom:72px;}
         .section-title{font-size:26px;margin-bottom:24px;display:flex;align-items:center;gap:8px;}
         .dep-visual-card{
@@ -277,7 +277,6 @@
             border:1px solid var(--line);border-radius:var(--radius-lg);padding:28px;
             background:var(--bg-card);backdrop-filter: blur(var(--glass-blur));
             box-shadow:var(--shadow-base);transition:0.35s ease;
-            /* 滚动淡入 */
             opacity:0;
             transform:translateY(24px);
         }
@@ -319,7 +318,7 @@
             transform:translateY(0);
         }
         .action-time{color:var(--text-dim);font-size:13px;margin-bottom:4px;}
-        /* FAQ */
+   
         .faq-item{
             border:1px solid var(--line);border-radius:var(--radius-lg);margin-bottom:14px;
             background:var(--bg-card);backdrop-filter: blur(var(--glass-blur));
@@ -340,7 +339,7 @@
             padding:0 24px;max-height:0;overflow:hidden;transition:0.45s ease;color:var(--text-dim);
         }
         .faq-item.open .faq-answer{padding:0 24px 20px;max-height:300px;}
-        /* 弹窗 */
+  
         .modal-overlay{
             position:fixed;inset:0;background:rgba(0,0,0,0.75);
             display:none;align-items:center;justify-content:center;z-index:999;
@@ -367,7 +366,6 @@
         .modal-link-list a:hover{background:var(--bg-card-hover);transform:translateY(-2px);box-shadow:var(--shadow-base);}
         .modal-close{margin-top:22px;width:100%;}
         footer{border-top:1px solid var(--line);padding:32px 0;color:var(--text-dim);font-size:14px;text-align:center;backdrop-filter: blur(var(--glass-blur));}
-        /* 移动端适配 */
         @media(max-width:768px){
             .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
             .hero h1{font-size:36px;}
@@ -415,7 +413,6 @@
         </div>
     </nav>
     <main class="container">
-        <!-- 预览轮播区域 -->
         <section class="hero section">
             <div class="carousel-wrap">
                 <div class="carousel-track">
@@ -590,15 +587,12 @@
             </div>
         </section>
     </main>
-    <!-- 下载弹窗 -->
     <div class="modal-overlay">
         <div class="modal-box">
             <h3>📥 下载 Dapa 资源包 Beta 0.0.1 (1.20.1)</h3>
             <div class="modal-link-list">
-                <a href="https://release-assets.githubusercontent.com/github-production-release-asset-2e65be/138898545/669ea30c-500c-4ce0-942f-10be52b83cb0?sp=r&sv=2018-11-09&sr=b&rscd=attachment%3B+filename%3Ddawn-aurora-player-animation-resource-pack-add-on-beta-0.0.1-1.20.1.zip&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab47aa7ab0ab&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-09-27T03%3A02%3A22Z&ske=2026-09-27T03%3A03%3A22Z&sks=b&skv=2018-11-09&sig=H8Zq7l6ZH4u%2B%2BO3J0NnscoxS4XxCEo2lN2rZTa5RXnM%3D" target="_blank">🔗 1. GitHub官方源（兜底备用）</a>
-                <a href="https://cdn.onmicrosoft.cn/gh/DawnAurora0221/dawnaurora-player-animation-resource-pack@beta-0.0.1/dawn-aurora-player-animation-add-on-beta-0.0.1-1.20.1.zip" target="_blank">🚀 2. cdn.onmicrosoft.cn（国内CDN）</a>
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-beta-0.0.1-1.20.1.zip">🔗 1. GitHub官方源（兜底备用）</a>
                 <a href="https://s4.zstatic.net/gh/DawnAurora0221/dawnaurora-player-animation-resource-pack@beta-0.0.1/dawn-aurora-player-animation-add-on-beta-0.0.1-1.20.1.zip" target="_blank">🚀 3. s4.zstatic.net（国内CDN）</a>
-                <a href="https://jsd.onmicrosoft.cn/gh/DawnAurora0221/dawnaurora-player-animation-resource-pack@beta-0.0.1/dawn-aurora-player-animation-add-on-beta-0.0.1-1.20.1.zip" target="_blank">🚀 4. jsd.onmicrosoft.cn（国内CDN）</a>
             </div>
             <button class="btn btn-secondary modal-close">关闭</button>
         </div>
@@ -628,14 +622,12 @@ themeBtn.addEventListener('click',()=>{
     if(html.hasAttribute('data-theme')) html.removeAttribute('data-theme');
     else html.setAttribute('data-theme','light');
 })
-// 滚动逐个淡入
 const observer = new IntersectionObserver((entries)=>{
     entries.forEach(entry=>{
         if(entry.isIntersecting) entry.target.classList.add('visible');
     })
 },{threshold:0.1})
 document.querySelectorAll('.card,.version-item,.action-item,.faq-item,.log-item,.dep-visual-card').forEach(el=>observer.observe(el));
-// 流星背景
 const canvas = document.getElementById('meteorBg');
 const ctx = canvas.getContext('2d');
 function resizeCanvas(){
@@ -676,13 +668,11 @@ function animate(){
     requestAnimationFrame(animate);
 }
 animate();
-// FAQ折叠
 document.querySelectorAll('.faq-question').forEach(q=>{
     q.addEventListener('click',()=>{
         q.parentElement.classList.toggle('open');
     })
 })
-// 轮播图逻辑
 const track = document.querySelector('.carousel-track');
 const slides = Array.from(track.children);
 const prevBtn = document.querySelector('.carousel-prev');
@@ -707,20 +697,17 @@ dots.forEach((dot,i)=>{
         updateCarousel();
     }
 })
-// 自动轮播
 setInterval(()=>{
     currentIndex = currentIndex === slides.length-1 ? 0 : currentIndex+1;
     updateCarousel();
 },5000)
 
-// GitHub 动态获取Star & 下载统计
 async function fetchGithubStat(){
     const repoApi = "https://api.github.com/repos/DawnAurora0221/dawnaurora-player-animation-resource-pack";
     try{
         const res = await fetch(repoApi);
         const data = await res.json();
         document.getElementById('starCount').innerText = data.stargazers_count;
-        // 获取release下载统计
         const releaseRes = await fetch(`${repoApi}/releases`);
         const releaseData = await releaseRes.json();
         let total = 0;
