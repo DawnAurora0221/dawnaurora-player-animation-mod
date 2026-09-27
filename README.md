@@ -1,45 +1,48 @@
-# DawnAurora Player Animation
-Fabric Resource Pack for Minecraft 1.20.1
+Release Title：DawnAurora's Player Animation Alpha 0.0.1
+Tag：dapa-alpha-0.0.1
+Type：Pre-release
 
-## About
-This is a Minecraft Fabric Resource Pack for version 1.20.1, which implements a custom bone animation system for players.
-- Third-person: Full body player animations, including walk, run, jump and attack motions.
-- First-person: Arm animations for digging, item holding and swinging.
-- Independent resource pack: All models and animation files are stored inside the resource pack. Animation assets can be edited separately without recompiling the mod source code.
+---
+# DawnAurora's Player Animation - Alpha 0.0.1
+Short Name: DaPa
+Minecraft 1.20.1 Fabric Animation Resource Pack
 
-## Project Info
-- Game Version: Minecraft 1.20.1
-- Mod Loader: Fabric
-- License: Apache License 2.0
+---
+📦 Version Information
+- Release Type: Alpha Early Preview
+- Supported Game Version: Minecraft 1.20.1
+- Requirement: Fabric Loader
+- Mandatory Dependencies: ETF, EMF (Fabric Mods)
 
-> You may use, study and distribute this project. Modified or derivative works must keep the original copyright notice. You are not allowed to apply patents based on this project.
+---
+✨ Pack Features
+This resource pack completely overhauls vanilla Minecraft player animations, bringing smoother, more natural and detailed movement performance.
+- Third-Person Full Body Animation Overhaul
+Replaces rigid default player movements. Includes smooth walking, running, sprinting, jumping, falling, and attacking animations. Makes player movements more realistic and fluent.
+- Custom First-Person Arm Animations
+Reworks first-person hand and arm motions for block mining, item holding, tool swinging, and idle poses. Eliminates stiff vanilla arm movements.
+- Optimized Motion Transition
+Smoother animation switching between different player states (walk, run, jump, stop). No sudden frame jumps or rigid pose changes.
+- Pure Resource Pack Implementation
+All animation and model assets are self-contained in this pack. No mod compilation required, easy to install, modify and uninstall.
 
-## Repository Structure
-dawnaurora-player-animation-mod/
-├── src/                    # Fabric mod source code
-├── resource-pack/          # Supporting animation resource pack
-│   ├── pack.mcmeta
-│   └── assets/dawnaurora/
-│       ├── models/
-│       └── animations/
-├── README.md
-└── .gitignore
+---
+⚠️ Important Warnings
+- This is a Resource Pack, NOT a Mod.
+- ETF & EMF are strictly required. This pack uses advanced animation frameworks provided by these two mods. Animations will not load or work without them installed.
+- This is an Alpha test version. Minor instability, animation glitches or frame errors may occur during use.
+- Client-side only. Works for single-player and multiplayer servers.
 
-## Installation
-1. Install Fabric Loader 1.20.1 and Fabric API.
-2. Put the mod jar file into your `mods` folder.
-3. Put the matching resource pack into your `resourcepacks` folder and enable it inside Minecraft.
+---
+📥 Installation Guide
+1. Install Fabric Loader for Minecraft 1.20.1
+2. Install required dependency mods: ETF and EMF
+3. Download the latest resource pack ZIP file from this release
+4. Place the ZIP file into your Minecraft resourcepacks folder
+5. Launch Minecraft, open Resource Pack settings, enable DaPa Animation Pack
+6. Fully restart your game to apply all animation changes
 
-## Notes
-- This is a personal development project. Learning and discussion are welcome. If you publish modified derivative works, follow the Apache 2.0 license and credit the original project.
-- Still under active development. Features will be added step by step.
-
-## Disclaimer
-This mod is provided "as is", without warranty of any kind, express or implied.
-In no event shall the author be liable for any claims, damages or other liabilities, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the mod or the use or other dealings in the mod.
-
-## Development Todo List
-- [ ] Basic third-person walk & run animations
-- [ ] First-person digging arm animation
-- [ ] Jump & hurt animations
-- [ ] More animation presets to switch between
+---
+📜 License
+Apache-2.0 License
+Free for personal use, study and modification. Please retain original project credits for public distribution.
