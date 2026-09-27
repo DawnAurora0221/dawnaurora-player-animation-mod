@@ -6,14 +6,20 @@
     <title>Dapa - DawnAurora Player Animation</title>
     <style>
         *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif;}
-        body{background:#181818;color:#eee;max-width:1100px;margin:0 auto;padding:24px;line-height:1.6;}
-        .banner{width:100%;border-radius:8px;margin-bottom:30px;}
+        body{background:#181818;color:#eee;max-width:1000px;margin:0 auto;padding:24px;line-height:1.6;}
+        /* 图片：大圆角 + 阴影，柔和卡片效果 */
+        .banner{
+            width:100%;
+            border-radius:18px;
+            margin-bottom:30px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.35);
+        }
         h1{color:#7cf;font-size:2.2rem;margin-bottom:12px;}
         .meta{color:#aaa;margin-bottom:24px;font-size:1rem;}
         h2{color:#adf;margin:28px 0 12px;}
         ul{padding-left:22px;margin-bottom:16px;}
-        .warn{background:#422;color:#ffc;padding:14px;border-radius:6px;margin:20px 0;border-left:4px solid #fc2;}
-        .install{background:#223444;padding:18px;border-radius:8px;margin:20px 0;}
+        .warn{background:#422;color:#ffc;padding:14px;border-radius:12px;margin:20px 0;border-left:4px solid #fc2;}
+        .install{background:#223444;padding:18px;border-radius:12px;margin:20px 0;}
         a{color:#6cf;}
         .download-btn {
             display:inline-block;
@@ -22,45 +28,69 @@
             background:#28a745;
             color:#fff;
             text-decoration:none;
-            border-radius:6px;
+            border-radius:8px;
             font-weight:bold;
             font-size:1.1rem;
         }
         .download-btn:hover{background:#2cbb4e;}
         .link-group{margin-top:10px;}
+        /* 滚动渐入动画 */
+        .fade-in{
+            opacity:0;
+            transform:translateY(24px);
+            transition:opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible{
+            opacity:1;
+            transform:translateY(0);
+        }
+        /* 图片视差滚动：鼠标滚轮上下滑动，图片缓慢移动 */
+        .banner-wrap{
+            overflow:hidden;
+            border-radius:18px;
+        }
     </style>
 </head>
 <body>
-    <img class="banner" src="banner.png" alt="Dapa Banner">
-    <h1>DawnAurora's Player Animation (Dapa)</h1>
-    <div class="meta">Minecraft 1.20.1 • Fabric • Apache-2.0 License</div>
+    <div class="banner-wrap fade-in">
+        <img class="banner" id="bannerImg" src="banner.png" alt="Dapa Banner">
+    </div>
 
-    <h2>✅ Completed Features（已完成功能）</h2>
-    <ul>
-        <li>Custom idle animations 自定义待机动画</li>
-        <li>Custom head yaw & pitch animations 自定义头部俯仰动画</li>
-        <li>Run / Sprint / Swim / Sneak / Prone animations 跑、冲刺、游泳、潜行、匍匐动画</li>
-        <li>Jump, fall & land animations 跳跃、坠落、落地动画</li>
-        <li>First-person hand animations 第一人称手部动画</li>
-        <li>Elytra gliding, climbing, wading animations 鞘翅、攀爬、涉水动画</li>
-        <li>Smooth transition between different states 状态切换平滑过渡</li>
-    </ul>
+    <div class="fade-in">
+        <h1>DawnAurora's Player Animation (Dapa)</h1>
+        <div class="meta">Minecraft 1.20.1 • Fabric • Apache-2.0 License</div>
+    </div>
 
-    <h2>📅 Planned（开发中）</h2>
-    <ul>
-        <li>Shield blocking animation 盾牌格挡动画</li>
-        <li>Hotbar & equipment swap animation 物品栏切换动画</li>
-        <li>Torch / Lantern holding animation 手持火把、灯笼动画</li>
-        <li>Player hurt animation 受伤动画</li>
-    </ul>
+    <div class="fade-in">
+        <h2>✅ Completed Features（已完成功能）</h2>
+        <ul>
+            <li>Custom idle animations 自定义待机动画</li>
+            <li>Custom head yaw & pitch animations 自定义头部俯仰动画</li>
+            <li>Run / Sprint / Swim / Sneak / Prone animations 跑、冲刺、游泳、潜行、匍匐动画</li>
+            <li>Jump, fall & land animations 跳跃、坠落、落地动画</li>
+            <li>First-person hand animations 第一人称手部动画</li>
+            <li>Elytra gliding, climbing, wading animations 鞘翅、攀爬、涉水动画</li>
+            <li>Smooth transition between different states 状态切换平滑过渡</li>
+        </ul>
+    </div>
 
-    <div class="warn">
+    <div class="fade-in">
+        <h2>📅 Planned（开发中）</h2>
+        <ul>
+            <li>Shield blocking animation 盾牌格挡动画</li>
+            <li>Hotbar & equipment swap animation 物品栏切换动画</li>
+            <li>Torch / Lantern holding animation 手持火把、灯笼动画</li>
+            <li>Player hurt animation 受伤动画</li>
+        </ul>
+    </div>
+
+    <div class="warn fade-in">
         ⚠️ Important Notes：This is a <strong>Resource Pack, NOT a Mod</strong>.<br>
         Must install ETF and EMF, otherwise animations cannot work.<br>
         Alpha test version, unstable, may have animation glitches. Client-side only. Works for single & multiplayer.
     </div>
 
-    <div class="install">
+    <div class="install fade-in">
         <h2>📖 Installation 安装教程</h2>
         <ol>
             <li>Install Fabric Loader 1.20.1</li>
@@ -73,12 +103,34 @@
         <a class="download-btn" href="https://github.com/黎明极光0221/dawnaurora-player-animation-mod/releases">⬇️ 下载 Dapa 资源包</a>
     </div>
 
-    <h2>🔗 全部链接 Links</h2>
-    <div class="link-group">
-        <p>📁 GitHub 仓库 Repository：<a href="https://github.com/黎明极光0221/dawnaurora-player-animation-mod">https://github.com/黎明极光0221/dawnaurora-player-animation-mod</a></p>
-        <p>📦 发布页 Releases：<a href="https://github.com/黎明极光0221/dawnaurora-player-animation-mod/releases">https://github.com/黎明极光0221/dawnaurora-player-animation-mod/releases</a></p>
-        <p>🐛 问题反馈 Issues：<a href="https://github.com/黎明极光0221/dawnaurora-player-animation-mod/issues">https://github.com/黎明极光0221/dawnaurora-player-animation-mod/issues</a></p>
-        <p>📜 许可证 License：<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0 License</a></p>
+    <div class="fade-in">
+        <h2>🔗 全部链接 Links</h2>
+        <div class="link-group">
+            <p>📁 GitHub 仓库 Repository：<a href="https://github.com/黎明极光0221/dawnaurora-player-animation-mod">https://github.com/黎明极光0221/dawnaurora-player-animation-mod</a></p>
+            <p>📦 发布页 Releases：<a href="https://github.com/黎明极光0221/dawnaurora-player-animation-mod/releases">https://github.com/黎明极光0221/dawnaurora-player-animation-mod/releases</a></p>
+            <p>🐛 问题反馈 Issues：<a href="https://github.com/黎明极光0221/dawnaurora-player-animation-mod/issues">https://github.com/黎明极光0221/dawnaurora-player-animation-mod/issues</a></p>
+            <p>📜 许可证 License：<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0 License</a></p>
+        </div>
     </div>
+
+<script>
+// 区块滚动渐入
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add('visible');
+        }
+    });
+},{threshold:0.1});
+
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+// 图片视差：滚轮滑动，图片缓慢上下移动
+const bannerImg = document.getElementById('bannerImg');
+window.addEventListener('scroll',()=>{
+    const scrollY = window.scrollY;
+    bannerImg.style.transform = `translateY(${scrollY * 0.22}px)`;
+});
+</script>
 </body>
 </html>
