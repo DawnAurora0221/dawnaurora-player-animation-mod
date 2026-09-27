@@ -5,1652 +5,473 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>DawnAurora's Player Animation</title>
 <meta name="description" content="Dapa 玩家动画资源包，优化 Minecraft 第一人称与第三人称玩家动作。" />
-
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
-
 <style>
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg-deep: #03050a;
-  --bg-card: rgba(255, 255, 255, 0.04);
-  --bg-card-hover: rgba(255, 255, 255, 0.07);
-  --line: rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.16);
-  --text: #eaf2ff;
-  --text-dim: #8a97a8;
-  --text-muted: #5c6878;
-
-  --cyan: #7cf;
-  --blue: #60a5fa;
-  --blue-2: #38bdf8;
-  --green: #4ade80;
-  --green-2: #22c55e;
-  --yellow: #fbbf24;
-  --red: #ff6b6b;
-
-  --glow-cyan: 0 0 18px rgba(124, 207, 255, 0.35);
-  --glow-blue: 0 0 22px rgba(96, 165, 250, 0.35);
-  --glow-green: 0 0 22px rgba(74, 222, 128, 0.35);
-  --glow-yellow: 0 0 20px rgba(251, 191, 36, 0.25);
-
-  --radius-xl: 24px;
-  --radius-lg: 18px;
-  --radius-md: 14px;
-  --radius-sm: 10px;
-
-  --shadow-1: 0 6px 24px rgba(0, 0, 0, 0.35);
-  --shadow-2: 0 14px 48px rgba(0, 0, 0, 0.45);
-  --shadow-3: 0 24px 80px rgba(0, 0, 0, 0.55);
-
-  --glass: blur(18px) saturate(140%);
+    --bg-deep: #03050a;
+    --bg-card: rgba(255, 255, 255, 0.04);
+    --bg-card-hover: rgba(255, 255, 255, 0.07);
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.16);
+    --text: #eaf2ff;
+    --text-dim: #8a97a8;
+    --text-muted: #5c6878;
+    --cyan: #7cf;
+    --blue: #60a5fa;
+    --blue-2: #38bdf8;
+    --green: #4ade80;
+    --green-2: #22c55e;
+    --yellow: #fbbf24;
+    --red: #ff6b6b;
+    --glow-cyan: 0 0 18px rgba(124, 207, 255, 0.35);
+    --glow-blue: 0 0 22px rgba(96, 165, 250, 0.35);
+    --glow-green: 0 0 22px rgba(74, 222, 128, 0.35);
+    --glow-yellow: 0 0 20px rgba(251, 191, 36, 0.25);
+    --radius-xl: 24px;
+    --radius-lg: 18px;
+    --radius-md: 14px;
+    --radius-sm: 10px;
+    --shadow-1: 0 6px 24px rgba(0, 0, 0, 0.35);
+    --shadow-2: 0 14px 48px rgba(0, 0, 0, 0.45);
+    --shadow-3: 0 24px 80px rgba(0, 0, 0, 0.55);
+    --glass: blur(18px) saturate(140%);
 }
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 90px;
+/* ========== 浅色主题（白天模式） ========== */
+html.light-theme {
+    --bg-deep: #f6f9ff;
+    --bg-card: rgba(0,0,0,0.04);
+    --bg-card-hover: rgba(0,0,0,0.07);
+    --line: rgba(0,0,0,0.08);
+    --line-strong: rgba(0,0,0,0.16);
+    --text: #111827;
+    --text-dim: #4b5563;
+    --text-muted: #6b7280;
 }
-
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 body {
-  font-family: "Noto Sans SC", system-ui, -apple-system, Segoe UI, sans-serif;
-  background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(56, 189, 248, 0.12), transparent 60%),
-    radial-gradient(900px 500px at 110% 10%, rgba(96, 165, 250, 0.10), transparent 55%),
-    radial-gradient(700px 500px at 50% 120%, rgba(74, 222, 128, 0.08), transparent 60%),
-    linear-gradient(180deg, #04070f 0%, #03050a 100%);
-  color: var(--text);
-  min-height: 100%;
-  overflow-x: hidden;
-  position: relative;
-  opacity: 0;
-  transition: opacity 0.8s ease;
+    font-family: "Noto Sans SC", system-ui, -apple-system, Segoe UI, sans-serif;
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(56, 189, 248, 0.12), transparent 60%), radial-gradient(900px 500px at 110% 10%, rgba(96, 165, 250, 0.10), transparent 55%), radial-gradient(700px 500px at 50% 120%, rgba(74, 222, 128, 0.08), transparent 60%), linear-gradient(180deg, #04070f 0%, #03050a 100%);
+    color: var(--text);
+    min-height: 100%;
+    overflow-x: hidden;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.8s ease, background 0.35s ease, color 0.35s ease;
 }
-
-body.loaded {
-  opacity: 1;
+html.light-theme body {
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(56, 189, 248, 0.10), transparent 60%), radial-gradient(900px 500px at 110% 10%, rgba(96, 165, 250, 0.08), transparent 55%), radial-gradient(700px 500px at 50% 120%, rgba(74, 222, 128, 0.06), transparent 60%), linear-gradient(180deg, #eef5ff 0%, #f6f9ff 100%);
 }
-
-::selection {
-  background: rgba(124, 207, 255, 0.35);
-  color: #fff;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0a0f1a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #2a3547, #141a26);
-  border-radius: 99px;
-  border: 1px solid var(--line);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #344258, #1a2232);
-}
-
+body.loaded { opacity: 1; }
+::selection { background: rgba(124, 207, 255, 0.35); color: #fff; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #0a0f1a; }
+html.light-theme ::-webkit-scrollbar-track { background: #e9edf7; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #2a3547, #141a26); border-radius: 99px; border: 1px solid var(--line); }
+html.light-theme ::-webkit-scrollbar-thumb { background: #b4bcca; }
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #344258, #1a2232); }
 /* ========== Background layers ========== */
 .aurora {
-  position: fixed;
-  inset: 0;
-  z-index: -3;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 600px 400px at 15% 20%, rgba(56, 189, 248, 0.18), transparent 60%),
-    radial-gradient(ellipse 700px 420px at 85% 30%, rgba(96, 165, 250, 0.14), transparent 60%),
-    radial-gradient(ellipse 500px 360px at 45% 80%, rgba(74, 222, 128, 0.10), transparent 60%);
-  animation: auroraMove 24s ease-in-out infinite alternate;
+    position: fixed; inset: 0; z-index: -3; pointer-events: none;
+    background: radial-gradient(ellipse 600px 400px at 15% 20%, rgba(56, 189, 248, 0.18), transparent 60%), radial-gradient(ellipse 700px 420px at 85% 30%, rgba(96, 165, 250, 0.14), transparent 60%), radial-gradient(ellipse 500px 360px at 45% 80%, rgba(74, 222, 128, 0.10), transparent 60%);
+    animation: auroraMove 24s ease-in-out infinite alternate;
 }
-
 @keyframes auroraMove {
-  0% {
-    transform: translateX(-6%) scale(1.04);
-  }
-  100% {
-    transform: translateX(6%) scale(1.08);
-  }
+    0% { transform: translateX(-6%) scale(1.04); }
+    100% { transform: translateX(6%) scale(1.08); }
 }
-
 .grid-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(124, 207, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124, 207, 255, 0.05) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 40%, transparent 80%);
+    position: fixed; inset: 0; z-index: -2; pointer-events: none;
+    background-image: linear-gradient(rgba(124, 207, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(124, 207, 255, 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 40%, transparent 80%);
 }
-
-#meteorBg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  width: 100%;
-  height: 100%;
-}
-
+#meteorBg { position: fixed; inset: 0; z-index: -1; pointer-events: none; width: 100%; height: 100%; }
 /* ========== Top loader ========== */
-.page-loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  z-index: 9999;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.06));
-}
-
-.page-loader .bar {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, var(--cyan), var(--blue), var(--green));
-  box-shadow: var(--glow-blue);
-  transition: width 0.25s ease;
-}
-
+.page-loader { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 9999; background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.06)); }
+.page-loader .bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--cyan), var(--blue), var(--green)); box-shadow: var(--glow-blue); transition: width 0.25s ease; }
 /* ========== Nav ========== */
 nav {
-  position: sticky;
-  top: 0;
-  z-index: 90;
-  padding: 14px 0;
-  border-bottom: 1px solid transparent;
-  background: rgba(3, 5, 10, 0.55);
-  backdrop-filter: var(--glass);
-  -webkit-backdrop-filter: var(--glass);
-  transition: border-color 0.3s ease, background 0.3s ease;
+    position: sticky; top: 0; z-index: 90; padding: 14px 0; border-bottom: 1px solid transparent;
+    background: rgba(3, 5, 10, 0.55); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass);
+    transition: border-color 0.3s ease, background 0.3s ease;
 }
-
-nav.scrolled {
-  border-bottom-color: var(--line);
-  background: rgba(3, 5, 10, 0.72);
-}
-
-.nav-inner {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: var(--text);
-}
-
-.brand-logo {
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  border: 1px solid var(--line-strong);
-  background: rgba(255, 255, 255, 0.04);
-  padding: 6px;
-  box-shadow: var(--glow-cyan);
-}
-
-.brand-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-.brand-text {
-  font-weight: 900;
-  font-size: 20px;
-  letter-spacing: 0.5px;
-}
-
-.brand-text span {
-  background: linear-gradient(90deg, var(--cyan), var(--blue));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.nav-links {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.nav-links a {
-  color: var(--text-dim);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  transition: 0.25s ease;
-}
-
-.nav-links a:hover {
-  color: var(--text);
-  border-color: var(--line);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.nav-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
+html.light-theme nav { background: rgba(255,255,255,0.65); }
+nav.scrolled { border-bottom-color: var(--line); background: rgba(3, 5, 10, 0.72); }
+html.light-theme nav.scrolled { background: rgba(255,255,255,0.82); }
+.nav-inner { max-width: 1240px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }
+.brand-logo { width: 42px; height: 42px; border-radius: 14px; border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.04); padding: 6px; box-shadow: var(--glow-cyan); }
+.brand-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.brand-text { font-weight: 900; font-size: 20px; letter-spacing: 0.5px; }
+.brand-text span { background: linear-gradient(90deg, var(--cyan), var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.nav-links { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.nav-links a { color: var(--text-dim); text-decoration: none; font-size: 14px; font-weight: 500; padding: 8px 10px; border-radius: 999px; border: 1px solid transparent; transition: 0.25s ease; }
+.nav-links a:hover { color: var(--text); border-color: var(--line); background: rgba(255, 255, 255, 0.04); }
+.nav-actions { display: flex; gap: 10px; align-items: center; }
 /* ========== Buttons ========== */
-.btn {
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  cursor: pointer;
-  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--green), var(--green-2));
-  color: #041208;
-  border-color: rgba(74, 222, 128, 0.35);
-  box-shadow: var(--glow-green);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(74, 222, 128, 0.35);
-}
-
-.btn-ghost {
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text);
-}
-
-.btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--line-strong);
-  transform: translateY(-2px);
-}
-
-.btn-icon {
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
+.btn { font-family: inherit; font-weight: 700; font-size: 14px; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line); cursor: pointer; transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; position: relative; overflow: hidden; }
+.btn-primary { background: linear-gradient(135deg, var(--green), var(--green-2)); color: #041208; border-color: rgba(74, 222, 128, 0.35); box-shadow: var(--glow-green); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(74, 222, 128, 0.35); }
+.btn-ghost { background: rgba(255, 255, 255, 0.04); color: var(--text); }
+html.light-theme .btn-ghost { background: rgba(0,0,0,0.04); }
+.btn-ghost:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--line-strong); transform: translateY(-2px); }
+html.light-theme .btn-ghost:hover { background: rgba(0,0,0,0.08); }
+.btn-icon { width: 44px; height: 44px; padding: 0; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
 /* ========== Layout ========== */
-main {
-  position: relative;
-  z-index: 1;
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-section {
-  position: relative;
-  z-index: 1;
-}
-
+main { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+section { position: relative; z-index: 1; }
 /* ========== Hero ========== */
-.hero {
-  padding: 56px 0 40px;
-}
-
+.hero { padding: 56px 0 40px; }
 .hero-inner {
-  position: relative;
-  border-radius: var(--radius-xl);
-  padding: 44px;
-  background:
-    radial-gradient(600px 300px at 0% 0%, rgba(56, 189, 248, 0.12), transparent 60%),
-    radial-gradient(500px 260px at 100% 0%, rgba(96, 165, 250, 0.10), transparent 60%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-2);
-  overflow: hidden;
+    position: relative; border-radius: var(--radius-xl); padding: 44px;
+    background: radial-gradient(600px 300px at 0% 0%, rgba(56, 189, 248, 0.12), transparent 60%), radial-gradient(500px 260px at 100% 0%, rgba(96, 165, 250, 0.10), transparent 60%), linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+    border: 1px solid var(--line); box-shadow: var(--shadow-2); overflow: hidden;
 }
-
 .hero-inner::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(120deg, rgba(124, 207, 255, 0.4), transparent 40%, rgba(74, 222, 128, 0.35), transparent 70%, rgba(124, 207, 255, 0.4));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0.6;
+    content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
+    background: linear-gradient(120deg, rgba(124, 207, 255, 0.4), transparent 40%, rgba(74, 222, 128, 0.35), transparent 70%, rgba(124, 207, 255, 0.4));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+    pointer-events: none; opacity: 0.6;
 }
-
-.hero-logo {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 24px;
-  border-radius: 28px;
-  padding: 14px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--line-strong);
-  box-shadow: var(--glow-cyan), var(--shadow-1);
-}
-
-.hero-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-.hero h1 {
-  font-size: clamp(36px, 5vw, 64px);
-  line-height: 1.08;
-  font-weight: 900;
-  letter-spacing: -1px;
-  margin-bottom: 18px;
-}
-
-.hero h1 .line-1 {
-  color: var(--text);
-}
-
-.hero h1 .line-2 {
-  background: linear-gradient(90deg, var(--cyan), var(--blue), var(--green));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 18px rgba(124, 207, 255, 0.25));
-}
-
-.hero-sub {
-  font-size: 17px;
-  color: var(--text-dim);
-  max-width: 780px;
-  line-height: 1.8;
-  margin-bottom: 28px;
-}
-
-.hero-sub strong {
-  color: var(--text);
-  font-weight: 700;
-}
-
-.badge-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 28px;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-dim);
-}
-
-.badge.warn {
-  border-color: rgba(251, 191, 36, 0.35);
-  color: var(--yellow);
-  background: rgba(251, 191, 36, 0.08);
-}
-
-.badge.tag {
-  border-color: rgba(124, 207, 255, 0.35);
-  color: var(--cyan);
-  background: rgba(124, 207, 255, 0.08);
-}
-
-.hero-actions {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
+.hero-logo { width: 120px; height: 120px; margin-bottom: 24px; border-radius: 28px; padding: 14px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-strong); box-shadow: var(--glow-cyan), var(--shadow-1); }
+.hero-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.hero h1 { font-size: clamp(36px, 5vw, 64px); line-height: 1.08; font-weight: 900; letter-spacing: -1px; margin-bottom: 18px; }
+.hero h1 .line-1 { color: var(--text); }
+.hero h1 .line-2 { background: linear-gradient(90deg, var(--cyan), var(--blue), var(--green)); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 18px rgba(124, 207, 255, 0.25)); }
+.hero-sub { font-size: 17px; color: var(--text-dim); max-width: 780px; line-height: 1.8; margin-bottom: 28px; }
+.hero-sub strong { color: var(--text); font-weight: 700; }
+.badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+.badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.04); color: var(--text-dim); }
+.badge.warn { border-color: rgba(251, 191, 36, 0.35); color: var(--yellow); background: rgba(251, 191, 36, 0.08); }
+.badge.tag { border-color: rgba(124, 207, 255, 0.35); color: var(--cyan); background: rgba(124, 207, 255, 0.08); }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 /* ========== Warning banner ========== */
-.warning-banner {
-  margin-top: 22px;
-  padding: 18px 22px;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(251, 191, 36, 0.35);
-  background: linear-gradient(90deg, rgba(251, 191, 36, 0.12), rgba(251, 191, 36, 0.04));
-  color: var(--yellow);
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-
-.warning-banner .icon {
-  font-size: 22px;
-  line-height: 1;
-}
-
-.warning-banner p {
-  font-size: 14px;
-  line-height: 1.7;
-}
-
+.warning-banner { margin-top: 22px; padding: 18px 22px; border-radius: var(--radius-lg); border: 1px solid rgba(251, 191, 36, 0.35); background: linear-gradient(90deg, rgba(251, 191, 36, 0.12), rgba(251, 191, 36, 0.04)); color: var(--yellow); display: flex; gap: 14px; align-items: flex-start; }
+.warning-banner .icon { font-size: 22px; line-height: 1; }
+.warning-banner p { font-size: 14px; line-height: 1.7; }
 /* ========== Section title ========== */
-.section-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.section-title .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--cyan);
-  box-shadow: var(--glow-cyan);
-}
-
-.section-title h2 {
-  font-size: 26px;
-  font-weight: 900;
-  letter-spacing: -0.5px;
-}
-
-.section-title p {
-  margin-left: 8px;
-  color: var(--text-muted);
-  font-size: 14px;
-}
-
+.section-title { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.section-title .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--cyan); box-shadow: var(--glow-cyan); }
+.section-title h2 { font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
+.section-title p { margin-left: 8px; color: var(--text-muted); font-size: 14px; }
 /* ========== Dependency chain ========== */
-.dep-section {
-  margin: 56px 0 40px;
-}
-
-.dep-card {
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--line);
-  background:
-    radial-gradient(500px 220px at 50% 0%, rgba(96, 165, 250, 0.10), transparent 60%),
-    rgba(255, 255, 255, 0.03);
-  padding: 34px;
-  box-shadow: var(--shadow-1);
-}
-
-.dep-chain {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.dep-node {
-  min-width: 150px;
-  padding: 16px 20px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line-strong);
-  background: rgba(255, 255, 255, 0.04);
-  text-align: center;
-  font-weight: 800;
-  font-size: 15px;
-  box-shadow: var(--shadow-1);
-}
-
-.dep-node.package {
-  border-color: rgba(74, 222, 128, 0.4);
-  color: var(--green);
-  box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.15), var(--glow-green);
-}
-
-.dep-node.mod {
-  border-color: rgba(124, 207, 255, 0.4);
-  color: var(--cyan);
-  box-shadow: 0 0 0 1px rgba(124, 207, 255, 0.15), var(--glow-cyan);
-}
-
-.dep-arrow,
-.dep-plus {
-  font-size: 22px;
-  color: var(--text-muted);
-  font-weight: 900;
-}
-
-.dep-desc {
-  text-align: center;
-  margin-top: 18px;
-  color: var(--text-dim);
-  font-size: 14px;
-}
-
+.dep-section { margin: 56px 0 40px; }
+.dep-card { border-radius: var(--radius-xl); border: 1px solid var(--line); background: radial-gradient(500px 220px at 50% 0%, rgba(96, 165, 250, 0.10), transparent 60%), rgba(255, 255, 255, 0.03); padding: 34px; box-shadow: var(--shadow-1); }
+.dep-chain { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+.dep-node { min-width: 150px; padding: 16px 20px; border-radius: var(--radius-md); border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.04); text-align: center; font-weight: 800; font-size: 15px; box-shadow: var(--shadow-1); }
+.dep-node.package { border-color: rgba(74, 222, 128, 0.4); color: var(--green); box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.15), var(--glow-green); }
+.dep-node.mod { border-color: rgba(124, 207, 255, 0.4); color: var(--cyan); box-shadow: 0 0 0 1px rgba(124, 207, 255, 0.15), var(--glow-cyan); }
+.dep-arrow, .dep-plus { font-size: 22px; color: var(--text-muted); font-weight: 900; }
+.dep-desc { text-align: center; margin-top: 18px; color: var(--text-dim); font-size: 14px; }
 /* ========== Download grid ========== */
-.download-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin: 40px 0 56px;
-}
-
-.download-card {
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-  padding: 30px;
-  text-align: center;
-  text-decoration: none;
-  color: var(--text);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.download-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(400px 180px at 50% 0%, rgba(124, 207, 255, 0.12), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.download-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--line-strong);
-  box-shadow: var(--shadow-2);
-}
-
-.download-card:hover::before {
-  opacity: 1;
-}
-
-.download-card .tag {
-  position: relative;
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 800;
-  margin-bottom: 14px;
-  letter-spacing: 0.5px;
-}
-
-.download-card .tag.primary {
-  background: rgba(74, 222, 128, 0.12);
-  color: var(--green);
-  border: 1px solid rgba(74, 222, 128, 0.35);
-}
-
-.download-card .tag.secondary {
-  background: rgba(124, 207, 255, 0.12);
-  color: var(--cyan);
-  border: 1px solid rgba(124, 207, 255, 0.35);
-}
-
-.download-card .tag.backup {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-dim);
-  border: 1px solid var(--line);
-}
-
-.download-card h3 {
-  position: relative;
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.download-card p {
-  position: relative;
-  color: var(--text-dim);
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-.download-card .arrow {
-  position: relative;
-  display: inline-block;
-  margin-top: 18px;
-  font-size: 20px;
-  color: var(--cyan);
-  transition: transform 0.3s ease;
-}
-
-.download-card:hover .arrow {
-  transform: translateX(6px);
-}
-
+.download-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 40px 0 56px; }
+.download-card { border-radius: var(--radius-xl); border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); padding: 30px; text-align: center; text-decoration: none; color: var(--text); transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; position: relative; overflow: hidden; }
+.download-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(400px 180px at 50% 0%, rgba(124, 207, 255, 0.12), transparent 60%); opacity: 0; transition: opacity 0.3s ease; }
+.download-card:hover { transform: translateY(-6px); border-color: var(--line-strong); box-shadow: var(--shadow-2); }
+.download-card:hover::before { opacity: 1; }
+.download-card .tag { position: relative; display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; margin-bottom: 14px; letter-spacing: 0.5px; }
+.download-card .tag.primary { background: rgba(74, 222, 128, 0.12); color: var(--green); border: 1px solid rgba(74, 222, 128, 0.35); }
+.download-card .tag.secondary { background: rgba(124, 207, 255, 0.12); color: var(--cyan); border: 1px solid rgba(124, 207, 255, 0.35); }
+.download-card .tag.backup { background: rgba(255, 255, 255, 0.06); color: var(--text-dim); border: 1px solid var(--line); }
+.download-card h3 { position: relative; font-size: 20px; margin-bottom: 10px; }
+.download-card p { position: relative; color: var(--text-dim); font-size: 14px; line-height: 1.7; }
+.download-card .arrow { position: relative; display: inline-block; margin-top: 18px; font-size: 20px; color: var(--cyan); transition: transform 0.3s ease; }
+.download-card:hover .arrow { transform: translateX(6px); }
 /* ========== Dependency cards ========== */
-.deps-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
-  margin-bottom: 56px;
-}
-
-.info-card {
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-  padding: 30px;
-  box-shadow: var(--shadow-1);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.info-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--line-strong);
-  box-shadow: var(--shadow-2);
-}
-
-.info-card .card-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.info-card .card-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  background: rgba(124, 207, 255, 0.12);
-  border: 1px solid rgba(124, 207, 255, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-}
-
-.info-card h3 {
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.info-card p {
-  color: var(--text-dim);
-  font-size: 14px;
-  line-height: 1.7;
-  margin-bottom: 18px;
-}
-
-.dep-links {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.dep-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-  text-decoration: none;
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 600;
-  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
-}
-
-.dep-link:hover {
-  border-color: var(--line-strong);
-  background: rgba(255, 255, 255, 0.06);
-  transform: translateX(4px);
-}
-
-.dep-link .label {
-  color: var(--text-dim);
-  font-weight: 500;
-  font-size: 13px;
-}
-
-.dep-link .link-name {
-  color: var(--cyan);
-}
-
-.dep-link.cf .link-name {
-  color: var(--yellow);
-}
-
+.deps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-bottom: 56px; }
+.info-card { border-radius: var(--radius-xl); border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); padding: 30px; box-shadow: var(--shadow-1); transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+.info-card:hover { transform: translateY(-4px); border-color: var(--line-strong); box-shadow: var(--shadow-2); }
+.info-card .card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.info-card .card-icon { width: 44px; height: 44px; border-radius: 14px; background: rgba(124, 207, 255, 0.12); border: 1px solid rgba(124, 207, 255, 0.35); display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.info-card h3 { font-size: 20px; font-weight: 800; }
+.info-card p { color: var(--text-dim); font-size: 14px; line-height: 1.7; margin-bottom: 18px; }
+.dep-links { display: flex; flex-direction: column; gap: 10px; }
+.dep-link { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border-radius: var(--radius-md); border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); text-decoration: none; color: var(--text); font-size: 14px; font-weight: 600; transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease; }
+.dep-link:hover { border-color: var(--line-strong); background: rgba(255, 255, 255, 0.06); transform: translateX(4px); }
+.dep-link .label { color: var(--text-dim); font-weight: 500; font-size: 13px; }
+.dep-link .link-name { color: var(--cyan); }
+.dep-link.cf .link-name { color: var(--yellow); }
 /* ========== Features ========== */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-bottom: 56px;
-}
-
-.feature-card {
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-  padding: 30px;
-  box-shadow: var(--shadow-1);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.feature-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--line-strong);
-  box-shadow: var(--shadow-2);
-}
-
-.feature-card .emoji {
-  font-size: 26px;
-  margin-bottom: 12px;
-}
-
-.feature-card h3 {
-  font-size: 19px;
-  margin-bottom: 10px;
-  font-weight: 800;
-}
-
-.feature-card p {
-  color: var(--text-dim);
-  font-size: 14px;
-  line-height: 1.7;
-}
-
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 56px; }
+.feature-card { border-radius: var(--radius-xl); border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); padding: 30px; box-shadow: var(--shadow-1); transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+.feature-card:hover { transform: translateY(-4px); border-color: var(--line-strong); box-shadow: var(--shadow-2); }
+.feature-card .emoji { font-size: 26px; margin-bottom: 12px; }
+.feature-card h3 { font-size: 19px; margin-bottom: 10px; font-weight: 800; }
+.feature-card p { color: var(--text-dim); font-size: 14px; line-height: 1.7; }
 /* ========== Stats ========== */
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin: 40px 0 56px;
-}
-
-.stat-card {
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-  padding: 26px;
-  text-align: center;
-  box-shadow: var(--shadow-1);
-}
-
-.stat-card .num {
-  font-size: 34px;
-  font-weight: 900;
-  background: linear-gradient(90deg, var(--cyan), var(--blue));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  margin-bottom: 6px;
-}
-
-.stat-card .label {
-  color: var(--text-dim);
-  font-size: 14px;
-}
-
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin: 40px 0 56px; }
+.stat-card { border-radius: var(--radius-xl); border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); padding: 26px; text-align: center; box-shadow: var(--shadow-1); }
+.stat-card .num { font-size: 34px; font-weight: 900; background: linear-gradient(90deg, var(--cyan), var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 6px; }
+.stat-card .label { color: var(--text-dim); font-size: 14px; }
 /* ========== FAQ ========== */
-.faq-list {
-  margin-bottom: 56px;
-}
-
-.faq-item {
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-  margin-bottom: 14px;
-  overflow: hidden;
-  box-shadow: var(--shadow-1);
-}
-
-.faq-question {
-  width: 100%;
-  background: transparent;
-  border: none;
-  color: var(--text);
-  text-align: left;
-  padding: 20px 22px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: inherit;
-}
-
-.faq-question .plus {
-  color: var(--cyan);
-  font-size: 20px;
-  transition: transform 0.3s ease;
-}
-
-.faq-item.open .faq-question .plus {
-  transform: rotate(45deg);
-}
-
-.faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease;
-}
-
-.faq-answer-inner {
-  padding: 0 22px 22px;
-  color: var(--text-dim);
-  line-height: 1.8;
-  font-size: 14px;
-}
-
+.faq-list { margin-bottom: 56px; }
+.faq-item { border-radius: var(--radius-lg); border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); margin-bottom: 14px; overflow: hidden; box-shadow: var(--shadow-1); }
+.faq-question { width: 100%; background: transparent; border: none; color: var(--text); text-align: left; padding: 20px 22px; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; }
+.faq-question .plus { color: var(--cyan); font-size: 20px; transition: transform 0.3s ease; }
+.faq-item.open .faq-question .plus { transform: rotate(45deg); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.faq-answer-inner { padding: 0 22px 22px; color: var(--text-dim); line-height: 1.8; font-size: 14px; }
 /* ========== Footer ========== */
-footer {
-  position: relative;
-  z-index: 1;
-  border-top: 1px solid var(--line);
-  padding: 32px 0;
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 14px;
-  margin-top: 40px;
-}
-
-footer .heart {
-  color: var(--red);
-}
-
+footer { position: relative; z-index: 1; border-top: 1px solid var(--line); padding: 32px 0; text-align: center; color: var(--text-muted); font-size: 14px; margin-top: 40px; }
+footer .heart { color: var(--red); }
 /* ========== Modal ========== */
-.modal-mask {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(10px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.modal-mask.open {
-  display: flex;
-}
-
-.modal {
-  width: 100%;
-  max-width: 480px;
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--line);
-  background: linear-gradient(180deg, #0a1020, #060914);
-  box-shadow: var(--shadow-3);
-  overflow: hidden;
-  transform: scale(0.96);
-  transition: transform 0.25s ease;
-}
-
-.modal-mask.open .modal {
-  transform: scale(1);
-}
-
-.modal-head {
-  padding: 24px;
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-head h3 {
-  font-size: 20px;
-  font-weight: 900;
-}
-
-.modal-close {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text);
-  cursor: pointer;
-  font-size: 18px;
-}
-
-.modal-close:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.modal-body {
-  padding: 24px;
-}
-
-.modal-links {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.modal-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-  text-decoration: none;
-  color: var(--text);
-  font-weight: 700;
-  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
-}
-
-.modal-link:hover {
-  border-color: var(--line-strong);
-  background: rgba(255, 255, 255, 0.06);
-  transform: translateX(4px);
-}
-
-.modal-link .desc {
-  color: var(--text-dim);
-  font-weight: 500;
-  font-size: 13px;
-}
-
-.modal-link .status {
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 999px;
-  font-weight: 800;
-}
-
-.status-primary {
-  background: rgba(74, 222, 128, 0.12);
-  color: var(--green);
-  border: 1px solid rgba(74, 222, 128, 0.35);
-}
-
-.status-secondary {
-  background: rgba(124, 207, 255, 0.12);
-  color: var(--cyan);
-  border: 1px solid rgba(124, 207, 255, 0.35);
-}
-
-.status-backup {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-dim);
-  border: 1px solid var(--line);
-}
-
+.modal-mask { position: fixed; inset: 0; z-index: 999; background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; padding: 20px; }
+.modal-mask.open { display: flex; }
+.modal { width: 100%; max-width: 480px; border-radius: var(--radius-xl); border: 1px solid var(--line); background: linear-gradient(180deg, #0a1020, #060914); box-shadow: var(--shadow-3); overflow: hidden; transform: scale(0.96); transition: transform 0.25s ease; }
+html.light-theme .modal { background: linear-gradient(180deg, #ffffff, #f3f6fc); }
+.modal-mask.open .modal { transform: scale(1); }
+.modal-head { padding: 24px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+.modal-head h3 { font-size: 20px; font-weight: 900; }
+.modal-close { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.04); color: var(--text); cursor: pointer; font-size: 18px; }
+.modal-close:hover { background: rgba(255, 255, 255, 0.08); }
+.modal-body { padding: 24px; }
+.modal-links { display: flex; flex-direction: column; gap: 12px; }
+.modal-link { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--line); background: rgba(255, 255, 255, 0.03); text-decoration: none; color: var(--text); font-weight: 700; transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease; }
+.modal-link:hover { border-color: var(--line-strong); background: rgba(255, 255, 255, 0.06); transform: translateX(4px); }
+.modal-link .desc { color: var(--text-dim); font-weight: 500; font-size: 13px; }
+.modal-link .status { font-size: 12px; padding: 4px 8px; border-radius: 999px; font-weight: 800; }
+.status-primary { background: rgba(74, 222, 128, 0.12); color: var(--green); border: 1px solid rgba(74, 222, 128, 0.35); }
+.status-secondary { background: rgba(124, 207, 255, 0.12); color: var(--cyan); border: 1px solid rgba(124, 207, 255, 0.35); }
+.status-backup { background: rgba(255, 255, 255, 0.06); color: var(--text-dim); border: 1px solid var(--line); }
 /* ========== Back to top ========== */
-.back-top {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: rgba(3, 5, 10, 0.7);
-  color: var(--text);
-  font-size: 20px;
-  cursor: pointer;
-  z-index: 80;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-2);
-  transition: transform 0.25s ease, background 0.25s ease;
-}
-
-.back-top.show {
-  display: flex;
-}
-
-.back-top:hover {
-  transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.08);
-}
-
+.back-top { position: fixed; right: 24px; bottom: 24px; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); background: rgba(3, 5, 10, 0.7); color: var(--text); font-size: 20px; cursor: pointer; z-index: 80; display: none; align-items: center; justify-content: center; box-shadow: var(--shadow-2); transition: transform 0.25s ease, background 0.25s ease; }
+html.light-theme .back-top { background: rgba(255,255,255,0.75); }
+.back-top.show { display: flex; }
+.back-top:hover { transform: translateY(-4px); background: rgba(255, 255, 255, 0.08); }
+html.light-theme .back-top:hover { background: rgba(0,0,0,0.08); }
 /* ========== Easter egg overlay ========== */
-.egg-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9997;
-  pointer-events: none;
-  background: radial-gradient(circle at 50% 50%, rgba(124, 207, 255, 0.35), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.egg-overlay.active {
-  opacity: 1;
-}
-
+.egg-overlay { position: fixed; inset: 0; z-index: 9997; pointer-events: none; background: radial-gradient(circle at 50% 50%, rgba(124, 207, 255, 0.35), transparent 60%); opacity: 0; transition: opacity 0.4s ease; }
+.egg-overlay.active { opacity: 1; }
 /* ========== Responsive ========== */
 @media (max-width: 980px) {
-  .download-grid,
-  .features-grid,
-  .stats-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .deps-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .nav-links {
-    display: none;
-  }
+    .download-grid, .features-grid, .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .deps-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
 }
-
 @media (max-width: 640px) {
-  .hero-inner {
-    padding: 32px 24px;
-  }
-
-  .download-grid,
-  .features-grid,
-  .stats-row {
-    grid-template-columns: 1fr;
-  }
-
-  .dep-chain {
-    flex-direction: column;
-  }
-
-  .dep-arrow,
-  .dep-plus {
-    transform: rotate(90deg);
-  }
-
-  .badge-row {
-    gap: 8px;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .btn {
-    text-align: center;
-  }
+    .hero-inner { padding: 32px 24px; }
+    .download-grid, .features-grid, .stats-row { grid-template-columns: 1fr; }
+    .dep-chain { flex-direction: column; }
+    .dep-arrow, .dep-plus { transform: rotate(90deg); }
+    .badge-row { gap: 8px; }
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .btn { text-align: center; }
 }
 </style>
 </head>
-
 <body>
 <div class="page-loader">
-  <div class="bar" id="loaderBar"></div>
+    <div class="bar" id="loaderBar"></div>
 </div>
-
 <div class="aurora"></div>
 <div class="grid-bg"></div>
 <canvas id="meteorBg"></canvas>
-
 <div class="egg-overlay" id="eggOverlay"></div>
-
 <nav id="navbar">
-  <div class="nav-inner">
-    <a href="#overview" class="brand">
-      <div class="brand-logo">
-        <img src="logo.png" alt="DawnAurora Logo" onerror="this.style.display='none'" />
-      </div>
-      <div class="brand-text">Dawn<span>Aurora</span></div>
-    </a>
-
-    <div class="nav-links">
-      <a href="#overview">概述</a>
-      <a href="#download">下载</a>
-      <a href="#deps">依赖</a>
-      <a href="#features">功能</a>
-      <a href="#faq">FAQ</a>
-      <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack" target="_blank">Code</a>
-      <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/issues" target="_blank">Issues</a>
+    <div class="nav-inner">
+        <a href="#overview" class="brand">
+            <div class="brand-logo">
+                <img src="logo.png" alt="DawnAurora Logo" onerror="this.style.display='none'" />
+            </div>
+            <div class="brand-text">Dawn<span>Aurora</span></div>
+        </a>
+        <div class="nav-links">
+            <a href="#overview" data-i18n="nav_overview">概述</a>
+            <a href="#download" data-i18n="nav_download">下载</a>
+            <a href="#deps" data-i18n="nav_deps">依赖</a>
+            <a href="#features" data-i18n="nav_features">功能</a>
+            <a href="#faq" data-i18n="nav_faq">FAQ</a>
+            <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack" target="_blank">Code</a>
+            <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/issues" target="_blank">Issues</a>
+        </div>
+        <div class="nav-actions">
+            <button class="btn btn-ghost btn-icon" id="themeBtn" title="切换主题">◐</button>
+            <!-- 语言切换国旗按钮 -->
+            <button class="btn btn-ghost btn-icon" id="langBtn" title="切换语言">🇨🇳</button>
+            <button class="btn btn-primary" id="openDownloadBtn" data-i18n="btn_download">下载资源包</button>
+        </div>
     </div>
-
-    <div class="nav-actions">
-      <button class="btn btn-ghost btn-icon" id="themeBtn" title="切换主题">◐</button>
-      <button class="btn btn-primary" id="openDownloadBtn">下载资源包</button>
-    </div>
-  </div>
 </nav>
 
 <main>
-  <section class="hero" id="overview">
+<section class="hero" id="overview">
     <div class="hero-inner">
-      <div class="hero-logo">
-        <img src="logo.png" alt="DawnAurora Logo" onerror="this.style.display='none'" />
-      </div>
-
-      <h1>
-        <div class="line-1">dawnaurora player animation resource pack 玩家动画</div>
-        <div class="line-2">DawnAurora Resource Pack</div>
-      </h1>
-
-      <p class="hero-sub">
-        为 Minecraft 1.20.1 Fabric 重制更流畅的玩家动作表现。第一人称手部姿态、武器挥砍、物品切换与移动动作优化，让角色看起来更有重量感与节奏感。
-        <br><br>
-        <strong>重要说明：这是资源包，不是模组。</strong>必须同时安装 <strong>EMF</strong> 和 <strong>ETF</strong> 两个前置模组才能运行。
-      </p>
-
-      <div class="badge-row">
-        <span class="badge warn">⚠️ Alpha 测试版</span>
-        <span class="badge tag">1.20.1 Fabric</span>
-        <span class="badge tag">EMF + ETF</span>
-        <span class="badge tag">Apache-2.0</span>
-      </div>
-
-      <div class="hero-actions">
-        <button class="btn btn-primary" id="heroDownloadBtn">下载 Dapa 资源包</button>
-        <button class="btn btn-ghost" id="openDepBtn">获取 EMF / ETF 前置</button>
-      </div>
+        <div class="hero-logo">
+            <img src="logo.png" alt="DawnAurora Logo" onerror="this.style.display='none'" />
+        </div>
+        <h1>
+            <div class="line-1" data-i18n="hero_title1">Dapa 玩家动画</div>
+            <div class="line-2">DawnAurora Resource Pack</div>
+        </h1>
+        <p class="hero-sub" data-i18n="hero_desc">
+            为 Minecraft 1.20.1 Fabric 重制更流畅的玩家动作表现。第一人称手部姿态、武器挥砍、物品切换与移动动作优化，让角色看起来更有重量感与节奏感。
+            <br><br>
+            <strong data-i18n="hero_note">重要说明：这是资源包，不是模组。</strong><span data-i18n="hero_note2">必须同时安装 <strong>EMF</strong> 和 <strong>ETF</strong> 两个前置模组才能运行。</span>
+        </p>
+        <div class="badge-row">
+            <span class="badge warn" data-i18n="badge_alpha">⚠️ Alpha 测试版</span>
+            <span class="badge tag">1.20.1 Fabric</span>
+            <span class="badge tag">EMF + ETF</span>
+            <span class="badge tag">Apache-2.0</span>
+        </div>
+        <div class="hero-actions">
+            <button class="btn btn-primary" id="heroDownloadBtn" data-i18n="btn_hero_download">下载 Dapa 资源包</button>
+            <button class="btn btn-ghost" id="openDepBtn" data-i18n="btn_get_deps">获取 EMF / ETF 前置</button>
+        </div>
     </div>
-
     <div class="warning-banner">
-      <div class="icon">⚠️</div>
-      <p>
-        <strong>Alpha 早期测试版本</strong><br>
-        本版本仅用于测试，可能存在动画不稳定等问题，不建议用于长期生存存档。
-      </p>
+        <div class="icon">⚠️</div>
+        <p>
+            <strong data-i18n="warn_title">Alpha 早期测试版本</strong><br>
+            <span data-i18n="warn_text">本版本仅用于测试，可能存在动画不稳定等问题，不建议用于长期生存存档。</span>
+        </p>
     </div>
-  </section>
+</section>
 
-  <section id="download">
+<section id="download">
     <div class="section-title">
-      <span class="dot"></span>
-      <h2>下载 Dapa 资源包</h2>
-      <p>三链路下载，优先加速，兜底官方源</p>
+        <span class="dot"></span>
+        <h2 data-i18n="download_title">下载 Dapa 资源包</h2>
+        <p data-i18n="download_sub">三链路下载，优先加速，兜底官方源</p>
     </div>
-
     <div class="download-grid">
-      <a class="download-card" href="https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip" target="_blank">
-        <span class="tag primary">🚀 首选加速</span>
-        <h3>gh-proxy</h3>
-        <p>推荐国内用户优先使用，下载资源包 zip 文件。</p>
-        <span class="arrow">→</span>
-      </a>
-
-      <a class="download-card" href="https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip" target="_blank">
-        <span class="tag secondary">🔁 备选加速</span>
-        <h3>ghproxy.net</h3>
-        <p>如果首选链接波动，可以切换此加速源。</p>
-        <span class="arrow">→</span>
-      </a>
-
-      <a class="download-card" href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/dapa" target="_blank">
-        <span class="tag backup">🔗 官方兜底</span>
-        <h3>GitHub Release</h3>
-        <p>直接进入仓库 Release 页面，手动下载最新资源包。</p>
-        <span class="arrow">→</span>
-      </a>
+        <a class="download-card" href="https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip" target="_blank">
+            <span class="tag primary" data-i18n="dl_tag1">🚀 首选加速</span>
+            <h3>gh-proxy</h3>
+            <p data-i18n="dl_p1">推荐国内用户优先使用，下载资源包 zip 文件。</p>
+            <span class="arrow">→</span>
+        </a>
+        <a class="download-card" href="https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip" target="_blank">
+            <span class="tag secondary" data-i18n="dl_tag2">🔁 备选加速</span>
+            <h3>ghproxy.net</h3>
+            <p data-i18n="dl_p2">如果首选链接波动，可以切换此加速源。</p>
+            <span class="arrow">→</span>
+        </a>
+        <a class="download-card" href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/dapa" target="_blank">
+            <span class="tag backup" data-i18n="dl_tag3">🔗 官方兜底</span>
+            <h3>GitHub Release</h3>
+            <p data-i18n="dl_p3">直接进入仓库 Release 页面，手动下载最新资源包。</p>
+            <span class="arrow">→</span>
+        </a>
     </div>
-  </section>
+</section>
 
-  <section class="dep-section" id="deps">
+<section class="dep-section" id="deps">
     <div class="section-title">
-      <span class="dot"></span>
-      <h2>依赖关系</h2>
-      <p>dawnaurora player animation resource pack 资源包必须配合 EMF + ETF 使用</p>
+        <span class="dot"></span>
+        <h2 data-i18n="dep_title">依赖关系</h2>
+        <p data-i18n="dep_sub">Dapa 资源包必须配合 EMF + ETF 使用</p>
     </div>
-
     <div class="dep-card">
-      <div class="dep-chain">
-        <div class="dep-node package">dawnaurora player animation resource pack 资源包</div>
-        <span class="dep-arrow">→</span>
-        <div class="dep-node mod">EMF</div>
-        <span class="dep-plus">+</span>
-        <div class="dep-node mod">ETF</div>
-      </div>
-      <p class="dep-desc">
-        EMF 负责实体模型与骨骼动画支持，ETF 负责实体纹理与动画驱动。二者缺一不可。
-      </p>
+        <div class="dep-chain">
+            <div class="dep-node package">Dapa 资源包</div>
+            <span class="dep-arrow">→</span>
+            <div class="dep-node mod">EMF</div>
+            <span class="dep-plus">+</span>
+            <div class="dep-node mod">ETF</div>
+        </div>
+        <p class="dep-desc" data-i18n="dep_desc">EMF 负责实体模型与骨骼动画支持，ETF 负责实体纹理与动画驱动。二者缺一不可。</p>
     </div>
-
     <div class="deps-grid">
-      <div class="info-card">
-        <div class="card-head">
-          <div class="card-icon">📦</div>
-          <div>
-            <h3>EMF</h3>
-            <p style="margin:0;">Entity Model Features</p>
-          </div>
+        <div class="info-card">
+            <div class="card-head">
+                <div class="card-icon">📦</div>
+                <div>
+                    <h3>EMF</h3>
+                    <p style="margin:0;">Entity Model Features</p>
+                </div>
+            </div>
+            <p data-i18n="emf_desc">提供实体模型扩展与骨骼动画能力，是 Dapa 资源包实现玩家动作重制的核心前置模组。</p>
+            <div class="dep-links">
+                <a class="dep-link" href="https://cdn-alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">
+                    <span>Modrinth CDN</span>
+                    <span class="link-name">下载 →</span>
+                </a>
+                <a class="dep-link Curseforge" href="https://mediafilez.forgecdn.net/files/8909/421/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">
+                    <span>CCurseforge CDN</span>
+                    <span class="link-name">Curseforge 兜底 →</span>
+                </a>
+            </div>
         </div>
-        <p>
-          提供实体模型扩展与骨骼动画能力，是 Dapa 资源包实现玩家动作重制的核心前置模组。
-        </p>
-        <div class="dep-links">
-          <a class="dep-link" href="https://cdn-alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">
-            <span>Modrinth CDN</span>
-            <span class="link-name">下载 →</span>
-          </a>
-          <a class="dep-link curseforge" href="https://mediafilez.forgecdn.net/files/8909/421/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">
-            <span>curseforge CDN</span>
-            <span class="link-name">curseforge 兜底 →</span>
-          </a>
+        <div class="info-card">
+            <div class="card-head">
+                <div class="card-icon">📦</div>
+                <div>
+                    <h3>ETF</h3>
+                    <p style="margin:0;">Entity Texture Features</p>
+                </div>
+            </div>
+            <p data-i18n="etf_desc">提供实体纹理特性与动画驱动支持，负责让资源包中的材质和动画效果正确显示。</p>
+            <div class="dep-links">
+                <a class="dep-link" href="https://cdn-alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">
+                    <span>Modrinth CDN</span>
+                    <span class="link-name">下载 →</span>
+                </a>
+                <a class="dep-link curseforge" href="https://mediafilez.forgecdn.net/files/8908/927/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">
+                    <span>Curseforge CDN</span>
+                    <span class="link-name">Curseforge 兜底 →</span>
+                </a>
+            </div>
         </div>
-      </div>
-
-      <div class="info-card">
-        <div class="card-head">
-          <div class="card-icon">📦</div>
-          <div>
-            <h3>ETF</h3>
-            <p style="margin:0;">Entity Texture Features</p>
-          </div>
-        </div>
-        <p>
-          提供实体纹理特性与动画驱动支持，负责让资源包中的材质和动画效果正确显示。
-        </p>
-        <div class="dep-links">
-          <a class="dep-link" href="https://cdn-alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">
-            <span>Modrinth CDN</span>
-            <span class="link-name">下载 →</span>
-          </a>
-          <a class="dep-link curseforge" href="https://mediafilez.forgecdn.net/files/8908/927/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">
-            <span>curseforge CDN</span>
-            <span class="link-name">curseforge 兜底 →</span>
-          </a>
-        </div>
-      </div>
     </div>
-  </section>
+</section>
 
-  <section id="features">
+<section id="features">
     <div class="section-title">
-      <span class="dot"></span>
-      <h2>功能列表</h2>
-      <p>Alpha 0.0.1 已包含的核心动作优化</p>
+        <span class="dot"></span>
+        <h2 data-i18n="feature_title">功能列表</h2>
+        <p data-i18n="feature_sub">Alpha v0.0.1 已包含的核心动作优化</p>
     </div>
-
     <div class="features-grid">
-      <div class="feature-card">
-        <div class="emoji">🍖</div>
-        <h3>进食动画</h3>
-        <p>吃东西时手臂会抬起，形成更自然的进食动作表现。</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="emoji">⚔️</div>
-        <h3>武器挥砍</h3>
-        <p>攻击与挥剑时加入更有节奏感的手部动作，提升战斗反馈。</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="emoji">🔄</div>
-        <h3>物品切换</h3>
-        <p>切换手中物品时加入平滑过渡，减少生硬的瞬间切换感。</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="emoji">👁️</div>
-        <h3>第一人称适配</h3>
-        <p>优化第一人称视角下的手部姿态，让动作更贴近镜头逻辑。</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="emoji">🎥</div>
-        <h3>第三人称动作</h3>
-        <p>第三人称下展示更完整的身体动作方向，增强角色表现力。</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="emoji">🚶</div>
-        <h3>移动动作优化</h3>
-        <p>行走与奔跑时手部动作更顺滑，整体观感更自然。</p>
-      </div>
+        <div class="feature-card">
+            <div class="emoji">🍖</div>
+            <h3 data-i18n="f1_title">进食动画</h3>
+            <p data-i18n="f1_desc">吃东西时手臂会抬起，形成更自然的进食动作表现。</p>
+        </div>
+        <div class="feature-card">
+            <div class="emoji">⚔️</div>
+            <h3 data-i18n="f2_title">武器挥砍</h3>
+            <p data-i18n="f2_desc">攻击与挥剑时加入更有节奏感的手部动作，提升战斗反馈。</p>
+        </div>
+        <div class="feature-card">
+            <div class="emoji">🔄</div>
+            <h3 data-i18n="f3_title">物品切换</h3>
+            <p data-i18n="f3_desc">切换手中物品时加入平滑过渡，减少生硬的瞬间切换感。</p>
+        </div>
+        <div class="feature-card">
+            <div class="emoji">👁️</div>
+            <h3 data-i18n="f4_title">第一人称适配</h3>
+            <p data-i18n="f4_desc">优化第一人称视角下的手部姿态，让动作更贴近镜头逻辑。</p>
+        </div>
+        <div class="feature-card">
+            <div class="emoji">🎥</div>
+            <h3 data-i18n="f5_title">第三人称动作</h3>
+            <p data-i18n="f5_desc">第三人称下展示更完整的身体动作方向，增强角色表现力。</p>
+        </div>
+        <div class="feature-card">
+            <div class="emoji">🚶</div>
+            <h3 data-i18n="f6_title">移动动作优化</h3>
+            <p data-i18n="f6_desc">行走与奔跑时手部动作更顺滑，整体观感更自然。</p>
+        </div>
     </div>
-  </section>
+</section>
 
-  <section id="faq">
+<section id="faq">
     <div class="section-title">
-      <span class="dot"></span>
-      <h2>常见问题 FAQ</h2>
-      <p>安装、下载与前置依赖说明</p>
+        <span class="dot"></span>
+        <h2 data-i18n="faq_title">常见问题 FAQ</h2>
+        <p data-i18n="faq_sub">安装、下载与前置依赖说明</p>
     </div>
-
     <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-question">
-          为什么放进资源包后没有动画效果？
-          <span class="plus">+</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">
-            请确认同时安装了 <strong>EMF</strong> 和 <strong>ETF</strong> 两个前置模组，并且游戏版本为 <strong>1.20.1 Fabric</strong>。只安装资源包不会生效。
-          </div>
+        <div class="faq-item">
+            <button class="faq-question" data-i18n="q1">为什么放进资源包后没有动画效果？ <span class="plus">+</span></button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner" data-i18n="a1">请确认同时安装了 <strong>EMF</strong> 和 <strong>ETF</strong> 两个前置模组，并且游戏版本为 <strong>1.20.1 Fabric</strong>。只安装资源包不会生效。</div>
+            </div>
         </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question">
-          下载链接失效或得到 1KB 文件怎么办？
-          <span class="plus">+</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">
-            公共加速链接可能存在临时波动。请按顺序尝试：<strong>gh-proxy → ghproxy.net → GitHub Release 官方页面</strong>。
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question">
-          EMF / ETF 下载失败时怎么办？
-          <span class="plus">+</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">
-            优先使用 <strong>Modrinth CDN</strong>；如果仍然失败，可以切换到 <strong>curseforge CDN（curseforge 兜底）</strong>。
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question">
-          Alpha 版本可以用于生存存档吗？
-          <span class="plus">+</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">
-            不建议。Alpha 测试版可能存在动画错位、卡顿或不稳定问题，推荐新建测试存档体验。
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer>
-  © 2026 DawnAurora · dawnaurora player animation resource pack 玩家动画资源包 · Apache-2.0 License · Alpha 测试版
-</footer>
-
-<button class="back-top" id="backTopBtn" title="返回顶部">↑</button>
-
-<!-- Download Modal -->
-<div class="modal-mask" id="downloadModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>下载 dawnaurora player animation resource pack 资源包</h3>
-      <button class="modal-close" id="closeDownloadModal">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-links">
-        <a class="modal-link" href="https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip" target="_blank">
-          <div>
-            <div>gh-proxy 国内加速</div>
-            <div class="desc">首选下载源</div>
-          </div>
-          <span class="status status-primary">首选</span>
-        </a>
-
-        <a class="modal-link" href="https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip" target="_blank">
-          <div>
-            <div>ghproxy.net 加速</div>
-            <div class="desc">备选下载源</div>
-          </div>
-          <span class="status status-secondary">备选</span>
-        </a>
-
-        <a class="modal-link" href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/dapa" target="_blank">
-          <div>
-            <div>GitHub Release</div>
-            <div class="desc">官方兜底页面</div>
-          </div>
-          <span class="status status-backup">兜底</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Dependency Modal -->
-<div class="modal-mask" id="depModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>获取 EMF / ETF 前置模组</h3>
-      <button class="modal-close" id="closeDepModal">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-links">
-        <a class="modal-link" href="https://cdn-alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">
-          <div>
-            <div>EMF - Modrinth CDN</div>
-            <div class="desc">推荐下载源</div>
-          </div>
-          <span class="status status-primary">首选</span>
-        </a>
-
-        <a class="modal-link" href="https://mediafilez.forgecdn.net/files/8909/421/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">
-          <div>
-            <div>EMF - curseforge CDN</div>
-            <div class="desc">curseforge 兜底备用</div>
-          </div>
-          <span class="status status-backup">CF 兜底</span>
-        </a>
-
-        <a class="modal-link" href="https://cdn-alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">
-          <div>
-            <div>ETF - Modrinth CDN</div>
-            <div class="desc">推荐下载源</div>
-          </div>
-          <span class="status status-primary">首选</span>
-        </a>
-
-        <a class="modal-link" href="https://mediafilez.forgecdn.net/files/8908/927/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">
-          <div>
-            <div>ETF - curseforge CDN</div>
-            <div class="desc">curseforge 兜底备用</div>
-          </div>
-          <span class="status status-backup">curseforge 兜底</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-// ========== Page load ==========
-window.addEventListener('load', () => {
-  document.body.classList.add('loaded');
-
-  const bar = document.getElementById('loaderBar');
-  let p = 0;
-  const timer = setInterval(() => {
-    p += Math.random() * 4;
-    if (p >= 100) {
-      p = 100;
-      clearInterval(timer);
-    }
-    bar.style.width = p + '%';
-  }, 40);
-});
-
-// ========== Nav scroll ==========
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 10) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
-  }
-});
-
-// ========== Modals ==========
-const downloadModal = document.getElementById('downloadModal');
-const depModal = document.getElementById('depModal');
-
-document.getElementById('openDownloadBtn').addEventListener('click', () => {
-  downloadModal.classList.add('open');
-});
-
-document.getElementById('heroDownloadBtn').addEventListener('click', () => {
-  downloadModal.classList.add('open');
-});
-
-document.getElementById('openDepBtn').addEventListener('click', () => {
-  depModal.classList.add('open');
-});
-
-document.getElementById('closeDownloadModal').addEventListener('click', () => {
-  downloadModal.classList.remove('open');
-});
-
-document.getElementById('closeDepModal').addEventListener('click', () => {
-  depModal.classList.remove('open');
-});
-
-downloadModal.addEventListener('click', (e) => {
-  if (e.target === downloadModal) downloadModal.classList.remove('open');
-});
-
-depModal.addEventListener('click', (e) => {
-  if (e.target === depModal) depModal.classList.remove('open');
-});
-
-// ========== FAQ ==========
-document.querySelectorAll('.faq-question').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const item = btn.parentElement;
-    const answer = item.querySelector('.faq-answer');
-
-    if (item.classList.contains('open')) {
-      item.classList.remove('open');
-      answer.style.maxHeight = '0';
-    } else {
-      item.classList.add('open');
-      answer.style.maxHeight = answer.scrollHeight + 'px';
-    }
-  });
-});
-
-// ========== Back to top ==========
-const backTopBtn = document.getElementById('backTopBtn');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    backTopBtn.classList.add('show');
-  } else {
-    backTopBtn.classList.remove('show');
-  }
-});
-
-backTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// ========== Meteor background ==========
-const canvas = document.getElementById('meteorBg');
-const ctx = canvas.getContext('2d');
-let meteors = [];
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-
-function createMeteors() {
-  meteors = [];
-  const count = Math.min(30, Math.floor(window.innerWidth / 40));
-  for (let i = 0; i < count; i++) {
-    meteors.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height * 0.5,
-      len: Math.random() * 80 + 20,
-      speed: Math.random() * 5 + 3,
-      opacity: Math.random() * 0.5 + 0.2,
-    });
-  }
-}
-
-function drawMeteors() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  meteors.forEach((m) => {
-    ctx.beginPath();
-    ctx.moveTo(m.x, m.y);
-    ctx.lineTo(m.x + m.len, m.y + m.len);
-    ctx.strokeStyle = `rgba(255, 255, 255, ${m.opacity})`;
-    ctx.lineWidth = 1;
-    ctx.stroke();
-
-    m.x += m.speed;
-    m.y += m.speed;
-
-    if (m.x > canvas.width || m.y > canvas.height) {
-      m.x = Math.random() * canvas.width;
-      m.y = Math.random() * canvas.height * 0.4;
-    }
-  });
-
-  requestAnimationFrame(drawMeteors);
-}
-
-resizeCanvas();
-createMeteors();
-drawMeteors();
-
-window.addEventListener('resize', () => {
-  resizeCanvas();
-  createMeteors();
-});
-
-// ========== Parallax ==========
-document.addEventListener('mousemove', (e) => {
-  const x = (e.clientX - window.innerWidth / 2) / 120;
-  const y = (e.clientY - window.innerHeight / 2) / 120;
-  document.documentElement.style.setProperty('--parallaxX', x + 'px');
-  document.documentElement.style.setProperty('--parallaxY', y + 'px');
-});
-
-// ========== Easter egg ==========
-let keyBuffer = '';
-const target = 'dawnaurora';
-const eggOverlay = document.getElementById('eggOverlay');
-
-document.addEventListener('keydown', (e) => {
-  keyBuffer += e.key.toLowerCase();
-  if (keyBuffer.length > target.length) {
-    keyBuffer = keyBuffer.slice(-target.length);
-  }
-
-  if (keyBuffer === target) {
-    eggOverlay.classList.add('active');
-    setTimeout(() => {
-      eggOverlay.classList.remove('active');
-    }, 1800);
-    keyBuffer = '';
-  }
-});
-
-// ========== Console easter egg ==========
-console.log('%c✨ DawnAurora', 'color:#7cf;font-size:20px;font-weight:bold;');
-console.log('%c输入 dawnaurora 触发极光爆发', 'color:#fbbf24;font-size:14px;');
-</script>
-</body>
-</html>
+        <div class="faq-item">
+            <button class="faq-question" data-i18n="q2">下载链接失效或得到 1
+              
