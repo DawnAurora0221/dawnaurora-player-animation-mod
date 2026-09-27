@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DawnAurora's Player Animation</title>
-    <meta name="description" content="DawnAurora玩家动画资源包，优化Minecraft第一人称、第三人称玩家动作，进食、举盾格挡、武器挥砍、物品切换流畅动画。">
+    <meta name="description" content="Dapa 玩家动画资源包，优化 Minecraft 第一人称、第三人称玩家动作，进食、举盾格挡、武器挥砍、物品切换流畅动画。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -15,38 +15,67 @@
             --text-dim:#9aa3ad;
             --cyan:#7cf;
             --green:#4ade80;
+            --green-glow:rgba(74,222,128,0.25);
             --warn-yellow:#fbbf24;
             --danger-red:#ff7373;
             --blue-primary:#60a5fa;
-            --bg:#0a0a0a;
-            --bg-card:rgba(255,255,255,0.06);
-            --bg-card-hover:rgba(255,255,255,0.1);
+            --blue-glow:rgba(96,165,250,0.25);
+            --bg-card:rgba(255,255,255,0.05);
+            --bg-card-hover:rgba(255,255,255,0.09);
+            --glass-blur:14px;
         }
         [data-theme="light"]{
             --line:rgba(0,0,0,0.12);
             --text:#1f2937;
             --text-dim:#4b5563;
-            --bg:#f3f4f6;
-            --bg-card:rgba(255,255,255,0.75);
-            --bg-card-hover:rgba(255,255,255,0.9);
+            --bg-card:rgba(255,255,255,0.72);
+            --bg-card-hover:rgba(255,255,255,0.92);
+            --glass-blur:10px;
+            --green-glow:rgba(74,222,128,0.12);
+            --blue-glow:rgba(96,165,250,0.15);
         }
         *{box-sizing:border-box;margin:0;padding:0;}
         html{scroll-behavior:smooth;scroll-padding-top:72px;}
+        ::-webkit-scrollbar {width:8px;height:8px;}
+        ::-webkit-scrollbar-track {background:transparent;}
+        ::-webkit-scrollbar-thumb {background:var(--line);border-radius:99px;}
+        ::selection{background:var(--blue-primary);color:#000;}
         html,body{min-height:100%;}
         body{
             font-family:"Noto Sans SC",system-ui,-apple-system,Segoe UI,sans-serif;
-            background-color:var(--bg);
             color:var(--text);
-            transition: background 0.3s, color 0.3s;
+            transition: color 0.35s ease;
             line-height:1.6;
+            overflow-x:hidden;
+            position:relative;
         }
+
+        #meteorBg{
+            position:fixed;
+            inset:0;
+            z-index:-1;
+            display:block;
+            width:100%;
+            height:100%;
+            pointer-events:none;
+        }
+
         .container{max-width:1200px;margin:0 auto;padding:0 20px;}
-        /*导航栏*/
+
         nav{
             position:sticky;top:0;z-index:99;
-            background-color:var(--bg);
-            border-bottom:1px solid var(--line);
+            background:transparent;
+            border-bottom:1px solid transparent;
             padding:14px 0;
+            transition:0.3s ease;
+        }
+        nav.scrolled{
+            background:rgba(5,7,13,0.72);
+            backdrop-filter: blur(var(--glass-blur));
+            border-bottom:1px solid var(--line);
+        }
+        [data-theme="light"] nav.scrolled{
+            background:rgba(238,244,255,0.75);
         }
         .nav-wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
         .nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;}
@@ -55,23 +84,56 @@
             width:auto;
             object-fit:contain;
         }
-        .nav-links{display:flex;gap:22px;align-items:center;flex-wrap:wrap;}
-        .nav-links a{color:var(--text-dim);text-decoration:none;transition:0.2s;font-size:15px;}
-        .nav-links a:hover{color:var(--text);}
+        .nav-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+        .nav-links a{color:var(--text-dim);text-decoration:none;transition:0.25s ease;font-size:14px;white-space:nowrap;}
+        .nav-links a:hover{color:var(--text);text-shadow:0 0 8px var(--blue-glow);}
         .btn{
-            padding:9px 18px;border-radius:8px;border:none;cursor:pointer;
-            font-weight:600;font-size:15px;transition:0.2s;
+            padding:9px 18px;border-radius:10px;border:none;cursor:pointer;
+            font-weight:600;font-size:15px;transition:0.25s ease;
+            font-family:inherit;
         }
-        .btn-primary{background:var(--green);color:#000;}
-        .btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px);}
-        .btn-secondary{background:var(--bg-card);color:var(--text);border:1px solid var(--line);}
-        .btn-secondary:hover{background:var(--bg-card-hover);}
+        .btn-primary{
+            background:linear-gradient(135deg,#4ade80,#22c55e);
+            color:#000;
+            box-shadow:0 0 0px var(--green-glow);
+        }
+        .btn-primary:hover{
+            filter:brightness(1.1);
+            transform:translateY(-2px);
+            box-shadow:0 0 16px var(--green-glow);
+        }
+        .btn-primary:active{transform:translateY(0px);}
+        .btn.pulse{
+            animation: pulse 2.2s infinite;
+        }
+        @keyframes pulse {
+            0%{box-shadow:0 0 0 0 rgba(74,222,128,0.4);}
+            70%{box-shadow:0 0 0 12px rgba(74,222,128,0);}
+            100%{box-shadow:0 0 0 0 rgba(74,222,128,0);}
+        }
+        .btn-secondary{
+            background:var(--bg-card);
+            color:var(--text);
+            border:1px solid var(--line);
+            backdrop-filter: blur(var(--glass-blur));
+        }
+        .btn-secondary:hover{
+            background:var(--bg-card-hover);
+            transform:translateY(-1px);
+        }
+        .btn-secondary:active{transform:translateY(0px);}
         select.btn-secondary{padding:8px 14px;}
-        /*Hero首屏*/
+        
         .hero{padding:60px 0;}
         .hero-card{
-            border:1px solid var(--line);border-radius:20px;padding:48px;
+            border:1px solid var(--line);border-radius:22px;padding:48px;
             background:var(--bg-card);
+            backdrop-filter: blur(var(--glass-blur));
+            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+            transition:0.3s ease;
+        }
+        .hero-card:hover{
+            box-shadow: 0 14px 50px rgba(0,0,0,0.35);
         }
         .hero-card .hero-logo{
             width:100%;
@@ -83,121 +145,168 @@
         .badge{
             padding:4px 10px;border-radius:99px;font-size:13px;font-weight:500;
             background:var(--bg-card);border:1px solid var(--line);
+            backdrop-filter: blur(var(--glass-blur));
         }
         .badge.warn{background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.3);color:#fbbf24;}
         .badge.tag{background:rgba(96,165,250,0.12);border-color:rgba(96,165,250,0.3);color:#60a5fa;}
-        .hero h1{font-size:56px;line-height:1.1;margin-bottom:16px;}
+        .hero h1{
+            font-size:56px;line-height:1.1;margin-bottom:16px;
+            text-shadow:0 0 18px rgba(124,204,255,0.35),0 0 40px rgba(96,165,250,0.25);
+        }
         .hero h1 span.blue-text{
             background:linear-gradient(90deg,#7cf,#60a5fa);
             -webkit-background-clip:text;color:transparent;
         }
         .hero p{color:var(--text-dim);max-width:720px;margin-bottom:28px;font-size:16px;}
         .hero-btn-group{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
-        /*统计卡片行*/
+
         .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0 60px;}
         .stat-card{
-            border:1px solid var(--line);border-radius:14px;padding:24px;
-            background:var(--bg-card);transition:0.2s;
+            border:1px solid var(--line);border-radius:16px;padding:24px;
+            background:var(--bg-card);
+            backdrop-filter: blur(var(--glass-blur));
+            transition:0.3s ease;
+            opacity:0;transform:translateY(24px);
         }
-        .stat-card:hover{background:var(--bg-card-hover);}
+        .stat-card.visible{opacity:1;transform:translateY(0);}
+        .stat-card:hover{background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
         .stat-card .num{font-size:24px;font-weight:700;margin-bottom:4px;}
         .stat-card .desc{color:var(--text-dim);font-size:14px;}
-        /*通用区块标题*/
+
         .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px;}
         .section-title h2{font-size:24px;display:flex;align-items:center;gap:8px;}
         .section-title .tip{color:var(--text-dim);font-size:14px;}
-        /*依赖可视化卡片*/
+
         .dep-visual-card{
-            border:1px solid var(--line);border-radius:16px;padding:28px;margin-bottom:30px;
+            border:1px solid var(--line);border-radius:18px;padding:28px;margin-bottom:30px;
             background:var(--bg-card);
+            backdrop-filter: blur(var(--glass-blur));
+            box-shadow:0 8px 30px rgba(0,0,0,0.18);
+            opacity:0;transform:translateY(24px);transition:0.4s ease;
         }
+        .dep-visual-card.visible{opacity:1;transform:translateY(0);}
         .dep-chain{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
         .dep-node{
             padding:14px 20px;border-radius:12px;border:1px solid var(--blue-primary);background:rgba(96,165,250,0.1);
             font-weight:bold;text-align:center;
+            box-shadow:0 0 12px var(--blue-glow);
         }
         .dep-arrow{font-size:24px;color:var(--text-dim);}
-        /*前置依赖模块*/
+
         .dep-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:60px;}
         .dep-card{
-            border:1px solid var(--line);border-radius:16px;padding:24px;
-            background:var(--bg-card);transition:0.2s;
+            border:1px solid var(--line);border-radius:18px;padding:24px;
+            background:var(--bg-card);
+            backdrop-filter: blur(var(--glass-blur));
+            transition:0.3s ease;
+            opacity:0;transform:translateY(24px);
         }
-        .dep-card:hover{background:var(--bg-card-hover);}
+        .dep-card.visible{opacity:1;transform:translateY(0);}
+        .dep-card:hover{background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
         .dep-card h3{margin-bottom:8px;font-size:18px;}
         .dep-card p{color:var(--text-dim);margin-bottom:16px;font-size:14px;}
         .dep-link-group{display:flex;gap:10px;flex-wrap:wrap;}
-        /*功能区块*/
+
         .features-section{margin-bottom:60px;}
         .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
         .feature-card{
-            border:1px solid var(--line);border-radius:16px;padding:24px;
-            background:var(--bg-card);transition:0.2s;
+            border:1px solid var(--line);border-radius:18px;padding:24px;
+            background:var(--bg-card);
+            backdrop-filter: blur(var(--glass-blur));
+            transition:0.3s ease;
+            opacity:0;transform:translateY(24px);
         }
-        .feature-card:hover{background:var(--bg-card-hover);}
-        /*版本板块*/
+        .feature-card.visible{opacity:1;transform:translateY(0);}
+        .feature-card:hover{background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
+
         .version-section{margin-bottom:60px;}
         .version-item{
-            border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:14px;
-            background:var(--bg-card);transition:0.2s;
+            border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:14px;
+            background:var(--bg-card);
+            backdrop-filter: blur(var(--glass-blur));
+            transition:0.3s ease;
+            opacity:0;transform:translateY(24px);
         }
-        .version-item:hover{background:var(--bg-card-hover);}
+        .version-item.visible{opacity:1;transform:translateY(0);}
+        .version-item:hover{background:var(--bg-card-hover);transform:translateX(4px);}
         .version-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
         .version-name{font-weight:700;font-size:18px;}
         .version-date{color:var(--text-dim);font-size:14px;}
-        /*团队板块*/
+        
         .team-section{margin-bottom:60px;}
         .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
         .team-card{
-            border:1px solid var(--line);border-radius:16px;padding:24px;text-align:center;
-            background:var(--bg-card);transition:0.2s;
+            border:1px solid var(--line);border-radius:18px;padding:24px;text-align:center;
+            background:var(--bg-card);
+            backdrop-filter: blur(var(--glass-blur));
+            transition:0.3s ease;
+            opacity:0;transform:translateY(24px);
         }
-        .team-card:hover{background:var(--bg-card-hover);}
+        .team-card.visible{opacity:1;transform:translateY(0);}
+        .team-card:hover{background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
         .team-card h3{margin:8px 0 4px;}
         .team-card .role{color:var(--text-dim);font-size:14px;}
-        /*动态 Actions 板块*/
+
         .action-section{margin-bottom:60px;}
         .action-item{
             border-left:3px solid var(--green);padding:14px 18px;margin-bottom:14px;
-            background:var(--bg-card);border-radius:0 12px 12px 0;
+            background:var(--bg-card);border-radius:0 14px 14px 0;
+            backdrop-filter: blur(var(--glass-blur));
+            opacity:0;transform:translateY(24px);transition:0.3s ease;
         }
+        .action-item.visible{opacity:1;transform:translateY(0);}
         .action-time{color:var(--text-dim);font-size:13px;margin-bottom:4px;}
-        /*统计板块*/
+
         .analytics-section{margin-bottom:60px;}
         .analytics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-        /*FAQ常见问题*/
+
         .faq-section{margin-bottom:60px;}
         .faq-item{
-            border:1px solid var(--line);border-radius:14px;margin-bottom:12px;
+            border:1px solid var(--line);border-radius:16px;margin-bottom:12px;
             background:var(--bg-card);
+            backdrop-filter: blur(var(--glass-blur));
+            overflow:hidden;
+            opacity:0;transform:translateY(24px);transition:0.3s ease;
         }
+        .faq-item.visible{opacity:1;transform:translateY(0);}
         .faq-question{padding:18px 22px;cursor:pointer;font-weight:500;display:flex;justify-content:space-between;}
-        .faq-answer{padding:0 22px;max-height:0;overflow:hidden;transition:0.3s;color:var(--text-dim);}
+        .faq-question::after{content:"+";transition:0.25s;font-size:20px;}
+        .faq-item.open .faq-question::after{content:"−";}
+        .faq-answer{padding:0 22px;max-height:0;overflow:hidden;transition:0.45s ease;color:var(--text-dim);}
         .faq-item.open .faq-answer{padding:0 22px 18px;max-height:500px;}
-        /*更新日志*/
+
         .changelog-section{margin-bottom:60px;}
-        .log-item{border-left:2px solid var(--green);padding-left:16px;margin-bottom:20px;}
-        /*弹窗样式*/
+        .log-item{border-left:2px solid var(--green);padding-left:16px;margin-bottom:20px;opacity:0;transform:translateY(24px);transition:0.3s ease;}
+        .log-item.visible{opacity:1;transform:translateY(0);}
+
         .modal-overlay{
-            position:fixed;inset:0;background:rgba(0,0,0,0.7);
+            position:fixed;inset:0;background:rgba(0,0,0,0.72);
             display:none;align-items:center;justify-content:center;z-index:999;
+            backdrop-filter: blur(8px);
         }
         .modal-overlay.open{display:flex;}
         .modal-box{
-            background:var(--bg);border:1px solid var(--line);border-radius:18px;
-            padding:32px;max-width:420px;width:calc(100% - 30px);
+            background:var(--bg-card);
+            border:1px solid var(--line);border-radius:20px;
+            padding:32px;max-width:480px;width:calc(100% - 30px);
+            backdrop-filter: blur(var(--glass-blur));
+            box-shadow:0 10px 40px rgba(0,0,0,0.4);
+            transform:scale(0.92);transition:0.25s ease;
         }
+        .modal-overlay.open .modal-box{transform:scale(1);}
         .modal-box h3{margin-bottom:20px;}
         .modal-link-list{display:flex;flex-direction:column;gap:12px;}
         .modal-link-list a{
-            display:block;padding:14px;border-radius:10px;border:1px solid var(--line);
-            color:var(--text);text-decoration:none;transition:0.2s;
+            display:block;padding:14px;border-radius:12px;border:1px solid var(--line);
+            color:var(--text);text-decoration:none;transition:0.25s ease;
             background:var(--bg-card);text-align:center;font-weight:500;
+            backdrop-filter: blur(var(--glass-blur));
         }
-        .modal-link-list a:hover{background:var(--bg-card-hover);}
+        .modal-link-list a:hover{background:var(--bg-card-hover);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.2);}
         .modal-close{margin-top:20px;width:100%;}
-        /*页脚*/
-        footer{border-top:1px solid var(--line);padding:30px 0;color:var(--text-dim);font-size:14px;text-align:center;}
+
+        footer{border-top:1px solid var(--line);padding:30px 0;color:var(--text-dim);font-size:14px;text-align:center;backdrop-filter: blur(var(--glass-blur));}
+
         @media(max-width:768px){
             .stats-row,.feature-grid,.dep-grid,.team-grid,.analytics-grid{grid-template-columns:1fr;}
             .hero h1{font-size:36px;}
@@ -206,7 +315,10 @@
     </style>
 </head>
 <body>
-    <nav>
+    
+    <canvas id="meteorBg"></canvas>
+
+    <nav id="navbar">
         <div class="container nav-wrap">
             <div class="nav-logo">
                 <img src="logo.png" alt="DawnAurora's Player Animation" />
@@ -220,18 +332,28 @@
                 <a href="#analytics">统计</a>
                 <a href="#faq">常见问题</a>
                 <a href="#changelog">更新日志</a>
-                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack" target="_blank">GitHub</a>
+                <!-- GitHub仓库全部导航项目 -->
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack" target="_blank">Code</a>
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/issues" target="_blank">Issues</a>
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/pulls" target="_blank">Pull requests</a>
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/agents" target="_blank">Agents</a>
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/actions" target="_blank">Actions</a>
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/projects" target="_blank">Projects</a>
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/wiki" target="_blank">Wiki</a>
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/security" target="_blank">Security and quality</a>
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/pulse" target="_blank">Insights</a>
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/settings" target="_blank">Settings</a>
+
                 <button id="themeSwitch" class="btn btn-secondary">主题切换</button>
                 <select id="versionSelector" class="btn btn-secondary">
                     <option value="v001">Beta 0.0.1 (1.20.1)</option>
                 </select>
-                <button id="openDownloadModal" class="btn btn-primary">下载资源包</button>
+                <button id="openDownloadModal" class="btn btn-primary pulse">下载资源包</button>
             </div>
         </div>
     </nav>
 
     <main class="container">
-        <!-- 概述 Overview -->
         <section id="overview" class="hero">
             <div class="hero-card">
                 <img src="logo.png" alt="DawnAurora's Player Animation" class="hero-logo">
@@ -243,10 +365,11 @@
                     <span class="badge tag">骨骼渲染</span>
                 </div>
                 <h1>Dapa<br><span class="blue-text">DawnAurora 玩家动画资源包</span></h1>
-                <p>优化Minecraft第一人称、第三人称玩家动作。进食、举盾格挡、武器挥砍、物品切换全部拥有流畅自然的动画效果。
-                <br><br><strong>重要：</strong>本资源包必须同时安装 EMF (Entity Model Features) 和 ETF (Entity Texture Features) 前置模组，否则无法正常加载动画。</p>
+                <p>优化 Minecraft 第一人称、第三人称玩家动作。进食、举盾格挡、武器挥砍、物品切换全部拥有流畅自然的动画效果。
+                <br><br><strong>重要：</strong>本资源包必须同时安装 EMF (Entity Model Features) 和 ETF (Entity Texture Features) 前置模组，否则无法正常加载动画。
+                <br><br>✅ 国内用户优先选用国内CDN镜像，大幅度提升下载速度。</p>
                 <div class="hero-btn-group">
-                    <button class="btn btn-primary" id="heroDownload">下载Dapa资源包</button>
+                    <button class="btn btn-primary pulse" id="heroDownload">下载 Dapa 资源包</button>
                     <button class="btn btn-secondary" id="openDepModal">获取前置 EMF / ETF</button>
                 </div>
             </div>
@@ -264,54 +387,51 @@
                     <div class="desc">游戏版本</div>
                 </div>
                 <div class="stat-card">
-                    <div class="num">Apache‑2.0</div>
+                    <div class="num">Apache-2.0</div>
                     <div class="desc">开源协议</div>
                 </div>
             </div>
         </section>
 
-        <!-- 依赖可视化卡片 -->
         <section id="deps" class="dep-visual-card">
             <div class="section-title">
                 <h2>● 依赖关系可视化</h2>
             </div>
             <div class="dep-chain">
-                <div class="dep-node">Dapa动画资源包</div>
+                <div class="dep-node">Dapa 动画资源包</div>
                 <span class="dep-arrow">→</span>
                 <div class="dep-node">EMF</div>
                 <span class="dep-arrow">+</span>
                 <div class="dep-node">ETF</div>
             </div>
-            <p style="text-align:center;margin-top:16px;color:var(--text-dim)">Dapa资源包依赖EMF和ETF模组提供骨骼动画支持，二者缺一不可</p>
+            <p style="text-align:center;margin-top:16px;color:var(--text-dim)">Dapa 资源包依赖 EMF 和 ETF 模组提供骨骼动画支持，二者缺一不可</p>
         </section>
 
-        <!-- 前置依赖 -->
         <section class="dep-section">
             <div class="section-title">
                 <h2>● 前置依赖模组</h2>
-                <div class="tip">必须全部安装，Dapa资源包才可以正常运行，国内用户推荐优先使用加速镜像地址</div>
+                <div class="tip">必须全部安装，Dapa 资源包才可以正常运行，国内用户推荐优先使用加速镜像地址</div>
             </div>
             <div class="dep-grid">
                 <div class="dep-card">
                     <h3>📦 EMF - Entity Model Features</h3>
                     <p>实体模型特性，负责修改玩家骨骼、手臂模型与动画。</p>
                     <div class="dep-link-group">
-                        <a class="btn btn-secondary" href="https://cdn‑alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features‑3.3.9‑1.20.1‑fabric.jar" target="_blank">官方源</a>
-                        <a class="btn btn-secondary" href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features‑3.3.9‑1.20.1‑fabric.jar" target="_blank">国内加速镜像</a>
+                        <a class="btn btn-secondary" href="https://cdn-alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">官方源</a>
+                        <a class="btn btn-secondary" href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">国内加速镜像</a>
                     </div>
                 </div>
                 <div class="dep-card">
                     <h3>📦 ETF - Entity Texture Features</h3>
                     <p>实体纹理特性，用于实体材质渲染与动画驱动。</p>
                     <div class="dep-link-group">
-                        <a class="btn btn-secondary" href="https://cdn‑alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features‑7.2.4‑1.20.1‑fabric.jar" target="_blank">官方源</a>
-                        <a class="btn btn-secondary" href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features‑7.2.4‑1.20.1‑fabric.jar" target="_blank">国内加速镜像</a>
+                        <a class="btn btn-secondary" href="https://cdn-alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">官方源</a>
+                        <a class="btn btn-secondary" href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">国内加速镜像</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 功能介绍 -->
         <section class="features-section">
             <div class="section-title">
                 <h2>● 功能列表</h2>
@@ -344,7 +464,6 @@
             </div>
         </section>
 
-        <!-- 版本 Versions -->
         <section id="versions" class="version-section">
             <div class="section-title">
                 <h2>● 版本</h2>
@@ -353,13 +472,12 @@
             <div class="version-item">
                 <div class="version-head">
                     <span class="version-name">Beta 0.0.1</span>
-                    <span class="version-date">2026‑09‑27</span>
+                    <span class="version-date">2026-09-27</span>
                 </div>
-                <p>支持Minecraft 1.20.1 Fabric。初始版本，包含进食、举盾、挥砍、物品切换基础动作动画。</p>
+                <p>支持 Minecraft 1.20.1 Fabric。初始版本，包含进食、举盾、挥砍、物品切换基础动作动画。</p>
             </div>
         </section>
 
-        <!-- 团队 Team -->
         <section id="team" class="team-section">
             <div class="section-title">
                 <h2>● 开发团队</h2>
@@ -368,166 +486,176 @@
             <div class="team-grid">
                 <div class="team-card">
                     <h3>DawnAurora</h3>
-                    <div class="role">dawnaurora0221</div>
+                    <div class="role">项目作者 / 动画开发</div>
                 </div>
                 <div class="team-card">
-                    <h3>预留成员1</h3>
-                    <div class="role">dawnaurora0221</div>
+                    <h3>dawnaurora0221</h3>
+                    <div class="role">测试人员</div>
                 </div>
                 <div class="team-card">
-                    <h3>预留成员2</h3>
-                    <div class="role">dawnaurora0221</div>
+                    <h3>                    <h3>预留成员2</h3></h3>
+                    <div class="role">文档维护</div>
                 </div>
             </div>
         </section>
 
-        <!-- 动态 Actions -->
         <section id="actions" class="action-section">
             <div class="section-title">
                 <h2>● 项目动态</h2>
-                <div class="tip">项目更新动态流</div>
             </div>
             <div class="action-item">
-                <div class="action‑time">2026‑09‑27</div>
-                <p>✅ 发布 Beta 0.0.1 初始版本，实现全套基础玩家动画。</p>
-            </div>
-            <div class="action-item">
-                <div class="action‑time">2026‑09‑26</div>
-                <p>📝 完成项目文档、主页网站开发。</p>
-            </div>
-            <div class="action-item">
-                <div class="action‑time">2026‑09‑25</div>
-                <p>🔧 完成进食、举盾格挡、武器挥砍动画开发。</p>
+                <div class="action-time">2026-09-27</div>
+                <div>发布 Beta 0.0.1 初始版本，上线多CDN下载分流，提升国内下载速度。</div>
             </div>
         </section>
 
-        <!-- 统计 Analytics -->
         <section id="analytics" class="analytics-section">
             <div class="section-title">
                 <h2>● 项目统计</h2>
-                <div class="tip">项目数据概览</div>
             </div>
             <div class="analytics-grid">
                 <div class="stat-card">
-                    <div class="num">0</div>
-                    <div class="desc">总下载量</div>
-                </div>
-                <div class="stat-card">
-                    <div class="num">1</div>
-                    <div class="desc">已发布版本</div>
+                    <div class="num">Beta</div>
+                    <div class="desc">版本阶段</div>
                 </div>
                 <div class="stat-card">
                     <div class="num">1.20.1</div>
-                    <div class="desc">支持游戏版本</div>
+                    <div class="desc">MC版本</div>
+                </div>
+                <div class="stat-card">
+                    <div class="num">4</div>
+                    <div class="desc">CDN分流节点</div>
                 </div>
             </div>
         </section>
 
-        <!-- FAQ常见问题 -->
         <section id="faq" class="faq-section">
             <div class="section-title">
-                <h2>● 常见问题</h2>
+                <h2>● 常见问题 FAQ</h2>
             </div>
             <div class="faq-item">
-                <div class="faq-question">Q：安装之后没有动画效果？</div>
-                <div class="faq-answer">请确认EMF、ETF两个前置模组全部安装，版本为1.20.1 Fabric版，并且资源包已经在游戏内启用。</div>
+                <div class="faq-question">为什么下载资源包后游戏内没有动画？</div>
+                <div class="faq-answer">请确认已经同时安装 EMF 和 ETF 前置模组，只装资源包无法生效。</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question">Q：这个是模组还是资源包？</div>
-                <div class="faq-answer">Dapa是资源包，依赖EMF+ETF模组实现动画效果。</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Q：支持其他游戏版本吗？</div>
-                <div class="faq-answer">当前仅支持Minecraft 1.20.1 Fabric。</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Q：国内下载前置模组很慢怎么办？</div>
-                <div class="faq-answer">点击前置弹窗里的【国内加速镜像】链接，使用ghproxy镜像加速下载。</div>
+                <div class="faq-question">下载链接哪个优先选择？</div>
+                <div class="faq-answer">国内网络优先选择国内CDN节点，GitHub官方源作为兜底备用。</div>
             </div>
         </section>
 
-        <!-- 更新日志 -->
         <section id="changelog" class="changelog-section">
             <div class="section-title">
                 <h2>● 更新日志</h2>
             </div>
             <div class="log-item">
                 <h3>Beta 0.0.1</h3>
-                <p>初始版本，实现进食、举盾、挥砍、物品切换基础动作动画。</p>
+                <p>初始版本，添加进食、举盾格挡、武器挥砍、物品切换动画；提供多CDN分流下载。</p>
             </div>
         </section>
     </main>
 
-    <!-- Dapa本体下载弹窗【永久Release下载地址写在这里】 -->
-    <div class="modal-overlay" id="downloadModal">
+    <!-- 下载弹窗 -->
+    <div class="modal-overlay">
         <div class="modal-box">
-            <h3>下载 Dapa 玩家动画资源包</h3>
+            <h3>📥 下载 Dapa 资源包 Beta 0.0.1 (1.20.1)</h3>
             <div class="modal-link-list">
-                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/Beta‑0.0.1/dawn‑aurora‑player‑animation‑resource‑pack‑add‑on‑beta‑0.0.1‑1.20.1.zip" target="_blank">🚀 Dapa资源包下载(GitHub Release)</a>
+                <a href="https://release-assets.githubusercontent.com/github-production-release-asset/1388985451/669ea30c-500c-4ce0-942f-10be52b83cb0?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-09-27T04%3A03%3A22Z&rscd=attachment%3B+filename%3Ddawn-aurora-player-animation-resource-pack-add-on-beta-0.0.1-1.20.1.zip&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-09-27T03%3A02%3A37Z&ske=2026-09-27T04%3A03%3A22Z&sks=b&skv=2018-11-09&sig=H8Zq7l6ZH4u%2B%2BO3J0NnscoxS4XxCEo2lN2rZTa5RXnM%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MDQ3OTkyOCwibmJmIjoxNzkwNDc5NjI4LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.v0wWSyCiyt-CxJra8KwRpcYUqy0OxjKeFygnDoNnk3c&response-content-disposition=attachment%3B%20filename%3Ddawn-aurora-player-animation-resource-pack-add-on-beta-0.0.1-1.20.1.zip&response-content-type=application%2Foctet-stream" target="_blank">🔗 1. GitHub官方源（兜底备用）</a>
+                <a href="https://cdn.onmicrosoft.cn/gh/DawnAurora0221/dawnaurora-player-animation-resource-pack@beta-0.0.1/dawn-aurora-player-animation-add-on-beta-0.0.1-1.20.1.zip" target="_blank">🚀 2. cdn.onmicrosoft.cn（国内CDN）</a>
+                <a href="https://s4.zstatic.net/gh/DawnAurora0221/dawnaurora-player-animation-resource-pack@beta-0.0.1/dawn-aurora-player-animation-add-on-beta-0.0.1-1.20.1.zip" target="_blank">🚀 3. s4.zstatic.net（国内CDN）</a>
+                <a href="https://jsd.onmicrosoft.cn/gh/DawnAurora0221/dawnaurora-player-animation-resource-pack@beta-0.0.1/dawn-aurora-player-animation-add-on-beta-0.0.1-1.20.1.zip" target="_blank">🚀 4. jsd.onmicrosoft.cn（国内CDN）</a>
             </div>
-            <button class="btn btn-secondary modal-close" id="closeDownloadModal">关闭</button>
-        </div>
-    </div>
-
-    <!-- 前置模组下载弹窗 -->
-    <div class="modal-overlay" id="depModal">
-        <div class="modal-box">
-            <h3>前置模组下载</h3>
-            <div class="modal-link-list">
-                <a href="https://cdn‑alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features‑3.3.9‑1.20.1‑fabric.jar" target="_blank">📦 EMF 官方源</a>
-                <a href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features‑3.3.9‑1.20.1‑fabric.jar" target="_blank">📦 EMF 国内加速镜像</a>
-                <a href="https://cdn‑alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features‑7.2.4‑1.20.1‑fabric.jar" target="_blank">📦 ETF 官方源</a>
-                <a href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features‑7.2.4‑1.20.1‑fabric.jar" target="_blank">📦 ETF 国内加速镜像</a>
-            </div>
-            <button class="btn btn-secondary modal-close" id="closeDepModal">关闭</button>
+            <button class="btn btn-secondary modal-close">关闭</button>
         </div>
     </div>
 
     <footer>
-        <div class="container">
-            DawnAurora's Player Animation | Licensed under Apache‑2.0
-            <br>本项目为Minecraft资源包，需要EMF、ETF前置模组
-        </div>
+        © 2026 DawnAurora | Dapa 玩家动画资源包 | Apache-2.0 License
     </footer>
 
-    <script>
-        // 主题切换
-        const themeSwitch = document.getElementById('themeSwitch');
-        if(localStorage.getItem('theme') === 'light'){
-            document.documentElement.setAttribute('data‑theme','light');
-        }
-        themeSwitch.onclick = ()=>{
-            if(document.documentElement.getAttribute('data‑theme') === 'light'){
-                document.documentElement.removeAttribute('data‑theme');
-                localStorage.setItem('theme','dark');
-            }else{
-                document.documentElement.setAttribute('data‑theme','light');
-                localStorage.setItem('theme','light');
-            }
-        }
+<script>
 
-        // 版本下拉切换逻辑
-        const versionSelector = document.getElementById("versionSelector");
-        versionSelector.addEventListener("change", function(){
-            const selected = this.value;
-            alert("已选择版本：" + selected + "\n页面内容自动加载对应版本信息");
-        });
+const modalOverlay = document.querySelector('.modal-overlay');
+const openDownloadModal = document.getElementById('openDownloadModal');
+const heroDownload = document.getElementById('heroDownload');
+const modalCloseBtn = document.querySelector('.modal-close');
 
-        // Dapa下载弹窗
-        const downloadModal = document.getElementById('downloadModal');
-        document.getElementById('openDownloadModal').onclick = ()=> downloadModal.classList.add('open');
-        document.getElementById('heroDownload').onclick = ()=> downloadModal.classList.add('open');
-        document.getElementById('closeDownloadModal').onclick = ()=> downloadModal.classList.remove('open');
+openDownloadModal.addEventListener('click', ()=> modalOverlay.classList.add('open'));
+heroDownload.addEventListener('click', ()=> modalOverlay.classList.add('open'));
+modalCloseBtn.addEventListener('click', ()=> modalOverlay.classList.remove('open'));
+modalOverlay.addEventListener('click', (e)=>{
+    if(e.target === modalOverlay) modalOverlay.classList.remove('open');
+});
 
-        // 前置下载弹窗
-        const depModal = document.getElementById('depModal');
-        document.getElementById('openDepModal').onclick = ()=> depModal.classList.add('open');
-        document.getElementById('closeDepModal').onclick = ()=> depModal.classList.remove('open');
 
-        // FAQ折叠展开
-        document.querySelectorAll('.faq‑question').forEach(q=>{
-            q.onclick = ()=> q.parentElement.classList.toggle('open');
-        })
-    </script>
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+    if(window.scrollY > 20) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+})
+
+
+const themeBtn = document.getElementById('themeSwitch');
+themeBtn.addEventListener('click',()=>{
+    const html = document.documentElement;
+    if(html.hasAttribute('data-theme')) html.removeAttribute('data-theme');
+    else html.setAttribute('data-theme','light');
+})
+
+
+const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting) entry.target.classList.add('visible');
+    })
+},{threshold:0.1})
+document.querySelectorAll('.stat-card,.dep-card,.feature-card,.version-item,.team-card,.action-item,.faq-item,.log-item,.dep-visual-card').forEach(el=>observer.observe(el));
+
+
+const canvas = document.getElementById('meteorBg');
+const ctx = canvas.getContext('2d');
+function resizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize',resizeCanvas);
+class Meteor{
+    constructor(){
+        this.reset();
+    }
+    reset(){
+        this.x = Math.random()*canvas.width;
+        this.y = Math.random()*canvas.height*0.5;
+        this.len = Math.random()*80+20;
+        this.speed = Math.random()*6+4;
+        this.opacity = Math.random()*0.6+0.2;
+    }
+    draw(){
+        ctx.beginPath();
+        ctx.moveTo(this.x,this.y);
+        ctx.lineTo(this.x+this.len,this.y+this.len);
+        ctx.strokeStyle=`rgba(255,255,255,${this.opacity})`;
+        ctx.lineWidth=1;
+        ctx.stroke();
+    }
+    update(){
+        this.x += this.speed;
+        this.y += this.speed;
+        if(this.x>canvas.width || this.y>canvas.height) this.reset();
+    }
+}
+const meteors = Array.from({length:30},()=>new Meteor());
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    meteors.forEach(m=>{m.update();m.draw();})
+    requestAnimationFrame(animate);
+}
+animate();
+
+document.querySelectorAll('.faq-question').forEach(q=>{
+    q.addEventListener('click',()=>{
+        q.parentElement.classList.toggle('open');
+    })
+})
+</script>
 </body>
 </html>
