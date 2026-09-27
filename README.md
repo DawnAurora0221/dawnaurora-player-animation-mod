@@ -1,48 +1,76 @@
-Release Title：DawnAurora's Player Animation Alpha 0.0.1
-Tag：dapa-alpha-0.0.1
-Type：Pre-release
-
----
 # DawnAurora's Player Animation - Alpha 0.0.1
-Short Name: DaPa
+**Short Name: DaPa**
 Minecraft 1.20.1 Fabric Animation Resource Pack
 
 ---
-📦 Version Information
+## 📦 Version Information
 - Release Type: Alpha Early Preview
 - Supported Game Version: Minecraft 1.20.1
 - Requirement: Fabric Loader
 - Mandatory Dependencies: ETF, EMF (Fabric Mods)
 
 ---
-✨ Pack Features
+## ✅ Completed Features
 This resource pack completely overhauls vanilla Minecraft player animations, bringing smoother, more natural and detailed movement performance.
-- Third-Person Full Body Animation Overhaul
-Replaces rigid default player movements. Includes smooth walking, running, sprinting, jumping, falling, and attacking animations. Makes player movements more realistic and fluent.
-- Custom First-Person Arm Animations
-Reworks first-person hand and arm motions for block mining, item holding, tool swinging, and idle poses. Eliminates stiff vanilla arm movements.
-- Optimized Motion Transition
-Smoother animation switching between different player states (walk, run, jump, stop). No sudden frame jumps or rigid pose changes.
-- Pure Resource Pack Implementation
-All animation and model assets are self-contained in this pack. No mod compilation required, easy to install, modify and uninstall.
+
+### Improvements
+- ✅ Custom idle animations
+- ✅ Custom head yaw & pitch animations
+- ✅ Custom running animation (default speed)
+- ✅ Custom sprint animation
+- ✅ Custom swimming animation
+- ✅ Custom sneaking animation
+- ✅ Custom prone animation
+- ✅ Custom mount state animations
+- ✅ Custom elytra gliding animation
+- ✅ Custom attack / interaction animations
+- ✅ Smooth transition between animations when equipping or using items
+- ✅ Tight armor texture styling
+
+### Additions
+- ✅ Walk animation (low speed)
+- ✅ Crawl state & animations
+- ✅ Climb state & animations
+- ✅ Wade animation (walking in shallow water & lava)
+- ✅ Jump, fall & land animations
+- ✅ Water treading animation (default in-water state)
+- ✅ Upward swimming animation
+- ✅ Sleep animation
+- ✅ First-person hand animations
+- ✅ Cape animations
+- ✅ Elytra animations
+- ✅ Locked rotation when climbing ladders
+- ✅ Backward walking, running, sneaking, crawling and wading animations
+- ✅ Strafing animations for walk, run and sneak
+- ✅ Body lean / tilt animations
+
+## 🚧 Work In Progress / Planned Features
+These features are under development and will be added in future updates:
+- ⏳ Custom shield blocking animation
+- ⏳ Equipment & hotbar swap animation
+- ⏳ Armor state animations
+- ⏳ Torch holding animation
+- ⏳ Lantern holding animation
+- ⏳ Player hurt / damage animation
+- ⏳ Respackopts configuration support
 
 ---
-⚠️ Important Warnings
+## ⚠️ Important Warnings
 - This is a Resource Pack, NOT a Mod.
 - ETF & EMF are strictly required. This pack uses advanced animation frameworks provided by these two mods. Animations will not load or work without them installed.
-- This is an Alpha test version. Minor instability, animation glitches or frame errors may occur during use.
+- This is an **Alpha test version**. Minor instability, animation glitches or frame errors may occur during use.
 - Client-side only. Works for single-player and multiplayer servers.
 
 ---
-📥 Installation Guide
+## 📥 Installation Guide
 1. Install Fabric Loader for Minecraft 1.20.1
-2. Install required dependency mods: ETF and EMF
+2. Install required dependency mods: **ETF** and **EMF**
 3. Download the latest resource pack ZIP file from this release
-4. Place the ZIP file into your Minecraft resourcepacks folder
+4. Place the ZIP file into your Minecraft `resourcepacks` folder
 5. Launch Minecraft, open Resource Pack settings, enable DaPa Animation Pack
 6. Fully restart your game to apply all animation changes
 
 ---
-📜 License
+## 📜 License
 Apache-2.0 License
 Free for personal use, study and modification. Please retain original project credits for public distribution.
