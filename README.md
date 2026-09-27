@@ -4,7 +4,7 @@ Minecraft 1.20.1 Fabric Animation Resource Pack
 
 ---
 ## 📦 Version Information
-- Release Type: Alpha Early Preview
+- Release Type: Beta Early Preview
 - Supported Game Version: Minecraft 1.20.1
 - Requirement: Fabric Loader
 - Mandatory Dependencies: ETF, EMF (Fabric Mods)
