@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dapa - DawnAurora Player Animation</title>
-    <meta name="description" content="Dapa 是Minecraft 1.20.1玩家动画资源包，基于EMF与ETF前置模组实现流畅玩家动作动画。" />
+    <title>DawnAurora's Player Animation</title>
+    <meta name="description" content="DawnAurora玩家动画资源包，优化Minecraft第一人称、第三人称玩家动作，进食、举盾格挡、武器挥砍、物品切换流畅动画。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -48,15 +48,15 @@
             border-bottom:1px solid var(--line);
             padding:14px 0;
         }
-        .nav-wrap{display:flex;justify-content:space-between;align-items:center;}
-        .nav-logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:18px;}
-        .nav-logo-icon{
-            width:32px;height:32px;border-radius:8px;
-            background:linear-gradient(135deg,#22d3ee,#3b82f6);
-            display:flex;align-items:center;justify-content:center;color:#000;
+        .nav-wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+        .nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;}
+        .nav-logo img{
+            height:42px;
+            width:auto;
+            object-fit:contain;
         }
-        .nav-links{display:flex;gap:28px;align-items:center;}
-        .nav-links a{color:var(--text-dim);text-decoration:none;transition:0.2s;}
+        .nav-links{display:flex;gap:22px;align-items:center;flex-wrap:wrap;}
+        .nav-links a{color:var(--text-dim);text-decoration:none;transition:0.2s;font-size:15px;}
         .nav-links a:hover{color:var(--text);}
         .btn{
             padding:9px 18px;border-radius:8px;border:none;cursor:pointer;
@@ -66,11 +66,18 @@
         .btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px);}
         .btn-secondary{background:var(--bg-card);color:var(--text);border:1px solid var(--line);}
         .btn-secondary:hover{background:var(--bg-card-hover);}
-        /*首页Hero区块*/
+        select.btn-secondary{padding:8px 14px;}
+        /*Hero首屏*/
         .hero{padding:60px 0;}
         .hero-card{
             border:1px solid var(--line);border-radius:20px;padding:48px;
             background:var(--bg-card);
+        }
+        .hero-card .hero-logo{
+            width:100%;
+            max-width:900px;
+            display:block;
+            margin:0 auto 24px;
         }
         .badge-group{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
         .badge{
@@ -78,13 +85,14 @@
             background:var(--bg-card);border:1px solid var(--line);
         }
         .badge.warn{background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.3);color:#fbbf24;}
+        .badge.tag{background:rgba(96,165,250,0.12);border-color:rgba(96,165,250,0.3);color:#60a5fa;}
         .hero h1{font-size:56px;line-height:1.1;margin-bottom:16px;}
         .hero h1 span.blue-text{
             background:linear-gradient(90deg,#7cf,#60a5fa);
             -webkit-background-clip:text;color:transparent;
         }
         .hero p{color:var(--text-dim);max-width:720px;margin-bottom:28px;font-size:16px;}
-        .hero-btn-group{display:flex;gap:14px;}
+        .hero-btn-group{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
         /*统计卡片行*/
         .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0 60px;}
         .stat-card{
@@ -95,9 +103,20 @@
         .stat-card .num{font-size:24px;font-weight:700;margin-bottom:4px;}
         .stat-card .desc{color:var(--text-dim);font-size:14px;}
         /*通用区块标题*/
-        .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;}
+        .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px;}
         .section-title h2{font-size:24px;display:flex;align-items:center;gap:8px;}
         .section-title .tip{color:var(--text-dim);font-size:14px;}
+        /*依赖可视化卡片*/
+        .dep-visual-card{
+            border:1px solid var(--line);border-radius:16px;padding:28px;margin-bottom:30px;
+            background:var(--bg-card);
+        }
+        .dep-chain{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
+        .dep-node{
+            padding:14px 20px;border-radius:12px;border:1px solid var(--blue-primary);background:rgba(96,165,250,0.1);
+            font-weight:bold;text-align:center;
+        }
+        .dep-arrow{font-size:24px;color:var(--text-dim);}
         /*前置依赖模块*/
         .dep-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:60px;}
         .dep-card{
@@ -107,6 +126,7 @@
         .dep-card:hover{background:var(--bg-card-hover);}
         .dep-card h3{margin-bottom:8px;font-size:18px;}
         .dep-card p{color:var(--text-dim);margin-bottom:16px;font-size:14px;}
+        .dep-link-group{display:flex;gap:10px;flex-wrap:wrap;}
         /*功能区块*/
         .features-section{margin-bottom:60px;}
         .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
@@ -115,7 +135,37 @@
             background:var(--bg-card);transition:0.2s;
         }
         .feature-card:hover{background:var(--bg-card-hover);}
-        /*常见问题*/
+        /*版本板块*/
+        .version-section{margin-bottom:60px;}
+        .version-item{
+            border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:14px;
+            background:var(--bg-card);transition:0.2s;
+        }
+        .version-item:hover{background:var(--bg-card-hover);}
+        .version-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+        .version-name{font-weight:700;font-size:18px;}
+        .version-date{color:var(--text-dim);font-size:14px;}
+        /*团队板块*/
+        .team-section{margin-bottom:60px;}
+        .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+        .team-card{
+            border:1px solid var(--line);border-radius:16px;padding:24px;text-align:center;
+            background:var(--bg-card);transition:0.2s;
+        }
+        .team-card:hover{background:var(--bg-card-hover);}
+        .team-card h3{margin:8px 0 4px;}
+        .team-card .role{color:var(--text-dim);font-size:14px;}
+        /*动态 Actions 板块*/
+        .action-section{margin-bottom:60px;}
+        .action-item{
+            border-left:3px solid var(--green);padding:14px 18px;margin-bottom:14px;
+            background:var(--bg-card);border-radius:0 12px 12px 0;
+        }
+        .action-time{color:var(--text-dim);font-size:13px;margin-bottom:4px;}
+        /*统计板块*/
+        .analytics-section{margin-bottom:60px;}
+        .analytics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+        /*FAQ常见问题*/
         .faq-section{margin-bottom:60px;}
         .faq-item{
             border:1px solid var(--line);border-radius:14px;margin-bottom:12px;
@@ -148,38 +198,49 @@
         .modal-close{margin-top:20px;width:100%;}
         /*页脚*/
         footer{border-top:1px solid var(--line);padding:30px 0;color:var(--text-dim);font-size:14px;text-align:center;}
+        @media(max-width:768px){
+            .stats-row,.feature-grid,.dep-grid,.team-grid,.analytics-grid{grid-template-columns:1fr;}
+            .hero h1{font-size:36px;}
+            .nav-logo img{height:34px;}
+        }
     </style>
 </head>
 <body>
     <nav>
         <div class="container nav-wrap">
             <div class="nav-logo">
-                <div class="nav-logo-icon">D</div>
-                <div>
-                    <div>Dapa</div>
-                    <div style="font-size:12px;color:var(--text-dim);font-weight:normal;">DawnAurora Player Animation</div>
-                </div>
+                <img src="logo.png" alt="DawnAurora's Player Animation" />
             </div>
             <div class="nav-links">
-                <a href="#features">功能</a>
-                <a href="#deps">前置依赖</a>
+                <a href="#overview">概述</a>
+                <a href="#versions">版本</a>
+                <a href="#deps">依赖</a>
+                <a href="#team">团队</a>
+                <a href="#actions">动态</a>
+                <a href="#analytics">统计</a>
                 <a href="#faq">常见问题</a>
                 <a href="#changelog">更新日志</a>
-                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack" target="_blank">GitHub项目入口</a>
-                <button id="themeSwitch" class="btn btn-secondary">主题</button>
-                <button id="openDownloadModal" class="btn btn-primary">直接下载</button>
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack" target="_blank">GitHub</a>
+                <button id="themeSwitch" class="btn btn-secondary">主题切换</button>
+                <select id="versionSelector" class="btn btn-secondary">
+                    <option value="v001">Beta 0.0.1 (1.20.1)</option>
+                </select>
+                <button id="openDownloadModal" class="btn btn-primary">下载资源包</button>
             </div>
         </div>
     </nav>
 
     <main class="container">
-        <!-- Hero首屏 -->
-        <section class="hero">
+        <!-- 概述 Overview -->
+        <section id="overview" class="hero">
             <div class="hero-card">
+                <img src="logo.png" alt="DawnAurora's Player Animation" class="hero-logo">
                 <div class="badge-group">
-                    <span class="badge">🟢 资源包 | 1.20.1</span>
+                    <span class="badge">🟢 资源包 | 1.20.1 Fabric</span>
                     <span class="badge">Beta 0.0.1</span>
                     <span class="badge warn">⚠️ 需要 EMF + ETF 前置模组</span>
+                    <span class="badge tag">玩家动画</span>
+                    <span class="badge tag">骨骼渲染</span>
                 </div>
                 <h1>Dapa<br><span class="blue-text">DawnAurora 玩家动画资源包</span></h1>
                 <p>优化Minecraft第一人称、第三人称玩家动作。进食、举盾格挡、武器挥砍、物品切换全部拥有流畅自然的动画效果。
@@ -203,36 +264,57 @@
                     <div class="desc">游戏版本</div>
                 </div>
                 <div class="stat-card">
-                    <div class="num">Apache-2.0</div>
+                    <div class="num">Apache‑2.0</div>
                     <div class="desc">开源协议</div>
                 </div>
             </div>
         </section>
 
+        <!-- 依赖可视化卡片 -->
+        <section id="deps" class="dep-visual-card">
+            <div class="section-title">
+                <h2>● 依赖关系可视化</h2>
+            </div>
+            <div class="dep-chain">
+                <div class="dep-node">Dapa动画资源包</div>
+                <span class="dep-arrow">→</span>
+                <div class="dep-node">EMF</div>
+                <span class="dep-arrow">+</span>
+                <div class="dep-node">ETF</div>
+            </div>
+            <p style="text-align:center;margin-top:16px;color:var(--text-dim)">Dapa资源包依赖EMF和ETF模组提供骨骼动画支持，二者缺一不可</p>
+        </section>
+
         <!-- 前置依赖 -->
-        <section id="deps" class="dep-section">
+        <section class="dep-section">
             <div class="section-title">
                 <h2>● 前置依赖模组</h2>
-                <div class="tip">必须全部安装，Dapa资源包才可以正常运行</div>
+                <div class="tip">必须全部安装，Dapa资源包才可以正常运行，国内用户推荐优先使用加速镜像地址</div>
             </div>
             <div class="dep-grid">
                 <div class="dep-card">
                     <h3>📦 EMF - Entity Model Features</h3>
                     <p>实体模型特性，负责修改玩家骨骼、手臂模型与动画。</p>
-                    <a class="btn btn-secondary" href="https://cdn-alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features-3.3.9-1.20.1-fabric.jar?mr_download_reason=standalone&mr_game_version=1.20.1&mr_loader=fabric" target="_blank">下载EMF</a>
+                    <div class="dep-link-group">
+                        <a class="btn btn-secondary" href="https://cdn‑alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features‑3.3.9‑1.20.1‑fabric.jar" target="_blank">官方源</a>
+                        <a class="btn btn-secondary" href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features‑3.3.9‑1.20.1‑fabric.jar" target="_blank">国内加速镜像</a>
+                    </div>
                 </div>
                 <div class="dep-card">
                     <h3>📦 ETF - Entity Texture Features</h3>
                     <p>实体纹理特性，用于实体材质渲染与动画驱动。</p>
-                    <a class="btn btn-secondary" href="https://cdn-alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar?mr_download_reason=standalone&mr_game_version=1.20.1&mr_loader=fabric" target="_blank">下载ETF</a>
+                    <div class="dep-link-group">
+                        <a class="btn btn-secondary" href="https://cdn‑alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features‑7.2.4‑1.20.1‑fabric.jar" target="_blank">官方源</a>
+                        <a class="btn btn-secondary" href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features‑7.2.4‑1.20.1‑fabric.jar" target="_blank">国内加速镜像</a>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- 功能介绍 -->
-        <section id="features" class="features-section">
+        <section class="features-section">
             <div class="section-title">
-                <h2>● 功能</h2>
+                <h2>● 功能列表</h2>
             </div>
             <div class="feature-grid">
                 <div class="feature-card">
@@ -262,7 +344,86 @@
             </div>
         </section>
 
-        <!-- 常见问题 -->
+        <!-- 版本 Versions -->
+        <section id="versions" class="version-section">
+            <div class="section-title">
+                <h2>● 版本</h2>
+                <div class="tip">所有发布版本</div>
+            </div>
+            <div class="version-item">
+                <div class="version-head">
+                    <span class="version-name">Beta 0.0.1</span>
+                    <span class="version-date">2026‑09‑27</span>
+                </div>
+                <p>支持Minecraft 1.20.1 Fabric。初始版本，包含进食、举盾、挥砍、物品切换基础动作动画。</p>
+            </div>
+        </section>
+
+        <!-- 团队 Team -->
+        <section id="team" class="team-section">
+            <div class="section-title">
+                <h2>● 开发团队</h2>
+                <div class="tip">dawnaurora0221</div>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <h3>DawnAurora</h3>
+                    <div class="role">dawnaurora0221</div>
+                </div>
+                <div class="team-card">
+                    <h3>预留成员1</h3>
+                    <div class="role">dawnaurora0221</div>
+                </div>
+                <div class="team-card">
+                    <h3>预留成员2</h3>
+                    <div class="role">dawnaurora0221</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 动态 Actions -->
+        <section id="actions" class="action-section">
+            <div class="section-title">
+                <h2>● 项目动态</h2>
+                <div class="tip">项目更新动态流</div>
+            </div>
+            <div class="action-item">
+                <div class="action‑time">2026‑09‑27</div>
+                <p>✅ 发布 Beta 0.0.1 初始版本，实现全套基础玩家动画。</p>
+            </div>
+            <div class="action-item">
+                <div class="action‑time">2026‑09‑26</div>
+                <p>📝 完成项目文档、主页网站开发。</p>
+            </div>
+            <div class="action-item">
+                <div class="action‑time">2026‑09‑25</div>
+                <p>🔧 完成进食、举盾格挡、武器挥砍动画开发。</p>
+            </div>
+        </section>
+
+        <!-- 统计 Analytics -->
+        <section id="analytics" class="analytics-section">
+            <div class="section-title">
+                <h2>● 项目统计</h2>
+                <div class="tip">项目数据概览</div>
+            </div>
+            <div class="analytics-grid">
+                <div class="stat-card">
+                    <div class="num">0</div>
+                    <div class="desc">总下载量</div>
+                </div>
+                <div class="stat-card">
+                    <div class="num">1</div>
+                    <div class="desc">已发布版本</div>
+                </div>
+                <div class="stat-card">
+                    <div class="num">1.20.1</div>
+                    <div class="desc">支持游戏版本</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ常见问题 -->
         <section id="faq" class="faq-section">
             <div class="section-title">
                 <h2>● 常见问题</h2>
@@ -279,6 +440,10 @@
                 <div class="faq-question">Q：支持其他游戏版本吗？</div>
                 <div class="faq-answer">当前仅支持Minecraft 1.20.1 Fabric。</div>
             </div>
+            <div class="faq-item">
+                <div class="faq-question">Q：国内下载前置模组很慢怎么办？</div>
+                <div class="faq-answer">点击前置弹窗里的【国内加速镜像】链接，使用ghproxy镜像加速下载。</div>
+            </div>
         </section>
 
         <!-- 更新日志 -->
@@ -293,24 +458,26 @@
         </section>
     </main>
 
-    <!-- 下载弹窗（Dapa本体） -->
+    <!-- Dapa本体下载弹窗【永久Release下载地址写在这里】 -->
     <div class="modal-overlay" id="downloadModal">
         <div class="modal-box">
             <h3>下载 Dapa 玩家动画资源包</h3>
             <div class="modal-link-list">
-                <a href="https://release-assets.githubusercontent.com/github-production-release-asset/1388985451/d8bbc381-db80-40a9-9690-4df5c1c504df?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-09-27T03%3A20%3A21Z&rscd=attachment%3B+filename%3Ddawn-aurora-player-animation-add-on-beta-0.0.1-1.20.1.zip&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-09-27T02%3A20%3A16Z&ske=2026-09-27T03%3A20%3A21Z&sks=b&skv=2018-11-09&sig=JKZ9pC0LuAEmqu8M%2B6SrOiqI90%2FLIlIp%2BBhBb5GvyDI%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MDQ3NjU2NywibmJmIjoxNzkwNDc2MjY3LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.mbk5yRShDWsPWuzFuJ6nLeogzZcD6EUh9zSefp9ltnI&response-content-disposition=attachment%3B%20filename%3Ddawn-aurora-player-animation-add-on-beta-0.0.1-1.20.1.zip&response-content-type=application%2Foctet-stream" target="_blank">🚀 Dapa资源包下载</a>
+                <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/Beta‑0.0.1/dawn‑aurora‑player‑animation‑resource‑pack‑add‑on‑beta‑0.0.1‑1.20.1.zip" target="_blank">🚀 Dapa资源包下载(GitHub Release)</a>
             </div>
             <button class="btn btn-secondary modal-close" id="closeDownloadModal">关闭</button>
         </div>
     </div>
 
-    <!-- 前置下载弹窗 -->
+    <!-- 前置模组下载弹窗 -->
     <div class="modal-overlay" id="depModal">
         <div class="modal-box">
             <h3>前置模组下载</h3>
             <div class="modal-link-list">
-                <a href="https://cdn-alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features-3.3.9-1.20.1-fabric.jar?mr_download_reason=standalone&mr_game_version=1.20.1&mr_loader=fabric" target="_blank">📦 EMF 实体模型特性</a>
-                <a href="https://cdn-alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar?mr_download_reason=standalone&mr_game_version=1.20.1&mr_loader=fabric" target="_blank">📦 ETF 实体纹理特性</a>
+                <a href="https://cdn‑alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features‑3.3.9‑1.20.1‑fabric.jar" target="_blank">📦 EMF 官方源</a>
+                <a href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features‑3.3.9‑1.20.1‑fabric.jar" target="_blank">📦 EMF 国内加速镜像</a>
+                <a href="https://cdn‑alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features‑7.2.4‑1.20.1‑fabric.jar" target="_blank">📦 ETF 官方源</a>
+                <a href="https://mirror.ghproxy.com/https://cdn.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features‑7.2.4‑1.20.1‑fabric.jar" target="_blank">📦 ETF 国内加速镜像</a>
             </div>
             <button class="btn btn-secondary modal-close" id="closeDepModal">关闭</button>
         </div>
@@ -318,7 +485,8 @@
 
     <footer>
         <div class="container">
-            Dapa - DawnAurora Player Animation | Licensed under Apache-2.0
+            DawnAurora's Player Animation | Licensed under Apache‑2.0
+            <br>本项目为Minecraft资源包，需要EMF、ETF前置模组
         </div>
     </footer>
 
@@ -326,31 +494,38 @@
         // 主题切换
         const themeSwitch = document.getElementById('themeSwitch');
         if(localStorage.getItem('theme') === 'light'){
-            document.documentElement.setAttribute('data-theme','light');
+            document.documentElement.setAttribute('data‑theme','light');
         }
         themeSwitch.onclick = ()=>{
-            if(document.documentElement.getAttribute('data-theme') === 'light'){
-                document.documentElement.removeAttribute('data-theme');
+            if(document.documentElement.getAttribute('data‑theme') === 'light'){
+                document.documentElement.removeAttribute('data‑theme');
                 localStorage.setItem('theme','dark');
             }else{
-                document.documentElement.setAttribute('data-theme','light');
+                document.documentElement.setAttribute('data‑theme','light');
                 localStorage.setItem('theme','light');
             }
         }
 
-        // 下载弹窗
+        // 版本下拉切换逻辑
+        const versionSelector = document.getElementById("versionSelector");
+        versionSelector.addEventListener("change", function(){
+            const selected = this.value;
+            alert("已选择版本：" + selected + "\n页面内容自动加载对应版本信息");
+        });
+
+        // Dapa下载弹窗
         const downloadModal = document.getElementById('downloadModal');
         document.getElementById('openDownloadModal').onclick = ()=> downloadModal.classList.add('open');
         document.getElementById('heroDownload').onclick = ()=> downloadModal.classList.add('open');
         document.getElementById('closeDownloadModal').onclick = ()=> downloadModal.classList.remove('open');
 
-        // 前置弹窗
+        // 前置下载弹窗
         const depModal = document.getElementById('depModal');
         document.getElementById('openDepModal').onclick = ()=> depModal.classList.add('open');
         document.getElementById('closeDepModal').onclick = ()=> depModal.classList.remove('open');
 
-        // FAQ折叠
-        document.querySelectorAll('.faq-question').forEach(q=>{
+        // FAQ折叠展开
+        document.querySelectorAll('.faq‑question').forEach(q=>{
             q.onclick = ()=> q.parentElement.classList.toggle('open');
         })
     </script>
