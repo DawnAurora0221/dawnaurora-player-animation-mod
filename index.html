@@ -130,6 +130,15 @@
             cursor:pointer;
             text-decoration:none;
         }
+        /* 版本下拉选择器样式 */
+        .version-select {
+            padding:8px 12px;
+            border-radius:10px;
+            background:var(--card-bg);
+            border:1px solid var(--border);
+            color:var(--text-white);
+            font-size:14px;
+        }
         /* 主容器 */
         .container {
             max-width:1300px;
@@ -178,7 +187,7 @@
         .tag-group {
             display:flex;
             gap:10px;
-            margin-bottom:28px;
+            margin-bottom:16px;
             flex-wrap:wrap;
         }
         .tag {
@@ -197,6 +206,8 @@
             display:flex;
             gap:14px;
             flex-wrap:wrap;
+            align-items:center;
+            margin-top:20px;
         }
         .secondary-btn {
             padding:9px 18px;
@@ -303,8 +314,17 @@
             <span class="tag">EMF + ETF</span>
             <span class="tag">Apache-2.0</span>
         </div>
+        <!-- ✅ 版本下拉选择器（新增，放在下载按钮上方） -->
+        <div>
+            <select id="versionSelect" class="version-select">
+                <option value="v002">Alpha v0.0.2 (Latest)</option>
+                <option value="v001">Alpha v0.0.1</option>
+            </select>
+        </div>
         <div class="hero-btn-group" id="download">
             <a class="green-btn" id="mainDlBtn" target="_blank">下载 DawnAurora Player Animation 资源包</a>
+            <a class="secondary-btn" id="altDlBtn" target="_blank">备选镜像</a>
+            <a class="secondary-btn" id="fallbackDlBtn" target="_blank">GitHub兜底</a>
             <a class="secondary-btn" href="#dependency">获取 EMF / ETF 前置</a>
         </div>
         <div class="alert-box"
@@ -370,11 +390,39 @@
 </footer>
 
 <script>
-// 资源包下载链接（v0.0.1）
-const primaryUrl = "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip";
-const altUrl = "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip";
-const fallbackUrl = "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/dapa";
-document.getElementById("mainDlBtn").href = primaryUrl;
+// ========== 版本下载链接数据（三套链接，切换下拉自动更新三个按钮） ==========
+const versionData = {
+    v002: {
+        primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip-mirror",
+        alt: " https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip-mirror",
+        fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases"
+    },
+    v001: {
+        primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip-mirror",
+        alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip-mirror",
+        fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases"
+    }
+};
+
+// 页面元素
+const versionSelect = document.getElementById("versionSelect");
+const mainDlBtn = document.getElementById("mainDlBtn");
+const altDlBtn = document.getElementById("altDlBtn");
+const fallbackDlBtn = document.getElementById("fallbackDlBtn");
+
+// 更新下载链接函数
+function updateDownloadLinks(verKey) {
+    const v = versionData[verKey];
+    mainDlBtn.href = v.primary;
+    altDlBtn.href = v.alt;
+    fallbackDlBtn.href = v.fallback;
+}
+// 下拉切换触发更新
+versionSelect.addEventListener("change", (e) => {
+    updateDownloadLinks(e.target.value);
+})
+// 默认加载 v0.0.2
+updateDownloadLinks("v002");
 
 // 主题切换（修复BUG，昼夜切换正常）
 const themeBtn = document.getElementById("themeBtn");
