@@ -4,340 +4,365 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DawnAurora's Player Animation</title>
-    <meta name="description" content="DawnAurora Player Animation（简称Dapa）玩家动画资源包 Alpha版，优化 Minecraft 第一人称与第三人称玩家动作。">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <meta name="description" content="DawnAurora Player Animation（简称Dapa）玩家动画资源包 Alpha版，为Minecraft 1.20.1 Fabric重制流畅玩家动作。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after {
-            box-sizing: border-box;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
         :root {
-            --bg-main: #070812;
-            --bg-card: rgba(20,24,40,0.65);
-            --text-primary: #f0f0f8;
-            --text-secondary: #b4b8d1;
-            --accent: #72aaff;
-            --accent-2: #ff9472;
-            --border: rgba(255,255,255,0.12);
+            --bg-main: #080b14;
+            --grid-color: rgba(60, 80, 120, 0.12);
+            --card-bg: rgba(18, 24, 38, 0.62);
+            --text-white: #ffffff;
+            --text-gray: #b4b9d1;
+            --accent-blue: #63b8ff;
+            --accent-green: #39d353;
+            --warn-yellow: #ffc847;
+            --border: rgba(255,255,255,0.1);
         }
         .light-theme {
-            --bg-main: #f4f6fc;
-            --bg-card: rgba(255,255,255,0.72);
-            --text-primary: #161827;
-            --text-secondary: #494c63;
-            --accent: #2b6cd8;
-            --accent-2: #d65c38;
-            --border: rgba(0,0,0,0.10);
+            --bg-main: #f0f4fa;
+            --grid-color: rgba(80,110,160,0.08);
+            --card-bg: rgba(255,255,255,0.7);
+            --text-white: #111624;
+            --text-gray: #444b66;
+            --border: rgba(0,0,0,0.1);
         }
         html {
             scroll-behavior: smooth;
         }
         body {
-            font-family: "Noto Sans SC", system-ui, sans-serif;
-            background: var(--bg-main);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: background 0.4s ease, color 0.4s ease;
+            font-family: "Noto Sans SC", sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-white);
+            min-height:100vh;
+            overflow-x:hidden;
+            transition: background 0.4s, color 0.4s;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
-        /* 极光流星背景画布 */
         #bgCanvas {
             position: fixed;
-            inset: 0;
-            z-index: -1;
+            inset:0;
+            z-index:-1;
+            pointer-events:none;
         }
+        /* 顶部导航栏 */
         header {
-            position: sticky;
+            position:sticky;
             top:0;
-            backdrop-filter: blur(14px);
-            background: rgba(7,8,18,0.6);
-            border-bottom: 1px solid var(--border);
-            z-index: 99;
+            z-index:99;
+            backdrop-filter: blur(12px);
+            background:rgba(8,11,20,0.65);
+            border-bottom:1px solid var(--border);
         }
-        .light-theme header {
-            background: rgba(244,246,252,0.65);
-        }
-        .nav-wrap {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0.8rem 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .logo-wrap {
+        .header-wrap {
+            max-width:1300px;
+            margin:0 auto;
+            padding:14px 20px;
             display:flex;
             align-items:center;
-            gap:0.6rem;
-            font-family: "JetBrains Mono", monospace;
-            font-weight:700;
-            font-size:1.3rem;
-            color: var(--accent);
+            justify-content:space-between;
         }
-        .logo-wrap img {
-            height:44px;
-            width:auto;
-        }
-        .nav-links {
+        .header-logo {
             display:flex;
-            gap:1.4rem;
             align-items:center;
+            gap:10px;
+            font-family:"JetBrains Mono", monospace;
+            font-weight:bold;
+            font-size:18px;
         }
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration:none;
-            font-size:0.92rem;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-        .btn-group-header {
-            display:flex;
-            gap:0.6rem;
-        }
-        .btn-icon {
-            width:36px;
+        .header-logo img {
             height:36px;
+        }
+        .nav-menu {
+            display:flex;
+            gap:28px;
+        }
+        .nav-menu a {
+            color:var(--text-gray);
+            text-decoration:none;
+            font-size:15px;
+            transition:0.2s;
+        }
+        .nav-menu a:hover {
+            color:#fff;
+        }
+        .header-right {
+            display:flex;
+            gap:12px;
+            align-items:center;
+        }
+        .icon-btn {
+            width:34px;
+            height:34px;
             border-radius:8px;
+            background:var(--card-bg);
             border:1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text-primary);
+            color:var(--text-white);
             cursor:pointer;
             display:grid;
             place-items:center;
-            font-size:18px;
-            transition: 0.2s;
+            font-size:16px;
         }
-        .btn-icon:hover {
-            background:var(--accent);
-            color:#fff;
+        .lang-btn {
+            padding:6px 10px;
+            border-radius:8px;
+            background:var(--card-bg);
+            border:1px solid var(--border);
+            color:var(--text-white);
+            cursor:pointer;
         }
-        .container {
-            max-width:1280px;
-            margin:0 auto;
-            padding:2rem 1.2rem;
-        }
-        .hero {
-            text-align:center;
-            padding:4rem 0 3rem;
-        }
-        .hero-logo{
-            max-width:420px;
-            width:90%;
-            margin:0 auto 1rem;
-        }
-        .hero h1 {
-            font-size:2.6rem;
-            margin-bottom:0.8rem;
-            font-family:"JetBrains Mono",monospace;
-        }
-        .hero p {
-            color:var(--text-secondary);
-            max-width:700px;
-            margin:0 auto 2rem;
-            font-size:1.05rem;
-        }
-        .version-select-wrap {
-            margin:1.5rem 0;
-        }
-        select.version-select {
-            padding:0.7rem 1rem;
+        .green-btn {
+            padding:9px 18px;
+            background-color:var(--accent-green);
+            color:#000;
+            border:none;
             border-radius:10px;
-            border:1px solid var(--border);
-            background:var(--bg-card);
-            color:var(--text-primary);
-            font-size:1rem;
-            min-width:260px;
+            font-weight:bold;
+            cursor:pointer;
+            text-decoration:none;
         }
-        .card {
-            background:var(--bg-card);
+        /* 主容器 */
+        .container {
+            max-width:1300px;
+            margin:0 auto;
+            padding:40px 20px;
+        }
+        .hero-card {
+            background:var(--card-bg);
             border:1px solid var(--border);
-            border-radius:16px;
-            padding:1.6rem;
-            margin:1.4rem 0;
+            border-radius:20px;
+            padding:42px;
             backdrop-filter: blur(10px);
         }
-        .card h2 {
-            margin-bottom:1rem;
-            color:var(--accent);
-        }
-        .card ul {
-            padding-left:1.4rem;
-            color:var(--text-secondary);
-            line-height:1.7;
-        }
-        .download-btn-wrap {
-            margin-top:1rem;
+        .hero-logo-box {
+            width:90px;
+            height:90px;
+            border-radius:14px;
+            background:rgba(255,255,255,0.08);
+            border:1px solid var(--border);
             display:flex;
+            align-items:center;
+            justify-content:center;
+            margin-bottom:24px;
+        }
+        .hero-logo-box img {
+            width:70px;
+        }
+        h1 {
+            font-size:48px;
+            line-height:1.1;
+            margin-bottom:12px;
+        }
+        .blue-text {
+            color:var(--accent-blue);
+        }
+        .hero-desc {
+            color:var(--text-gray);
+            max-width:720px;
+            line-height:1.6;
+            margin-bottom:18px;
+        }
+        .hero-warning-text {
+            font-weight:bold;
+            margin-bottom:24px;
+        }
+        .tag-group {
+            display:flex;
+            gap:10px;
+            margin-bottom:28px;
             flex-wrap:wrap;
-            gap:0.8rem;
         }
-        .btn {
-            padding:0.75rem 1.4rem;
+        .tag {
+            padding:6px 12px;
+            border-radius:20px;
+            font-size:13px;
+            background:rgba(255,255,255,0.08);
+            border:1px solid var(--border);
+        }
+        .tag-alpha {
+            background:rgba(255,200,71,0.15);
+            border-color:var(--warn-yellow);
+            color:var(--warn-yellow);
+        }
+        .hero-btn-group {
+            display:flex;
+            gap:14px;
+            flex-wrap:wrap;
+        }
+        .secondary-btn {
+            padding:9px 18px;
+            background:rgba(255,255,255,0.08);
+            border:1px solid var(--border);
+            color:var(--text-white);
             border-radius:10px;
+            cursor:pointer;
             text-decoration:none;
-            font-weight:500;
-            transition:0.2s;
         }
-        .btn-primary {
-            background:var(--accent);
-            color:#fff;
+        .alert-box {
+            margin-top:22px;
+            background:rgba(255,200,71,0.1);
+            border:1px solid rgba(255,200,71,0.3);
+            border-radius:12px;
+            padding:16px 20px;
+            color:var(--warn-yellow);
         }
-        .btn-alt {
-            background:transparent;
-            border:1px solid var(--accent);
-            color:var(--accent);
+        .section-card {
+            margin-top:32px;
+            background:var(--card-bg);
+            border:1px solid var(--border);
+            border-radius:20px;
+            padding:32px;
+            backdrop-filter: blur(10px);
         }
-        .btn-fallback {
-            background:transparent;
-            border:1px solid var(--text-secondary);
-            color:var(--text-secondary);
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-        .warning {
-            border-left:4px solid #ff9472;
-            padding:0.8rem 1rem;
-            background:rgba(255,148,114,0.08);
-            border-radius:8px;
-            margin:1rem 0;
-        }
-        .dependency-grid {
+        .dep-grid {
             display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
-            gap:1.2rem;
+            grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));
+            gap:20px;
+            margin-top:20px;
+        }
+        .dep-card {
+            border:1px solid var(--border);
+            border-radius:14px;
+            padding:22px;
+        }
+        .dep-card h3 {
+            margin-bottom:10px;
+        }
+        .dep-card p {
+            color:var(--text-gray);
+            margin-bottom:16px;
+        }
+        .dep-btn-group {
+            display:flex;
+            gap:10px;
         }
         footer {
             text-align:center;
-            padding:2rem;
-            color:var(--text-secondary);
-            font-size:0.9rem;
+            padding:30px;
+            color:var(--text-gray);
+            margin-top:40px;
             border-top:1px solid var(--border);
-            margin-top:3rem;
         }
     </style>
 </head>
 <body>
 <canvas id="bgCanvas"></canvas>
 <header>
-    <div class="nav-wrap">
-        <div class="logo-wrap">
-            <!-- 导航栏LOGO，图片名logo.png -->
-            <img src="logo.png" alt="DawnAurora Player Animation Logo" onerror="this.style.display='none'">
-            DawnAurora Player Animation
+    <div class="header-wrap">
+        <div class="header-logo">
+            <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
+            DawnAurora
         </div>
-        <nav class="nav-links">
+        <nav class="nav-menu">
+            <a href="#overview">概述</a>
+            <a href="#download">下载</a>
+            <a href="#dependency">依赖</a>
+            <a href="#feature">功能</a>
+            <a href="#faq">FAQ</a>
             <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack">Code</a>
             <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/issues">Issues</a>
-            <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/pulls">Pull requests</a>
-            <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/actions">Actions</a>
-            <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/projects">Projects</a>
-            <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/wiki">Wiki</a>
-            <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/security">Security and quality</a>
-            <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/graphs">Insights</a>
-            <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/settings">Settings</a>
         </nav>
-        <div class="btn-group-header">
-            <button class="btn btn-icon" id="themeBtn" title="切换白天/黑夜主题">◐</button>
-            <button class="btn btn-icon" id="langBtn" title="切换中英文">EN</button>
+        <div class="header-right">
+            <button class="icon-btn" id="themeBtn" title="切换白天黑夜">◐</button>
+            <button class="lang-btn" id="langBtn">CN</button>
+            <a class="green-btn" href="#download">下载资源包</a>
         </div>
     </div>
 </header>
 <main class="container">
-    <section class="hero">
-        <!-- 首页大LOGO -->
-        <img class="hero-logo" src="logo.png" alt="DawnAurora Player Animation Logo" onerror="this.style.display='none'">
-        <h1>DawnAurora Player Animation <span style="font-size:1.2rem;color:var(--accent-2)">Dapa</span></h1>
-        <p data-zh="DawnAurora Player Animation（简称Dapa）是Minecraft 1.20.1 Fabric动画资源包，完全重写原版玩家动画，带来更流畅、拟人化的玩家动作。"
-           data-en="DawnAurora Player Animation (Short Name: Dapa) is a Minecraft 1.20.1 Fabric animation resource pack. It overhauls vanilla player animations for smoother, human-like movement.">
-            DawnAurora Player Animation（简称Dapa）是Minecraft 1.20.1 Fabric动画资源包，完全重写原版玩家动画，带来更流畅、拟人化的玩家动作。
+    <section class="hero-card" id="overview">
+        <div class="hero-logo-box">
+            <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
+        </div>
+        <h1 data-zh="DawnAurora Player Animation<br><span class='blue-text'>Resource Pack</span>"
+            data-en="DawnAurora Player Animation<br><span class='blue-text'>Resource Pack</span>">
+            DawnAurora Player Animation<br><span class="blue-text">Resource Pack</span>
+        </h1>
+        <p class="hero-desc"
+        data-zh="为 Minecraft 1.20.1 Fabric 重制更流畅的玩家动作表现。第一人称手部姿态、武器挥砍、物品切换与移动动作优化，让角色看起来更有重量感与节奏感。"
+        data-en="Rework smoother player animations for Minecraft 1.20.1 Fabric. Optimized first-person hand poses, weapon swings, item switching and movement to give your character weight and rhythm.">
+            为 Minecraft 1.20.1 Fabric 重制更流畅的玩家动作表现。第一人称手部姿态、武器挥砍、物品切换与移动动作优化，让角色看起来更有重量感与节奏感。
         </p>
-        <div class="version-select-wrap">
-            <select id="versionSelect" class="version-select">
-                <option value="v002">Alpha v0.0.2 (Latest)</option>
-                <option value="v001">Alpha v0.0.1</option>
-            </select>
+        <p class="hero-warning-text"
+        data-zh="重要说明：这是资源包，不是模组。必须同时安装 EMF 和 ETF 两个前置模组才能运行。"
+        data-en="Important: This is a resource pack, NOT a mod. You must install EMF and ETF prerequisite mods.">
+            重要说明：这是资源包，不是模组。必须同时安装 EMF 和 ETF 两个前置模组才能运行。
+        </p>
+        <div class="tag-group">
+            <span class="tag tag-alpha" data-zh="▲ Alpha测试版" data-en="▲ Alpha Test Version">▲ Alpha测试版</span>
+            <span class="tag">1.20.1 Fabric</span>
+            <span class="tag">EMF + ETF</span>
+            <span class="tag">Apache-2.0</span>
         </div>
-        <div class="warning" data-zh="⚠️ Alpha早期预览版：存在未完成动画、模型穿模等问题，不建议长期存档使用。"
-             data-en="⚠️ Alpha Early Preview: Contains unfinished animations, model clipping, not recommended for long-term worlds.">
-            ⚠️ Alpha早期预览版：存在未完成动画、模型穿模等问题，不建议长期存档使用。
+        <div class="hero-btn-group" id="download">
+            <a class="green-btn" id="mainDlBtn" target="_blank">下载 DawnAurora Player Animation 资源包</a>
+            <a class="secondary-btn" href="#dependency">获取 EMF / ETF 前置</a>
         </div>
-        <div class="download-btn-wrap">
-            <a id="primaryDL" class="btn btn-primary" href="" target="_blank">首选镜像下载</a>
-            <a id="altDL" class="btn btn-alt" href="" target="_blank">备选镜像下载</a>
-            <a id="fallbackDL" class="btn btn-fallback" href="" target="_blank">GitHub发布页兜底</a>
+        <div class="alert-box"
+        data-zh="⚠️ Alpha早期测试版本<br>本版本仅用于测试，可能存在动画不稳定等问题，不建议用于长期生存存档。"
+        data-en="⚠️ Alpha Early Test Version<br>This build is for testing only. Unstable animations may occur, not recommended for long-term survival worlds.">
+            ⚠️ Alpha早期测试版本<br>本版本仅用于测试，可能存在动画不稳定等问题，不建议用于长期生存存档。
         </div>
     </section>
 
-    <section class="card">
-        <h2 data-zh="版本信息" data-en="Version Information">版本信息</h2>
-        <ul>
-            <li data-zh="发布类型：Alpha Early Preview" data-en="Release Type: Alpha Early Preview">发布类型：Alpha Early Preview</li>
-            <li data-zh="支持游戏版本：Minecraft 1.20.1" data-en="Supported Game Version: Minecraft 1.20.1">支持游戏版本：Minecraft 1.20.1</li>
-            <li data-zh="加载器：Fabric Loader" data-en="Requirement: Fabric Loader">加载器：Fabric Loader</li>
-            <li data-zh="强制前置依赖：Entity Texture Features (ETF), Entity Model Features (EMF)" data-en="Mandatory Dependencies: Entity Texture Features (ETF), Entity Model Features (EMF)">强制前置依赖：Entity Texture Features (ETF), Entity Model Features (EMF)</li>
-        </ul>
-    </section>
-
-    <section class="card">
-        <h2 data-zh="已实现功能" data-en="Completed Features">已实现功能</h2>
-        <ul>
-            <li data-zh="第三人称完整玩家动画：行走、奔跑、跳跃、坠落、游泳" data-en="Full third-person player animations: walk, run, jump, fall, swim">第三人称完整玩家动画：行走、奔跑、跳跃、坠落、游泳</li>
-            <li data-zh="第一人称手部动画，与身体动作同步" data-en="First-person hand animations synced with body">第一人称手部动画，与身体动作同步</li>
-            <li data-zh="身体倾斜、头部跟随镜头旋转" data-en="Body tilting & head rotation follow camera">身体倾斜、头部跟随镜头旋转</li>
-            <li data-zh="攀爬、鞘翅滑翔、水下游泳专属动画" data-en="Unique animations for climb, gliding, underwater swimming">攀爬、鞘翅滑翔、水下游泳专属动画</li>
-        </ul>
-    </section>
-
-    <section class="card">
-        <h2 data-zh="前置依赖下载" data-en="Dependency Downloads">前置依赖下载</h2>
-        <div class="dependency-grid">
-            <div class="card" style="margin:0">
+    <section class="section-card" id="dependency">
+        <h2 data-zh="前置依赖" data-en="Dependencies">前置依赖</h2>
+        <p style="color:var(--text-gray);margin:10px 0 20px;"
+        data-zh="下面两个前置模组必须安装，Modrinth为主下载源，CurseForge作为兜底备用。"
+        data-en="Both prerequisites must be installed. Primary source: Modrinth, fallback: CurseForge.">
+            下面两个前置模组必须安装，Modrinth为主下载源，CurseForge作为兜底备用。
+        </p>
+        <div class="dep-grid">
+            <div class="dep-card">
                 <h3>Entity Texture Features (ETF)</h3>
-                <p data-zh="Modrinth为主源，CurseForge兜底备用" data-en="Primary: Modrinth, Fallback: CurseForge">Modrinth为主源，CurseForge兜底备用</p>
-                <div class="download-btn-wrap">
-                    <a class="btn btn-primary" href="https://cdn-alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar?mr_download_reason=standalone&mr_game_version=1.20.1&mr_loader=fabric" target="_blank">Modrinth 下载</a>
-                    <a class="btn btn-alt" href="https://mediafilez.forgecdn.net/files/8908/927/entity_texture_features-7.2.4-1.20.1-fabric.jar" target="_blank">CurseForge 兜底</a>
+                <p data-zh="实体纹理特性，资源包必需前置" data-en="Entity Texture Features, required dependency">实体纹理特性，资源包必需前置</p>
+                <div class="dep-btn-group">
+                    <a class="secondary-btn" target="_blank" href="https://cdn-alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar?mr_download_reason=standalone&mr_game_version=1.20.1&mr_loader=fabric">Modrinth</a>
+                    <a class="secondary-btn" target="_blank" href="https://mediafilez.forgecdn.net/files/8908/927/entity_texture_features-7.2.4-1.20.1-fabric.jar">CurseForge兜底</a>
                 </div>
             </div>
-            <div class="card" style="margin:0">
+            <div class="dep-card">
                 <h3>Entity Model Features (EMF)</h3>
-                <p data-zh="Modrinth为主源，CurseForge兜底备用" data-en="Primary: Modrinth, Fallback: CurseForge">Modrinth为主源，CurseForge兜底备用</p>
-                <div class="download-btn-wrap">
-                    <a class="btn btn-primary" href="https://cdn-alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features-3.3.9-1.20.1-fabric.jar?mr_download_reason=standalone&mr_game_version=1.20.1&mr_loader=fabric" target="_blank">Modrinth 下载</a>
-                    <a class="btn btn-alt" href="https://mediafilez.forgecdn.net/files/8909/421/entity_model_features-3.3.9-1.20.1-fabric.jar" target="_blank">CurseForge 兜底</a>
+                <p data-zh="实体模型特性，资源包必需前置" data-en="Entity Model Features, required dependency">实体模型特性，资源包必需前置</p>
+                <div class="dep-btn-group">
+                    <a class="secondary-btn" target="_blank" href="https://cdn-alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features-3.3.9-1.20.1-fabric.jar?mr_download_reason=standalone&mr_game_version=1.20.1-fabric.jar">Modrinth</a>
+                    <a class="secondary-btn" target="_blank" href="https://mediafilez.forgecdn.net/files/8909/421/entity_model_features-3.3.9-1.20.1-fabric.jar">CurseForge兜底</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="card">
-        <h2 data-zh="安装教程" data-en="Installation Guide">安装教程</h2>
-        <ol style="padding-left:1.4rem;color:var(--text-secondary);line-height:1.7;">
-            <li data-zh="安装 Minecraft 1.20.1 Fabric Loader" data-en="Install Fabric Loader for Minecraft 1.20.1">安装 Minecraft 1.20.1 Fabric Loader</li>
-            <li data-zh="安装前置依赖 ETF 与 EMF 模组，放入mods文件夹" data-en="Install dependencies ETF and EMF into mods folder">安装前置依赖 ETF 与 EMF 模组，放入mods文件夹</li>
-            <li data-zh="将Dapa资源包zip放入resourcepacks文件夹" data-en="Put Dapa zip into resourcepacks folder">将Dapa资源包zip放入resourcepacks文件夹</li>
-            <li data-zh="在游戏资源包菜单启用 DawnAurora Player Animation" data-en="Enable Dapa inside Minecraft resource pack menu">在游戏资源包菜单启用 DawnAurora Player Animation</li>
-        </ol>
-    </section>
-
-    <section class="card">
-        <h2 data-zh="已知问题" data-en="Known Issues">已知问题</h2>
-        <ul>
-            <li data-zh="部分动画存在模型穿模、抖动" data-en="Some animations may have model clipping or jittering">部分动画存在模型穿模、抖动</li>
-            <li data-zh="物品交互动画尚未完全实现" data-en="Item interaction animations not fully implemented">物品交互动画尚未完全实现</li>
-            <li data-zh="与其他修改玩家模型/动画的资源包冲突" data-en="Conflicts with other packs modifying player model/animations">与其他修改玩家模型/动画的资源包冲突</li>
+    <section class="section-card" id="feature">
+        <h2 data-zh="功能介绍" data-en="Features">功能介绍</h2>
+        <ul style="padding-left:22px;line-height:1.7;color:var(--text-gray);margin-top:12px;">
+            <li data-zh="重制玩家行走、奔跑、跳跃、坠落、游泳、攀爬动画" data-en="Rework walk, run, jump, fall, swim, climb player animations">重制玩家行走、奔跑、跳跃、坠落、游泳、攀爬动画</li>
+            <li data-zh="第一人称手部动画与身体动作同步" data-en="First-person hand animations synced with body">第一人称手部动画与身体动作同步</li>
+            <li data-zh="头部跟随镜头旋转，身体倾斜效果" data-en="Head rotation follow camera, body tilting">头部跟随镜头旋转，身体倾斜效果</li>
+            <li data-zh="鞘翅滑翔、水下游泳专属动画" data-en="Unique animations for elytra gliding and underwater swimming">鞘翅滑翔、水下游泳专属动画</li>
         </ul>
     </section>
 
-    <section class="card">
-        <h2 data-zh="开源协议" data-en="License">开源协议</h2>
-        <p>Apache-2.0 Open Source License</p>
+    <section class="section-card" id="faq">
+        <h2 data-zh="常见问题 FAQ" data-en="FAQ">常见问题 FAQ</h2>
+        <ul style="padding-left:22px;line-height:1.7;color:var(--text-gray);margin-top:12px;">
+            <li data-zh="Q：下载资源包无法打开？A：确认下载完整，不要用浏览器直接打开zip，放入resourcepacks文件夹。"
+            data-en="Q: Can't open resource pack? A: Check full download, put zip into resourcepacks folder.">
+                Q：下载资源包无法打开？A：确认下载完整，不要用浏览器直接打开zip，放入resourcepacks文件夹。
+            </li>
+            <li data-zh="Q：动画不生效？A：确认EMF、ETF版本正确，资源包在游戏内启用。"
+            data-en="Q: Animations not working? A: Check EMF & ETF versions, enable resource pack in game.">
+                Q：动画不生效？A：确认EMF、ETF版本正确，资源包在游戏内启用。
+            </li>
+        </ul>
     </section>
 </main>
 <footer>
@@ -345,36 +370,13 @@
 </footer>
 
 <script>
-// 版本链接数据
-const versionData = {
-    v002: {
-        primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip-mirror",
-        alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip-mirror",
-        fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/dev-alpha-beta-release-vx.x.x"
-    },
-    v001: {
-        primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
-        alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
-        fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/dapa"
-    }
-};
-// 版本下拉切换
-const versionSelect = document.getElementById("versionSelect");
-const primaryDL = document.getElementById("primaryDL");
-const altDL = document.getElementById("altDL");
-const fallbackDL = document.getElementById("fallbackDL");
-function updateDownloadLinks(verKey){
-    const v = versionData[verKey];
-    primaryDL.href = v.primary;
-    altDL.href = v.alt;
-    fallbackDL.href = v.fallback;
-}
-versionSelect.addEventListener("change",e=>{
-    updateDownloadLinks(e.target.value);
-});
-updateDownloadLinks("v002");
+// 资源包下载链接（v0.0.1）
+const primaryUrl = "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip";
+const altUrl = "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip";
+const fallbackUrl = "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/dapa";
+document.getElementById("mainDlBtn").href = primaryUrl;
 
-// 昼夜主题切换（修复BUG，正常切换）
+// 主题切换（修复BUG，昼夜切换正常）
 const themeBtn = document.getElementById("themeBtn");
 themeBtn.onclick = ()=>{
     document.body.classList.toggle("light-theme");
@@ -386,13 +388,13 @@ const langBtn = document.getElementById("langBtn");
 let isZh = true;
 langBtn.onclick = ()=>{
     isZh = !isZh;
-    langBtn.textContent = isZh ? "EN" : "ZH";
+    langBtn.textContent = isZh ? "CN" : "EN";
     document.querySelectorAll("[data-zh]").forEach(el=>{
-        el.textContent = isZh ? el.dataset.zh : el.dataset.en;
+        el.innerHTML = isZh ? el.dataset.zh : el.dataset.en;
     })
 }
 
-// 极光+流星背景 原版效果保留
+// 极光+流星背景 原版效果
 const canvas = document.getElementById("bgCanvas");
 const ctx = canvas.getContext("2d");
 function resizeCanvas(){
@@ -404,7 +406,6 @@ window.addEventListener("resize",resizeCanvas);
 
 let stars = [];
 let meteors = [];
-// 生成星星
 for(let i=0;i<400;i++){
     stars.push({
         x:Math.random()*canvas.width,
@@ -426,14 +427,14 @@ function spawnMeteor(){
 setInterval(spawnMeteor,1200);
 function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    // 极光渐变
+    //极光渐变
     const grad = ctx.createLinearGradient(0,0,0,canvas.height);
     grad.addColorStop(0,"rgba(20,30,80,0.35)");
     grad.addColorStop(0.5,"rgba(15,60,70,0.2)");
     grad.addColorStop(1,"rgba(5,10,20,0)");
     ctx.fillStyle = grad;
     ctx.fillRect(0,0,canvas.width,canvas.height);
-    // 星星
+    //星星
     stars.forEach(s=>{
         ctx.beginPath();
         ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
@@ -458,14 +459,14 @@ function draw(){
 }
 draw();
 
-// Konami键盘彩蛋 ↑↑↓↓←→←→BA
+// Konami 键盘彩蛋 ↑↑↓↓←→←→BA
 const konamiCode = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
 let kIdx=0;
 window.addEventListener("keydown",e=>{
     if(e.key === konamiCode[kIdx]){
         kIdx++;
         if(kIdx>=konamiCode.length){
-            alert("🎉 彩蛋触发！DawnAurora Player Animation 开发彩蛋！");
+            alert("🎉 DawnAurora Player Animation 彩蛋触发！");
             kIdx=0;
         }
     }else kIdx=0;
