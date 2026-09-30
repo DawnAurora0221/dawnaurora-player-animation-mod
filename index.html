@@ -4,8 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DawnAurora's Player Animation</title>
-    <meta name="description" content="DawnAurora Player Animation（简称Dapa）玩家动画资源包 Alpha v0.0.1，优化 Minecraft 1.20.1 Fabric 玩家动作。">
-    <!-- 谷歌字体预加载 -->
+    <meta name="description" content="DawnAurora Player Animation（简称Dapa）玩家动画资源包 Alpha版，优化 Minecraft 1.20.1 Fabric 玩家动作。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -46,14 +45,12 @@
             overflow-x:hidden;
             transition: background 0.4s ease, color 0.4s ease;
         }
-        /* 星空极光画布 */
         #bgCanvas {
             position: fixed;
             inset:0;
             z-index:-1;
             pointer-events:none;
         }
-        /* 导航栏 */
         header {
             position:sticky;
             top:0;
@@ -326,14 +323,16 @@
             重要说明：这是资源包，不是模组。必须同时安装 EMF 和 ETF 两个前置模组才能正常使用。
         </p>
         <div class="tag-group">
-            <span class="tag tag-alpha" data-zh="▲ Alpha v0.0.1" data-en="▲ Alpha v0.0.1">▲ Alpha v0.0.1</span>
+            <span class="tag tag-alpha" data-zh="▲ Alpha 早期预览" data-en="▲ Alpha Early Preview">▲ Alpha 早期预览</span>
             <span class="tag">1.20.1 Fabric</span>
             <span class="tag">EMF + ETF</span>
             <span class="tag">Apache-2.0</span>
         </div>
         <div>
             <select id="versionSelect" class="version-select">
-                <option value="v001" selected>Alpha v0.0.1 (Latest)</option>
+                <option value="v003" selected>Alpha v0.0.3 (Latest)</option>
+                <option value="v002">Alpha v0.0.2</option>
+                <option value="v001">Alpha v0.0.1</option>
             </select>
         </div>
         <div class="hero-btn-group" id="download">
@@ -343,9 +342,9 @@
             <a class="secondary-btn" href="#dependency">获取 EMF / ETF 前置</a>
         </div>
         <div class="alert-box"
-        data-zh="⚠️ Alpha早期测试版本 v0.0.1<br>本版本仅用于测试，动画仍存在不稳定问题，不推荐用于长期生存存档。"
-        data-en="⚠️ Alpha Early Test Build v0.0.1<br>This version is for testing only. Animations may be unstable, not recommended for long-term survival worlds.">
-            ⚠️ Alpha早期测试版本 v0.0.1<br>本版本仅用于测试，动画仍存在不稳定问题，不推荐用于长期生存存档。
+        data-zh="⚠️ Alpha早期测试版本<br>本版本仅用于测试，动画仍存在不稳定问题，不推荐用于长期生存存档。"
+        data-en="⚠️ Alpha Early Test Build<br>This version is for testing only. Animations may be unstable, not recommended for long-term survival worlds.">
+            ⚠️ Alpha早期测试版本<br>本版本仅用于测试，动画仍存在不稳定问题，不推荐用于长期生存存档。
         </div>
     </section>
 
@@ -381,7 +380,7 @@
     </section>
 
     <section class="section-card" id="feature">
-        <h2 data-zh="功能介绍 Alpha v0.0.1" data-en="Features Alpha v0.0.1">功能介绍 Alpha v0.0.1</h2>
+        <h2 data-zh="功能介绍" data-en="Features">功能介绍</h2>
         <ul>
             <li data-zh="重制玩家行走、奔跑、跳跃、坠落、游泳、攀爬动画" data-en="Rework walk, run, jump, fall, swim, climb player animations">重制玩家行走、奔跑、跳跃、坠落、游泳、攀爬动画</li>
             <li data-zh="第一人称手部动画与身体动作同步" data-en="First-person hand animations synchronized with body">第一人称手部动画与身体动作同步</li>
@@ -412,12 +411,21 @@
     <p>DawnAurora Player Animation (Dapa) © 2026 | Apache-2.0 License</p>
 </footer>
 <script>
-// 资源包本体下载链接
 const versionData = {
     v001: {
-        primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
-        alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dapa/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
-        fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/dapa"
+        primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
+        alt: ":https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
+        fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases"
+    },
+    v002: {
+        primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip",
+        alt: "【替换成v0.0.2 ghproxy.net备用链接】",
+        fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases"
+    },
+    v003: {
+        primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/alpha-playeranimation-0.xxx/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.3-1.20.1.zip",
+        alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip",
+        fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases"
     }
 };
 const versionSelect = document.getElementById("versionSelect");
@@ -431,16 +439,14 @@ function updateDownloadLinks(key) {
     fallbackDlBtn.href = v.fallback;
 }
 versionSelect.addEventListener("change", e=>updateDownloadLinks(e.target.value));
-updateDownloadLinks("v001");
+updateDownloadLinks("v003");
 
-// 昼夜主题切换
 const themeBtn = document.getElementById("themeBtn");
 themeBtn.onclick = ()=>{
     document.body.classList.toggle("light-theme");
     themeBtn.textContent = document.body.classList.contains("light-theme") ? "◑" : "◐";
 }
 
-// 中英双语切换
 const langBtn = document.getElementById("langBtn");
 let isCN = true;
 langBtn.onclick = ()=>{
@@ -451,7 +457,6 @@ langBtn.onclick = ()=>{
     })
 }
 
-// ========== 极光 + 流星 + 星空背景 ==========
 const canvas = document.getElementById("bgCanvas");
 const ctx = canvas.getContext("2d");
 let w, h;
@@ -485,7 +490,6 @@ function spawnMeteor(){
 }
 setInterval(spawnMeteor,1400);
 
-// 极光渐变层
 function drawAurora(time){
     const grad1 = ctx.createLinearGradient(0,0,0,h*0.75);
     grad1.addColorStop(0,`hsla(${190+Math.sin(time*0.0004)*30}, 75%, 45%, 0.18)`);
@@ -497,7 +501,6 @@ function drawAurora(time){
 function render(time){
     ctx.clearRect(0,0,w,h);
     drawAurora(time);
-    // 闪烁星星
     stars.forEach(s=>{
         s.phase += s.twinkleSpeed;
         const o = 0.25 + Math.sin(s.phase)*0.35;
@@ -506,7 +509,6 @@ function render(time){
         ctx.fillStyle = `rgba(255,255,255,${o})`;
         ctx.fill();
     })
-    // 流星
     for(let i=meteors.length-1;i>=0;i--){
         const m = meteors[i];
         ctx.beginPath();
@@ -524,7 +526,6 @@ function render(time){
 }
 requestAnimationFrame(render);
 
-// Konami 彩蛋 ↑↑↓↓←→←→BA
 const konamiCode = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
 let konamiIndex = 0;
 window.addEventListener("keydown",e=>{
