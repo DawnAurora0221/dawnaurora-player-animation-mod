@@ -273,4 +273,73 @@ defend, and hold each Contributor harmless for any liability
 incurred by, or claims asserted against, such Contributor by reason
 of your accepting any such warranty or additional liability.
 
+# DawnAurora's Player Animation - Alpha v0.0.2
+Short Name: Dapa
+Minecraft 1.20.1 Fabric Animation Resource Pack
+
+## Overview
+Alpha v0.0.2 brings more player animations and fixes multiple animation issues from v0.0.1.
+More natural player motion and improved animation blending.
+
+## Added
+- Custom idle animations
+- Custom head yaw & pitch animations
+- Full custom swimming animation
+- Basic weapon animation framework for item interaction
+
+## Bug Fixes
+- Fixed animation blending weight calculation issues
+- Fixed incorrect player pose while sprinting
+- Fixed minor model offset errors in third-person perspective
+- Optimized transition smoothness for basic movement animations
+
+## Dependencies
+- Minecraft 1.20.1
+- Fabric Loader
+- Entity Model Features (EMF)
+- Entity Texture Features (ETF)
+
+## Notice
+This is still an alpha preview. Some animations remain unfinished.
+
+# DawnAurora's Player Animation - Alpha v0.0.3
+Short Name: Dapa
+Minecraft 1.20.1 Fabric Animation Resource Pack
+
+## Overview
+Alpha v0.0.3 is the largest update so far. Almost all planned animation logic has been fully implemented, including shield blocking animation.
+Only Respackopts configuration support remains work-in-progress.
+
+## Added
+- Walk-on-fence animation
+- Player edge standing animation
+- Custom shield blocking animation
+- Torch holding animation
+- Lantern holding animation
+- Player hurt / damage hit reaction animation
+- Equipment & hotbar item swap animation
+- Dynamic armor state animations
+
+## Bug Fixes
+- Fixed resource pack recognition issue in PCL2 and HCL launchers
+- Fixed abnormal animation jitter in some movement scenarios
+- Fixed broken animation transition when switching held items
+- Fixed multiple JSON parsing errors inside animation controller files
+- Fixed incorrect timing of some movement animation blending
+- Fixed rare cases where animations stop playing after dimension switching
+
+## Work In Progress
+⏳ Respackopts configuration support for animation customization
+
+## Dependencies
+- Minecraft 1.20.1
+- Fabric Loader
+- Entity Model Features (EMF)
+- Entity Texture Features (ETF)
+
+## Notice
+This is an alpha early preview. A small number of hidden bugs may still exist.
+This is a resource pack, NOT a Fabric mod.
+
+
 END OF TERMS AND CONDITIONS
