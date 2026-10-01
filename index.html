@@ -336,7 +336,6 @@
             <option value="v002">Alpha v0.0.2</option>
             <option value="v001">Alpha v0.0.1</option>
         </select>
-
         </div>
         <div class="hero-btn-group" id="download">
             <a class="green-btn" id="mainDlBtn" target="_blank" data-zh="下载 DawnAurora Player Animation 资源包" data-en="Download DawnAurora Player Animation Resource Pack">下载 DawnAurora Player Animation 资源包</a>
@@ -350,7 +349,6 @@
             ⚠️ Alpha早期测试版本<br>本版本仅用于测试，动画仍存在不稳定问题，不推荐用于长期生存存档。
         </div>
     </section>
-
     <section class="section-card" id="dependency">
         <h2 data-zh="前置依赖" data-en="Dependencies">前置依赖</h2>
         <p style="color:var(--text-gray);margin:10px 0 20px;"
@@ -381,7 +379,6 @@
             </div>
         </div>
     </section>
-
     <section class="section-card" id="feature">
         <h2 data-zh="功能介绍" data-en="Features">功能介绍</h2>
         <ul>
@@ -395,7 +392,6 @@
             <li data-zh="火把/灵魂火把/灯笼/灵魂灯笼统一持握动画" data-en="Unified hold animations for torch, soul torch, lantern, soul lantern">火把/灵魂火把/灯笼/灵魂灯笼统一持握动画</li>
         </ul>
     </section>
-
     <section class="section-card" id="faq">
         <h2 data-zh="常见问题 FAQ" data-en="FAQ">常见问题 FAQ</h2>
         <ul>
@@ -417,25 +413,23 @@
 const versionData = {
     v001: {
         primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
-        alt: ":https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
+        alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
         fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/dev-alpha-beta-release-vx.x"
     },
     v002: {
         primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip",
-        alt: " https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip",
+        alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip",
         fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/dev-alpha-beta-release-vx.x.x"
     },
     v003: {
         primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/alpha-playeranimation-0.xxx/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.3-1.20.1.zip",
         alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip",
         fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/alpha-player-animation-v0.xxxxx"
-
+    },
     v004: {
         primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/alpha-player-animation-v0.xxxxx/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.4-1.20.1.zip",
         alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/alpha-player-animation-v0.xxxxx/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.4-1.20.1.zip",
         fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/alpha-player-animation-v0.xxxxx"
-    }
-
     }
 };
 const versionSelect = document.getElementById("versionSelect");
@@ -449,14 +443,12 @@ function updateDownloadLinks(key) {
     fallbackDlBtn.href = v.fallback;
 }
 versionSelect.addEventListener("change", e=>updateDownloadLinks(e.target.value));
-updateDownloadLinks("v003");
-
+updateDownloadLinks("v004");
 const themeBtn = document.getElementById("themeBtn");
 themeBtn.onclick = ()=>{
     document.body.classList.toggle("light-theme");
     themeBtn.textContent = document.body.classList.contains("light-theme") ? "◑" : "◐";
 }
-
 const langBtn = document.getElementById("langBtn");
 let isCN = true;
 langBtn.onclick = ()=>{
@@ -466,7 +458,6 @@ langBtn.onclick = ()=>{
         el.innerHTML = isCN ? el.dataset.zh : el.dataset.en;
     })
 }
-
 const canvas = document.getElementById("bgCanvas");
 const ctx = canvas.getContext("2d");
 let w, h;
@@ -476,7 +467,6 @@ function resize() {
 }
 resize();
 window.addEventListener("resize", resize);
-
 const stars = [];
 for(let i=0;i<450;i++){
     stars.push({
@@ -499,7 +489,6 @@ function spawnMeteor(){
     })
 }
 setInterval(spawnMeteor,1400);
-
 function drawAurora(time){
     const grad1 = ctx.createLinearGradient(0,0,0,h*0.75);
     grad1.addColorStop(0,`hsla(${190+Math.sin(time*0.0004)*30}, 75%, 45%, 0.18)`);
@@ -535,7 +524,6 @@ function render(time){
     requestAnimationFrame(render);
 }
 requestAnimationFrame(render);
-
 const konamiCode = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
 let konamiIndex = 0;
 window.addEventListener("keydown",e=>{
