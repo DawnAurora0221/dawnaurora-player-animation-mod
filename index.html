@@ -17,22 +17,26 @@
         :root {
             --bg: #070914;
             --card-bg: rgba(18, 22, 36, 0.65);
+            --card-bg-strong: rgba(18, 22, 36, 0.78);
             --text: #e8edf8;
             --text-gray: #a8b2c5;
             --accent-green: #4cd964;
             --warn: #ffc145;
             --border: rgba(255,255,255,0.12);
             --halo: 0 0 22px rgba(90,160,255,0.25);
+            --hover-glow: 0 0 30px rgba(90,160,255,0.35);
         }
         .light-theme {
             --bg: #f4f7ff;
             --card-bg: rgba(255,255,255,0.72);
+            --card-bg-strong: rgba(255,255,255,0.85);
             --text: #111827;
             --text-gray: #4b5563;
             --accent-green: #22c55e;
             --warn: #d97706;
             --border: rgba(0,0,0,0.1);
             --halo: 0 0 24px rgba(70,130,230,0.2);
+            --hover-glow: 0 0 32px rgba(70,130,230,0.28);
         }
         html {
             scroll-behavior: smooth;
@@ -89,7 +93,7 @@
             color:var(--text-gray);
             text-decoration:none;
             font-size:15px;
-            transition:0.2s;
+            transition:0.25s;
         }
         .nav-menu a:hover {
             color:#fff;
@@ -111,6 +115,10 @@
             display:grid;
             place-items:center;
             font-size:16px;
+            transition: 0.25s;
+        }
+        .icon-btn:hover {
+            box-shadow: var(--hover-glow);
         }
         .lang-btn {
             padding:6px 10px;
@@ -119,6 +127,10 @@
             border:1px solid var(--border);
             color:var(--text);
             cursor:pointer;
+            transition:0.25s;
+        }
+        .lang-btn:hover {
+            box-shadow: var(--hover-glow);
         }
         .green-btn {
             padding:9px 18px;
@@ -129,6 +141,11 @@
             font-weight:bold;
             cursor:pointer;
             text-decoration:none;
+            transition:0.25s;
+        }
+        .green-btn:hover {
+            filter:brightness(1.1);
+            box-shadow: 0 0 20px rgba(76,217,100,0.35);
         }
         .container {
             max-width:1300px;
@@ -142,6 +159,10 @@
             padding:42px;
             backdrop-filter: blur(10px);
             box-shadow: var(--halo);
+            transition:0.3s;
+        }
+        .hero-card:hover {
+            box-shadow: var(--hover-glow);
         }
         .hero-logo-box {
             width:90px;
@@ -218,6 +239,11 @@
             border-radius:10px;
             cursor:pointer;
             text-decoration:none;
+            transition:0.25s;
+        }
+        .secondary-btn:hover {
+            box-shadow: var(--hover-glow);
+            background:rgba(255,255,255,0.12);
         }
         .alert-box {
             margin-top:22px;
@@ -235,6 +261,10 @@
             padding:32px;
             backdrop-filter: blur(10px);
             box-shadow: var(--halo);
+            transition:0.3s;
+        }
+        .section-card:hover {
+            box-shadow: var(--hover-glow);
         }
         .dep-grid {
             display:grid;
@@ -246,6 +276,11 @@
             border:1px solid var(--border);
             border-radius:14px;
             padding:22px;
+            background:var(--card-bg-strong);
+            transition:0.25s;
+        }
+        .dep-card:hover {
+            box-shadow: var(--hover-glow);
         }
         .dep-card h3 {
             margin-bottom:10px;
@@ -265,6 +300,21 @@
             line-height:1.7;
             color:var(--text-gray);
             margin-top:12px;
+        }
+        .team-card {
+            margin-top:20px;
+            border:1px solid var(--border);
+            border-radius:14px;
+            padding:24px;
+            background:var(--card-bg-strong);
+            backdrop-filter: blur(10px);
+            transition:0.25s;
+        }
+        .team-card:hover {
+            box-shadow: var(--hover-glow);
+        }
+        .mirror-list li {
+            margin:8px 0;
         }
         footer {
             text-align:center;
@@ -288,6 +338,8 @@
             <a href="#download">下载</a>
             <a href="#dependency">依赖</a>
             <a href="#feature">功能</a>
+            <a href="#team">开发团队</a>
+            <a href="#mirrors">多镜像备份</a>
             <a href="#faq">FAQ</a>
             <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack">Code</a>
             <a href="https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/issues">Issues</a>
@@ -338,8 +390,9 @@
         </select>
         </div>
         <div class="hero-btn-group" id="download">
-            <a class="green-btn" id="mainDlBtn" target="_blank" data-zh="下载 DawnAurora Player Animation 资源包" data-en="Download DawnAurora Player Animation Resource Pack">下载 DawnAurora Player Animation 资源包</a>
-            <a class="secondary-btn" id="altDlBtn" target="_blank" data-zh="备选镜像" data-en="Alternative Mirror">备选镜像</a>
+            <a class="green-btn" id="mainDlBtn" target="_blank" data-zh="自建主镜像（推荐）" data-en="Self-host Main Mirror(Recommended)">自建主镜像（推荐）</a>
+            <a class="secondary-btn" id="altDl2Btn" target="_blank" data-zh="gh-proxy.com 公共镜像" data-en="shturl.cc/K Public Mirror">gh-proxy.com 公共镜像</a>
+            <a class="secondary-btn" id="altDl3Btn" target="_blank" data-zh="ghproxy.net 公共镜像" data-en="ghproxy.net Public Mirror">ghproxy.net 公共镜像</a>
             <a class="secondary-btn" id="fallbackDlBtn" target="_blank" data-zh="GitHub兜底" data-en="GitHub Fallback">GitHub兜底</a>
             <a class="secondary-btn" href="#dependency">获取 EMF / ETF 前置</a>
         </div>
@@ -349,32 +402,60 @@
             ⚠️ Alpha早期测试版本<br>本版本仅用于测试，动画仍存在不稳定问题，不推荐用于长期生存存档。
         </div>
     </section>
+
+    <section class="section-card" id="team">
+        <h2 data-zh="开发团队" data-en="Development Team">开发团队</h2>
+        <div class="team-card">
+            <h3 data-zh="DawnAurora（独立开发者）" data-en="DawnAurora (Solo Developer)">DawnAurora（独立开发者）</h3>
+            <p data-zh="本项目由 DawnAurora 一人独立完成，包含全部动画设计、JEM/JPM编写、资源包制作、镜像站点搭建与网页开发。"
+               data-en="This project is fully developed by DawnAurora alone. Including all animation design, JEM/JPM scripting, resource pack creation, mirror website construction and web development.">
+                本项目由 DawnAurora 一人独立完成，包含全部动画设计、JEM/JPM编写、资源包制作、镜像站点搭建与网页开发。
+            </p>
+        </div>
+    </section>
+
+    <section class="section-card" id="mirrors">
+        <h2 data-zh="多镜像站点备份" data-en="Multi-Mirror Backup Sites">多镜像站点备份</h2>
+        <ul class="mirror-list">
+            <li data-zh="主镜像：https://mirrors-dawnaurora0221.infinityfree.me/（自建，优先推荐）" data-en="Main Mirror: https://mirrors-dawnaurora0221.infinityfree.me/ (Self-hosted, Recommended)">主镜像：https://mirrors-dawnaurora0221.infinityfree.me/（自建，优先推荐）</li>
+            <li data-zh="备用镜像1：后续新增站点（预留）" data-en="Backup Mirror 1: Site to be added later (Reserved)">备用镜像1：后续新增站点（预留）</li>
+            <li data-zh="备用镜像2：后续新增站点（预留）" data-en="Backup Mirror 2: Site to be added later (Reserved)">备用镜像2：后续新增站点（预留）</li>
+        </ul>
+        <p style="margin-top:12px;color:var(--text-gray);"
+        data-zh="当其中一个站点无法访问时，可以切换其他镜像站下载。"
+        data-en="If one site cannot be accessed, switch to other mirrors for download.">
+            当其中一个站点无法访问时，可以切换其他镜像站下载。
+        </p>
+    </section>
+
     <section class="section-card" id="dependency">
         <h2 data-zh="前置依赖" data-en="Dependencies">前置依赖</h2>
         <p style="color:var(--text-gray);margin:10px 0 20px;"
-        data-zh="下面两个前置模组必须安装，国内加速镜像优先；Modrinth、CurseForge为国外双兜底下载源。"
-        data-en="Both prerequisite mods below must be installed. Domestic mirrors recommended; Modrinth and CurseForge are two overseas fallback sources.">
-            下面两个前置模组必须安装，国内加速镜像优先；Modrinth、CurseForge为国外双兜底下载源。
+        data-zh="下面两个前置模组必须安装，共5条下载通道：自建加速镜像、2个公益公共镜像、CurseForge、Modrinth。"
+        data-en="Both prerequisite mods below must be installed. Total 5 download sources: Self-host mirror, 2 public mirrors, CurseForge and Modrinth.">
+            下面两个前置模组必须安装，共5条下载通道：自建加速镜像、2个公益公共镜像、CurseForge、Modrinth。
         </p>
         <div class="dep-grid">
             <div class="dep-card">
                 <h3>Entity Texture Features (ETF)</h3>
                 <p data-zh="实体纹理特性，资源包必需前置" data-en="Entity Texture Features, required dependency for this resource pack">实体纹理特性，资源包必需前置</p>
                 <div class="dep-btn-group">
-                    <a class="secondary-btn" target="_blank" href="https://gh-proxy.com/https://raw.githubusercontent.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/main/Entity-Texture-Features-Beta-1.20.1-Fabric-Mirror-CDN.jar" data-zh="国内加速镜像" data-en="Domestic Mirror">国内加速镜像</a>
-                    <a class="secondary-btn" target="_blank" href="https://ghproxy.net/https://raw.githubusercontent.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/main/Entity-Texture-Features-Beta-1.20.1-Fabric-Mirror-CDN.jar" data-zh="备用国内镜像" data-en="Backup Domestic Mirror">备用国内镜像</a>
-                    <a class="secondary-btn" target="_blank" href="https://cdn-alt.modrinth.com/data/BVzZfTc1/versions/iOlqSm7x/entity_texture_features-7.2.4-1.20.1-fabric.jar?mr_download_reason=standalone&mr_game_version=1.20.1&mr_loader=fabric">Modrinth</a>
-                    <a class="secondary-btn" target="_blank" href="https://mediafilez.forgecdn.net/files/8908/927/entity_texture_features-7.2.4-1.20.1-fabric.jar" data-zh="CurseForge兜底" data-en="CurseForge Backup">CurseForge兜底</a>
+                    <a class="secondary-btn" target="_blank" href="https://mirrors-dawnaurora0221.infinityfree.me/files/EntityTextureFeatures-Beta-1.20.1-Fabric-Add-On.jar" data-zh="自建加速镜像（推荐）" data-en="Self-host Mirror (Recommended)">自建加速镜像（推荐）</a>
+                    <a class="secondary-btn" target="_blank" href="https://shturl.cc/om/https://mediafilez.forgecdn.net/files/8908/927/entity_texture_features-7.2.4-1.20.1-fabric.jar" data-zh="shturl.cc/om 公益镜像" data-en="shturl.cc/om Public Mirror">shturl.cc/om 公益镜像</a>
+                    <a class="secondary-btn" target="_blank" href="https://shturl.cc/K/https://mediafilez.forgecdn.net/files/8908/927/entity_texture_features-7.2.4-1.20.1-fabric.jar" data-zh="shturl.cc/K 公益镜像" data-en="shturl.cc/K Public Mirror">shturl.cc/K 公益镜像</a>
+                    <a class="secondary-btn" target="_blank" href="https://mediafilez.forgecdn.net/files/8908/927/entity_texture_features-7.2.4-1.20.1-fabric.jar" data-zh="CurseForge" data-en="CurseForge">CurseForge</a>
+                    <a class="secondary-btn" target="_blank" href="https://modrinth.com/mod/entitytexturefeatures/version/7.2.4+1.20.1-fabric" data-zh="Modrinth" data-en="Modrinth">Modrinth</a>
                 </div>
             </div>
             <div class="dep-card">
                 <h3>Entity Model Features (EMF)</h3>
                 <p data-zh="实体模型特性，资源包必需前置" data-en="Entity Model Features, required dependency for this resource pack">实体模型特性，资源包必需前置</p>
                 <div class="dep-btn-group">
-                    <a class="secondary-btn" target="_blank" href="https://gh-proxy.com/https://raw.githubusercontent.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/main/Entity-Mode-Features-Beta-1.20.1-Fabric-Mirror-CDN.jar" data-zh="国内加速镜像" data-en="Domestic Mirror">国内加速镜像</a>
-                    <a class="secondary-btn" target="_blank" href="https://ghproxy.net/https://raw.githubusercontent.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/main/Entity-Mode-Features-Beta-1.20.1-Fabric-Mirror-CDN.jar" data-zh="备用国内镜像" data-en="Backup Domestic Mirror">备用国内镜像</a>
-                    <a class="secondary-btn" target="_blank" href="https://cdn-alt.modrinth.com/data/4I1XuqiY/versions/1YnYIfno/entity_model_features-3.3.9-1.20.1-fabric.jar">Modrinth</a>
-                    <a class="secondary-btn" target="_blank" href="https://mediafilez.forgecdn.net/files/8909/421/entity_model_features-3.3.9-1.20.1-fabric.jar" data-zh="CurseForge兜底" data-en="CurseForge Backup">CurseForge兜底</a>
+                    <a class="secondary-btn" target="_blank" href="https://mirrors-dawnaurora0221.infinityfree.me/files/EntityModelFeatures-Beta-1.20.1-Fabric-Add-On.jar" data-zh="自建加速镜像（推荐）" data-en="Self-host Mirror (Recommended)">自建加速镜像（推荐）</a>
+                    <a class="secondary-btn" target="_blank" href="https://shturl.cc/om/https://mediafilez.forgecdn.net/files/8909/421/entity_model_features-3.3.9-1.20.1-fabric.jar" data-zh="shturl.cc/om 公益镜像" data-en="shturl.cc/om Public Mirror">shturl.cc/om 公益镜像</a>
+                    <a class="secondary-btn" target="_blank" href="https://shturl.cc/K/https://mediafilez.forgecdn.net/files/8909/421/entity_model_features-3.3.9-1.20.1-fabric.jar" data-zh="shturl.cc/K 公益镜像" data-en="shturl.cc/K Public Mirror">shturl.cc/K 公益镜像</a>
+                    <a class="secondary-btn" target="_blank" href="https://mediafilez.forgecdn.net/files/8909/421/entity_model_features-3.3.9-1.20.1-fabric.jar" data-zh="CurseForge" data-en="CurseForge">CurseForge</a>
+                    <a class="secondary-btn" target="_blank" href="https://modrinth.com/mod/entity-model-features/version/3.3.9+1.20.1-fabric" data-zh="Modrinth" data-en="Modrinth">Modrinth</a>
                 </div>
             </div>
         </div>
@@ -412,34 +493,42 @@
 <script>
 const versionData = {
     v001: {
-        primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
-        alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
+        primary: "https://mirrors-dawnaurora0221.infinityfree.me/files/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
+        mirror1: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
+        mirror2: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.1-1.20.1.zip",
         fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/dev-alpha-beta-release-vx.x"
     },
     v002: {
-        primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip",
-        alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip",
+        primary: "https://mirrors-dawnaurora0221.infinityfree.me/files/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip",
+        mirror1: "https://shturl.cc/om/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip",
+        mirror2: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/dev-alpha-beta-release-vx.x.x/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.2-1.20.1.zip",
         fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/dev-alpha-beta-release-vx.x.x"
     },
     v003: {
-        primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/alpha-playeranimation-0.xxx/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.3-1.20.1.zip",
-        alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/alpha-playeranimation-0.xxx/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.3-1.20.1.zip",
+        primary: "https://mirrors-dawnaurora0221.infinityfree.me/files/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.3-1.20.1.zip",
+        mirror1: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/alpha-playeranimation-0.xxx/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.3-1.20.1.zip",
+        mirror2: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/alpha-playeranimation-0.xxx/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.3-1.20.1.zip",
         fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/alpha-player-animation-v0.xxxxx"
     },
     v004: {
-        primary: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/alpha-player-animation-v0.xxxxx/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.4-1.20.1.zip",
-        alt: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/alpha-player-animation-v0.xxxxx/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.4-1.20.1.zip",
+        primary: "https://mirrors-dawnaurora0221.infinityfree.me/files/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.4-1.20.1.zip",
+        mirror1: "https://gh-proxy.com/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/alpha-player-animation-v0.xxxxx/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.4-1.20.1.zip",
+        mirror2: "https://ghproxy.net/https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/download/alpha-player-animation-v0.xxxxx/dawn-aurora-player-animation-resource-pack-add-on-alpha-v0.0.4-1.20.1.zip",
         fallback: "https://github.com/DawnAurora0221/dawnaurora-player-animation-resource-pack/releases/tag/alpha-player-animation-v0.xxxxx"
     }
 };
 const versionSelect = document.getElementById("versionSelect");
 const mainDlBtn = document.getElementById("mainDlBtn");
-const altDlBtn = document.getElementById("altDlBtn");
+const altDl1Btn = document.getElementById("altDl1Btn");
+const altDl2Btn = document.getElementById("altDl2Btn");
+const altDl3Btn = document.getElementById("altDl3Btn");
 const fallbackDlBtn = document.getElementById("fallbackDlBtn");
 function updateDownloadLinks(key) {
     const v = versionData[key];
     mainDlBtn.href = v.primary;
-    altDlBtn.href = v.alt;
+    altDl1Btn.href = v.mirror1;
+    altDl2Btn.href = v.mirror2;
+    altDl3Btn.href = v.mirror3;
     fallbackDlBtn.href = v.fallback;
 }
 versionSelect.addEventListener("change", e=>updateDownloadLinks(e.target.value));
