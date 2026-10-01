@@ -302,34 +302,24 @@ More natural player motion and improved animation blending.
 ## Notice
 This is still an alpha preview. Some animations remain unfinished.
 
-# DawnAurora's Player Animation - Alpha v0.0.3
+# DawnAurora's Player Animation - Alpha v0.0.1
 Short Name: Dapa
 Minecraft 1.20.1 Fabric Animation Resource Pack
 
 ## Overview
-Alpha v0.0.3 is the largest update so far. Almost all planned animation logic has been fully implemented, including shield blocking animation.
-Only Respackopts configuration support remains work-in-progress.
+This is the very first early alpha preview release of DawnAurora's Player Animation resource pack.
+This pack reworks vanilla player movement animations for both first-person and third-person view.
+EMF and ETF fabric mods are mandatory to run this resource pack.
 
 ## Added
-- Walk-on-fence animation
-- Player edge standing animation
-- Custom shield blocking animation
-- Torch holding animation
-- Lantern holding animation
-- Player hurt / damage hit reaction animation
-- Equipment & hotbar item swap animation
-- Dynamic armor state animations
+- Custom running animation
+- Custom sprint animation
+- Basic rework of vanilla player movement animation system
 
-## Bug Fixes
-- Fixed resource pack recognition issue in PCL2 and HCL launchers
-- Fixed abnormal animation jitter in some movement scenarios
-- Fixed broken animation transition when switching held items
-- Fixed multiple JSON parsing errors inside animation controller files
-- Fixed incorrect timing of some movement animation blending
-- Fixed rare cases where animations stop playing after dimension switching
-
-## Work In Progress
-⏳ Respackopts configuration support for animation customization
+## Known Issues
+- Many advanced animations are not implemented
+- Animation jitter happens under certain movement states
+- Some animation transitions lack smooth blending
 
 ## Dependencies
 - Minecraft 1.20.1
@@ -338,8 +328,4 @@ Only Respackopts configuration support remains work-in-progress.
 - Entity Texture Features (ETF)
 
 ## Notice
-This is an alpha early preview. A small number of hidden bugs may still exist.
-This is a resource pack, NOT a Fabric mod.
-
-
-END OF TERMS AND CONDITIONS
+This is an alpha preview. Bugs are expected. This is a resource pack, not a mod.
