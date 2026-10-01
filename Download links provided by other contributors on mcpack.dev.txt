@@ -1,0 +1,26 @@
+0.0.1 alpha:
+
+https://mcpacks.dev/pack/b11815ec-8d7d-460c-9945-0d05d59778bf/download
+
+SHA 1 Hash 256: 220ac87c4ec4d353f5102ccc842f7b083d8d2c36
+
+
+0.0.2 alpha:
+
+https://mcpacks.dev/pack/62cd49dc-dcdb-47bb-bb15-f7cb6623f811/download
+
+SHA 1 Hash 256: d21b6ad171f4b381f266c29a158b23e3e13e1d37
+ 
+
+0.0.3 alpha:
+
+https://mcpacks.dev/pack/da975dcb-f3b1-4266-a7b3-43612c5c5dbd/download
+
+SHA 1 Hash 256: 3be4b1e68ea40a8f192ee66329829534e4387462
+
+
+0.0.4 alpha:
+
+https://mcpacks.dev/pack/f1a487ab-eeb8-4303-86b6-f7446da49258/download
+
+SHA 1 Hash 256: ce6f6c27ced841da066ca591355e57779476ad3a
